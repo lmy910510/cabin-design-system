@@ -100,7 +100,7 @@
 
 <h1 style="font-size:48px;font-weight:600;margin:0 0 8px;">brand-tag</h1>
 <p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
-  5 个业务 variant · 1:1 映射 Figma component set <code>594:9487</code> · 颜色复用现有 <code>--color-bg-warning / --color-text-link / --color-bg-price</code> 语义 token
+  5 个业务 variant · 1:1 映射 Figma component set <code>594:9487</code> · 颜色按 Figma 裸色还原（红 #D62F35 / 蓝 #2965FF / 黄 #FFDA38）· 整体 36px、左段为<strong>斜切平行四边形</strong>（顶宽 90/92/96，底宽收窄 8~11px）
 </p>
 
 
@@ -112,7 +112,7 @@
   <div class="case-grid">
     <div class="label">车速取-车道（红）</div>
     <div class="demo">
-      <span class="brand-tag brand-tag--warning">
+      <span class="brand-tag brand-tag--warning brand-tag--lane">
         <span class="brand-tag__head">车速取</span>
         <span class="brand-tag__body">车道</span>
       </span>
@@ -157,7 +157,7 @@
         <span class="brand-tag__body">
           车道取餐 无须下车
           <svg class="brand-tag__icon" viewBox="0 0 48 48" aria-hidden="true">
-            <use href="#icon/info--fill" />
+            <use href="#icon/info--line" />
           </svg>
         </span>
       </span>
@@ -191,7 +191,7 @@
     <div class="poi-mock">
       <span class="poi-mock__name">肯德基（万象城店）</span>
       <div class="poi-mock__tags">
-        <span class="brand-tag brand-tag--warning">
+        <span class="brand-tag brand-tag--warning brand-tag--lane">
           <span class="brand-tag__head">车速取</span>
           <span class="brand-tag__body">车道</span>
         </span>
@@ -212,7 +212,7 @@
           <span class="brand-tag__body">
             车道取餐 无须下车
             <svg class="brand-tag__icon" viewBox="0 0 48 48" aria-hidden="true">
-              <use href="#icon/info--fill" />
+              <use href="#icon/info--line" />
             </svg>
           </span>
         </span>
@@ -222,7 +222,8 @@
 </section>
 
 
-<!-- 复用得来速 logo 的 symbol 定义（同文档锚点 use） -->
+<!-- 复用得来速 logo 的 symbol 定义（同文档锚点 use）。
+     info icon 走通用 sprite（icon-sprite-inline.js 已在 head 注入），引用 #icon/info--line。 -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <symbol id="brand-drive-thru-logo" viewBox="0 0 74.86 22">

@@ -580,6 +580,56 @@
     }
     .step p:first-of-type { margin-top: 4px; }
 
+    /* 训练用例收集入口 */
+    .collect-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 14px 0 2px;
+      padding: 14px 16px;
+      border: 1px solid var(--border-default);
+      border-left: 3px solid var(--accent-ink);
+      border-radius: 6px;
+      background: var(--bg-soft);
+      text-decoration: none;
+      color: inherit;
+      transition: background .15s ease, border-color .15s ease;
+    }
+    .collect-link:hover {
+      background: var(--bg-block);
+    }
+    .collect-link__icon {
+      width: 32px; height: 32px;
+      flex-shrink: 0;
+      border-radius: 5px;
+      background: #fff;
+      border: 1px solid var(--border-default);
+      display: grid; place-items: center;
+      font-size: 16px;
+    }
+    .collect-link__body { flex: 1; min-width: 0; }
+    .collect-link__title {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-default);
+      margin-bottom: 2px;
+    }
+    .collect-link__desc {
+      display: block;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .collect-link__cta {
+      flex-shrink: 0;
+      font-size: 13px;
+      color: var(--text-default);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .collect-link__cta::after { content: " →"; }
+
     /* 维度网格 */
     .grid-2 {
       display: grid;
@@ -1293,6 +1343,17 @@
         <span class="step-tag">Test Set</span>
       </div>
       <p>写下 10 个你最常遇到的设计需求，附上每个用例的检查项与满分。</p>
+
+      <a class="collect-link"
+         href="https://doc.weixin.qq.com/sheet/e3_AOIAxgYKACoCNsbI3oeTsSf2QJTC7?scode=AJEAIQdfAAopDxVAvUAOIAxgYKACo&tab=BB08J2"
+         target="_blank" rel="noopener noreferrer">
+        <span class="collect-link__icon" aria-hidden="true">📋</span>
+        <span class="collect-link__body">
+          <span class="collect-link__title">训练用例收集表（腾讯文档）</span>
+          <span class="collect-link__desc">本项目用例集统一在这里收集，遇到典型/失败的设计需求都欢迎补充进来。</span>
+        </span>
+        <span class="collect-link__cta">去填写</span>
+      </a>
     </div>
 
     <div class="step">

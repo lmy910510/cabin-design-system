@@ -246,6 +246,15 @@
     <path fill="currentColor" d="M34 23H41V27H34V23Z"/>
     <path fill="currentColor" d="M25 35H41V39H25V35Z"/>
   </symbol>
+  <!-- ============== info（信息提示，圆环+i 字，线/面） ============== -->
+  <symbol id="icon/info--line" viewBox="0 0 48 48">
+    <path fill="currentColor" d="M26 23V33H22V23H26Z"/>
+    <path fill="currentColor" d="M26 19V15H22V19H26Z"/>
+    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M24 43C34.4934 43 43 34.4934 43 24C43 13.5066 34.4934 5 24 5C13.5066 5 5 13.5066 5 24C5 34.4934 13.5066 43 24 43ZM24 39C32.2843 39 39 32.2843 39 24C39 15.7157 32.2843 9 24 9C15.7157 9 9 15.7157 9 24C9 32.2843 15.7157 39 24 39Z"/>
+  </symbol>
+  <symbol id="icon/info--fill" viewBox="0 0 48 48">
+    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M24 5C34.4934 5 43 13.5066 43 24C43 34.4934 34.4934 43 24 43C13.5066 43 5 34.4934 5 24C5 13.5066 13.5066 5 24 5ZM22 22V34H26V22H22ZM22 14V18H26V14H22Z"/>
+  </symbol>
 
 </svg>
 <!-- sprite-inline end -->
@@ -254,13 +263,13 @@
 
 <h1 style="font-size:48px;font-weight:600;margin:0 0 8px;">icon</h1>
 <p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
-  座舱图标系统 · SVG sprite · 11 个语义 × 2 form = 22 symbol · currentColor 主题色继承
+  座舱图标系统 · SVG sprite · 12 个语义 × 2 form = 24 symbol · currentColor 主题色继承
 </p>
 
 
 <!-- ============ 1. 完整 sprite 矩阵：line ============ -->
 <section>
-  <h2>1. 形态=线形（line）—— 11 个</h2>
+  <h2>1. 形态=线形（line）—— 12 个</h2>
   <p class="group-desc">分组标题、辅助操作、信息层级弱。</p>
 
   <div class="matrix">
@@ -319,13 +328,18 @@
       <span class="name">list</span>
       <span class="form-tag">--line</span>
     </div>
+    <div class="matrix__cell">
+      <svg class="icon"><use href="#icon/info--line"/></svg>
+      <span class="name">info</span>
+      <span class="form-tag">--line</span>
+    </div>
   </div>
 </section>
 
 
 <!-- ============ 2. 完整 sprite 矩阵：fill ============ -->
 <section>
-  <h2>2. 形态=面形（fill）—— 11 个</h2>
+  <h2>2. 形态=面形（fill）—— 12 个</h2>
   <p class="group-desc">list row 主图标、CTA、需要远观识别的强信息层（默认推荐）。</p>
 
   <div class="matrix">
@@ -382,6 +396,11 @@
     <div class="matrix__cell">
       <svg class="icon"><use href="#icon/list--fill"/></svg>
       <span class="name">list</span>
+      <span class="form-tag">--fill</span>
+    </div>
+    <div class="matrix__cell">
+      <svg class="icon"><use href="#icon/info--fill"/></svg>
+      <span class="name">info</span>
       <span class="form-tag">--fill</span>
     </div>
   </div>

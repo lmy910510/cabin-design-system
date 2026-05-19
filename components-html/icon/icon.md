@@ -89,7 +89,7 @@ icon/<语义名>--<form>
 
 ---
 
-## 当前 sprite 内置图标清单（MVP，11 × 2 = 22 symbol）
+## 当前 sprite 内置图标清单（MVP，12 × 2 = 24 symbol）
 
 > 选取依据：项目当前代码用到的 + 高频通用 icon。后续按需扩充。
 
@@ -106,6 +106,7 @@ icon/<语义名>--<form>
 | `up` | ✓ | ✓ | `60:533` | 向上 / 展开（线/面同源） |
 | `setting` | ✓ | ✓ | `60:603` | 设置 / 通用 |
 | `list` | ✓ | ✓ | `60:2846` | 列表 / 菜单（含定位形 + 三横线，区别于 hamburger） |
+| `info` | ✓ | ✓ | `60:3126` | 信息提示 / tooltip 前置 / brand-tag 得来速「车道取餐 无须下车」 |
 
 > Figma `icon/<name>` 的 `形态=面形` ↔ HTML id `icon/<name>--fill`；`形态=线形` ↔ `icon/<name>--line`。
 
@@ -222,3 +223,4 @@ PY
 | 2026-05-19 | 首版 | 建立 SVG sprite + .icon 容器；MVP 收录 11 个语义 icon × 2 form = 22 symbol；从 Figma `figma_execute` 直读真值，去掉硬编码 fill 改用 currentColor |
 | 2026-05-19 | 增 sprite loader | 新增 `icon-sprite-inline.js`，把 sprite 内联到当前文档 `<body>`，所有引用改为同文档锚点 `<use href="#icon/…"/>`，规避 `file://` 跨文件 use 在 macOS iCloud 中文路径下加载失败的问题 |
 | 2026-05-19 | button 接入 sprite | button.preview.html / button.html / button.md 全部 leading/trailing/icon-only demo 从手画 svg 迁到 sprite 引用；删除（trash）与分享（share）暂保留临时手画并标注 TODO，等 sprite 收录后再迁 |
+| 2026-05-19 | 增 info | 收录 `icon/info`（`60:3126`，**12 × 2 = 24 symbol**），从 Figma `exportAsync(SVG_STRING)` 直读 48×48 真值；fill 形态用 `fill-rule="evenodd"` 实现「实心圆 + 镂空 i」的 boolean subtract 效果。brand-tag 得来速 variant 由原本的「内联 #brand-info-icon 22×22 一次性 symbol」迁到统一调用 `#icon/info--line`（线形、中性提示语义），去掉了一次分叉 |

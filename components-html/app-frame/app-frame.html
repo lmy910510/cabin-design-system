@@ -1,0 +1,92 @@
+<!-- AppFrame · 应用框架（纯模板，不含预览页脚手架）
+     Figma: 🤖座舱组件库-AI版 / AppFrame (436:1772)
+     交付组合：AppFrame · SideMenu(expanded) · TopBar(title)
+
+     使用前请：
+       1) 引入 design-system/tokens.css、shadows.css、text-styles.css
+       2) 引入 components-html/app-frame/app-frame.css
+       3) 注入图标 sprite：<script src="../icon/icon-sprite-inline.js"></script>
+       4) 业务页内容写在 .app-frame__content-canvas 里
+-->
+<div class="app-frame">
+
+  <!-- ============ SideMenu / mode=expanded ============ -->
+  <aside class="side-menu" aria-label="主导航">
+    <div class="side-menu__nav-group">
+      <ul class="side-menu__nav-list">
+
+        <li>
+          <a class="nav-item is-active" href="#" aria-current="page">
+            <span class="nav-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><use href="#icon/list--fill"/></svg>
+            </span>
+            <span class="nav-item__label">列表</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-item" href="#">
+            <span class="nav-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg>
+            </span>
+            <span class="nav-item__label">收藏</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-item" href="#">
+            <span class="nav-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><use href="#icon/refresh--line"/></svg>
+            </span>
+            <span class="nav-item__label">刷新</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="nav-item" href="#">
+            <span class="nav-item__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><use href="#icon/setting--line"/></svg>
+            </span>
+            <span class="nav-item__label">设置</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+
+    <div class="side-menu__footer">
+      <a class="nav-item" href="#">
+        <span class="nav-item__icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48"><use href="#icon/setting--line"/></svg>
+        </span>
+        <span class="nav-item__label">设置</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ============ main · 圆角白卡 ============ -->
+  <div class="app-frame__main">
+    <div class="app-frame__card">
+
+      <!-- TopBar / style=title -->
+      <div class="app-frame__topbar-slot">
+        <header class="top-bar">
+          <div class="top-bar__left">
+            <h1 class="top-bar__title">页面标题</h1>
+          </div>
+          <div class="top-bar__right">
+            <!-- style=title 默认无右侧操作；如需操作按钮，请用 TopBar 的其他 variant -->
+          </div>
+        </header>
+      </div>
+
+      <!-- content SLOT：业务页面在这里画 -->
+      <div class="app-frame__content">
+        <div class="app-frame__content-canvas" data-slot="content">
+          <!-- 自由绘制区域：1504 × 876 -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

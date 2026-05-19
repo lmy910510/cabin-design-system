@@ -118,6 +118,15 @@
     <path fill="currentColor" d="M33 11H41V15H33V11Z"/>
     <path fill="currentColor" d="M34 23H41V27H34V23Z"/>
     <path fill="currentColor" d="M25 35H41V39H25V35Z"/>
+  </symbol>
+  <!-- ============== info（信息提示，圆环+i 字，线/面） ============== -->
+  <symbol id="icon/info--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M26 23V33H22V23H26Z"/>
+    <path fill="currentColor" d="M26 19V15H22V19H26Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M24 43C34.4934 43 43 34.4934 43 24C43 13.5066 34.4934 5 24 5C13.5066 5 5 13.5066 5 24C5 34.4934 13.5066 43 24 43ZM24 39C32.2843 39 39 32.2843 39 24C39 15.7157 32.2843 9 24 9C15.7157 9 9 15.7157 9 24C9 32.2843 15.7157 39 24 39Z"/>
+  </symbol>
+  <symbol id="icon/info--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M24 5C34.4934 5 43 13.5066 43 24C43 34.4934 34.4934 43 24 43C13.5066 43 5 34.4934 5 24C5 13.5066 13.5066 5 24 5ZM22 22V34H26V22H22ZM22 14V18H26V14H22Z"/>
   </symbol>`;
 
   // 用 DOMParser 以 image/svg+xml 解析，确保 <symbol>/<path> 都在正确的 SVG 命名空间下创建。

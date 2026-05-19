@@ -5,55 +5,30 @@
  * 1:1 映射自 Figma 真实测量（通过 figma_execute 直读 5 个 variant）：
  *   Variant：类型 = {车速取-车道, 车速取-沿街, 可预约, 得来速, 得来速-带icon}
  *
- * 结构：双段组合
- *   ┌──────────────┬───────────────────────────┐
- *   │  左段 head    │   右段 body (可带 icon)     │
- *   └──────────────┴───────────────────────────┘
- *   外层圆角 5；左右段无内部圆角；
- *   外层背景：对应 type 的 6%~12% 半透明色（tinted 底）。
- *   外层不带 1px 紫描边（Figma 里那个紫框是变体编辑示意，非真实 UI）。
+ * Figma 真实测量（这一版按这个走，不再四舍五入）：
+ *   - 整体高度 36px、外层圆角 6px
+ *   - 左段是固定宽度的实色块（不是 hug），且**右边线是斜的**（顶宽 > 底宽）：
+ *       车速取-车道  顶宽 90 / 底宽 82  (斜切 8px)
+ *       车速取-沿街  顶宽 92 / 底宽 82  (斜切 10px)
+ *       可预约       顶宽 92 / 底宽 82  (斜切 10px)
+ *       得来速       顶宽 96 / 底宽 85  (斜切 11px)
+ *     —— 通过 clip-path: polygon() 一比一切出，跟 Figma 的 vector 路径完全一致：
+ *        M 0 0  L W 0  L (W-S) H  L 0 H  Z
+ *   - 左右两段之间有 gap：红/蓝 4px、黄 3px
+ *     右段为了视觉上"贴着"斜边，会负 margin 把斜出来的三角空间吃掉一部分
+ *   - 右段：右内边距 8px（左侧不需要内边距，靠 gap 撑开）
+ *   - 左段字：MFYuanHei 22 / 22，白 92%
+ *   - 右段字：Noto Sans SC 20 / 20
  *
- * 颜色策略：
- *   不新增 brand 色 token，直接复用现有 design-system 语义色：
- *     红（车速取） → --color-bg-warning / --color-text-warning / --color-bg-warning-transparent
- *     蓝（可预约） → --color-text-link  /  --color-bg-link (=blue transparent)
- *     黄（得来速） → --color-bg-price   / --color-text-price  / --color-bg-price-transparent
- *   色值与 Figma 不完全一致是预期内的（沿用 tokens，跟随 dark mode 自动切换）。
+ * 颜色策略（这次按 Figma 裸色一比一还原，不再用近义语义 token）：
+ *   红（车速取） head=#D62F35  body=#D62F35  bg=rgba(214,47,53,0.06)
+ *   蓝（可预约） head=#2965FF  body=#2965FF  bg=rgba(41,101,255,0.06)
+ *   黄（得来速） head=#FFDA38  body=#8A6000  bg=rgba(255,218,56,0.12)
+ *                logo path 填充：#D32D20（深红）
  *
- * 字体：
- *   左段（车速取/可预约）：MFYuanHei + 系统圆体回退，22 / 22 加粗
- *   左段（得来速）：矢量 logo（内联 SVG，path 直接来自 Figma vector 594:9506）
- *   右段：Noto Sans SC 20 / 20 加粗
- *
- * 用法：
- *   <span class="brand-tag brand-tag--warning">
- *     <span class="brand-tag__head">车速取</span>
- *     <span class="brand-tag__body">车道</span>
- *   </span>
- *
- *   <span class="brand-tag brand-tag--link">
- *     <span class="brand-tag__head">可预约</span>
- *     <span class="brand-tag__body">定时出餐 美味新鲜</span>
- *   </span>
- *
- *   <!-- 得来速：左段是 SVG logo -->
- *   <span class="brand-tag brand-tag--price">
- *     <span class="brand-tag__head brand-tag__head--logo">
- *       <svg class="brand-tag__logo" viewBox="0 0 75 22" aria-label="得来速" role="img"> ... </svg>
- *     </span>
- *     <span class="brand-tag__body">车道取餐 无须下车</span>
- *   </span>
- *
- *   <!-- 得来速 + 右侧 info icon -->
- *   <span class="brand-tag brand-tag--price">
- *     <span class="brand-tag__head brand-tag__head--logo"> ... </span>
- *     <span class="brand-tag__body">
- *       车道取餐 无须下车
- *       <svg class="brand-tag__icon" viewBox="0 0 48 48" aria-hidden="true">
- *         <use href="#icon/info--fill" />
- *       </svg>
- *     </span>
- *   </span>
+ * 说明：之前用 --color-bg-price（橙）近似得来速的"黄"是错误的，本次纠正为
+ *       Figma 实际的亮黄 + 深棕黄文字。其余两色也改为 Figma 裸色，避免
+ *       语义 token（红 #ff293b / 蓝 #367bf6）造成的色相偏移。
  * ============================================================= */
 
 
@@ -63,8 +38,8 @@
   display: inline-flex;
   flex-direction: row;
   align-items: stretch;        /* 左右两段等高 */
-  height: 28px;                /* Figma 实测整体高度 */
-  border-radius: 5px;
+  height: 36px;                /* Figma 实测整体高度 */
+  border-radius: 6px;
   overflow: hidden;            /* 让左段实底色不溢出外层圆角 */
   user-select: none;
   flex: none;
@@ -80,23 +55,42 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0 6px;
+  /* 默认顶宽 92px / 斜切 10px（车速取-沿街、可预约）；用修饰类覆盖 */
+  width: 92px;
+  height: 100%;
   font-family: "MFYuanHei", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
   font-size: 22px;
-  font-weight: 700;
-  color: var(--color-text-primary-inverse);  /* 白字（Figma 实测） */
+  font-weight: 400;
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.92);  /* Figma 实测白 92% */
   flex: none;
+  /* 关键：右下角斜切，与 Figma vector 路径 M 0 0 L W 0 L (W-S) H L 0 H Z 一致 */
+  clip-path: polygon(0 0, 92px 0, 82px 100%, 0 100%);
+  /* 文字稍微往左偏，避免落在被切掉的三角区 */
+  padding-right: 8px;
+  box-sizing: border-box;
 }
 
-/* 得来速：左段是矢量 logo，padding 收紧、不用文字色 */
+/* 车速取-车道：顶宽 90 / 底宽 82（斜切 8px） */
+.brand-tag--lane .brand-tag__head {
+  width: 90px;
+  clip-path: polygon(0 0, 90px 0, 82px 100%, 0 100%);
+  padding-right: 6px;
+}
+
+/* 得来速：顶宽 96 / 底宽 85（斜切 11px），使用矢量 logo */
 .brand-tag__head--logo {
-  padding: 0 6px;
+  width: 96px;
+  padding: 0;
+  clip-path: polygon(0 0, 96px 0, 85px 100%, 0 100%);
 }
 
 .brand-tag__logo {
   display: block;
   width: 75px;
   height: 22px;
+  /* logo 同样左偏一点，保持视觉重心居中（落在底边斜切之上的可见区） */
+  margin-right: 11px;
 }
 
 
@@ -106,9 +100,12 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 0 8px;
+  /* 左侧不需要 padding，靠容器 gap 撑开；右侧 8px = Figma paddingRight */
+  padding: 0 8px 0 0;
+  margin-left: 4px;            /* Figma itemSpacing：红/蓝默认 4px */
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 400;
+  letter-spacing: 0;
   flex: none;
   /* 文字色由 type 修饰类控制 */
 }
@@ -118,40 +115,42 @@
   height: 22px;
   flex: none;
   color: currentColor;         /* 跟随 body 文字色 */
+  fill: currentColor;          /* symbol 内部用 fill="currentColor" 时回退用 */
 }
 
 
-/* ---------- Type 修饰类（颜色组合） ---------- */
+/* ---------- Type 修饰类（颜色组合，1:1 还原 Figma 裸色） ---------- */
 
 /* 红：车速取 */
 .brand-tag--warning {
-  background: var(--color-bg-warning-transparent);
+  background: rgba(214, 47, 53, 0.06);
 }
 .brand-tag--warning .brand-tag__head {
-  background: var(--color-bg-warning);
+  background: #D62F35;
 }
 .brand-tag--warning .brand-tag__body {
-  color: var(--color-text-warning);
+  color: #D62F35;
 }
 
 /* 蓝：可预约 */
 .brand-tag--link {
-  background: var(--color-bg-link);  /* blue transparent */
+  background: rgba(41, 101, 255, 0.06);
 }
 .brand-tag--link .brand-tag__head {
-  background: var(--color-text-link); /* blue-5 实底 */
+  background: #2965FF;
 }
 .brand-tag--link .brand-tag__body {
-  color: var(--color-text-link);
+  color: #2965FF;
 }
 
-/* 黄/橙：得来速 */
+/* 黄：得来速（gap 收紧到 3px，body 文字是深棕黄） */
 .brand-tag--price {
-  background: var(--color-bg-price-transparent);
+  background: rgba(255, 218, 56, 0.12);
 }
 .brand-tag--price .brand-tag__head {
-  background: var(--color-bg-price);
+  background: #FFDA38;
 }
 .brand-tag--price .brand-tag__body {
-  color: var(--color-text-price);
+  color: #8A6000;
+  margin-left: 3px;            /* Figma itemSpacing 黄=3px */
 }

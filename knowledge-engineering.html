@@ -1120,36 +1120,197 @@
         </div>
       </div>
 
-      <!-- ===== 1.3 最小示意 + 陷阱题 ===== -->
-      <h4 style="margin-top:32px;">1.3　最小示意：一道 L1 基础题 + 一道陷阱题</h4>
-      <p class="sub-desc">下面只放两道"通用范例"，让你看清字段长什么样。<strong>真实业务的 L2 / L4 题</strong>请见 1.4 三个 agent 的示范。</p>
+      <!-- ===== 1.3 范例库（10 道） ===== -->
+      <h4 style="margin-top:32px;">1.3　范例库：10 道题铺满 L1–L4</h4>
+      <p class="sub-desc">下面 10 道题覆盖 <strong>4 条能力线 × 4 种颗粒度 × 3 个 agent</strong>，是一份可以直接照抄结构的最小完整样本。看一遍就能明白"题该长什么样"，剩下的照葫芦画瓢。</p>
 
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:80px">用例 ID</th>
-              <th style="width:200px">输入需求（题面）</th>
-              <th>期望输出的关键检查项</th>
-              <th style="width:90px" class="center">满分</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="badge">L1-001</span></td>
-              <td>"生成一个车机设置页，包含 WiFi、蓝牙、显示三个菜单项"<br/><em style="color:var(--text-tertiary);font-size:12px;">L1 · 页面 · 基础</em></td>
-              <td>① TopBar 复用组件实例　② 列表项复用组件实例　③ 文字绑定 text style　④ 颜色绑定 semantic variable　⑤ 间距使用 spacing token　⑥ 图标命中对照表</td>
-              <td class="center">规范 6</td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- 1. L1 原子 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L1-001</span>
+          <span class="pill">L1 规范 · 原子</span>
+          <span class="pill">公共卷</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"这个次要说明文字看起来有点抢，想让它退到背景里一点，用哪个色？"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>正确：<code>text-secondary</code> 或 <code>text-tertiary</code> 语义 token</li>
+              <li>must_not：<code>color/gray/500</code>、<code>#999999</code>、<code>opacity: 0.6</code></li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">规范 6 + 说明 secondary/tertiary 用法差异 +2 ＝ 满分 8</div>
+        </div>
       </div>
 
+      <!-- 2. L1 组件 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L1-002</span>
+          <span class="pill">L1 规范 · 组件</span>
+          <span class="pill">公共卷</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"做一个'确认删除'的弹窗，要有取消和确认两个按钮"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>复用 Dialog 组件实例 + Button 组件实例；主按钮 <code>variant=danger</code>，次按钮 <code>variant=ghost</code></li>
+              <li>must_not：自绘黑底浮层、两个按钮都 primary、确认按钮放左边</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">组件复用 +4；按钮主次正确 +3；危险动作用 danger 变体 +3 ＝ 满分 10</div>
+        </div>
+      </div>
+
+      <!-- 3. L1 页面 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L1-003</span>
+          <span class="pill">L1 规范 · 页面</span>
+          <span class="pill">公共卷</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"生成一个车机设置页，包含 WiFi、蓝牙、显示三个菜单项"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">① TopBar 复用组件实例　② 列表项复用组件实例　③ 文字绑定 text style　④ 颜色绑定 semantic variable　⑤ 间距走 spacing token　⑥ 图标命中对照表</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">每命中一项 +1，满分 6；任一项写死硬编码 直接扣 2</div>
+        </div>
+      </div>
+
+      <!-- 4. L2 Agent1 组件 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L2-A1-001</span>
+          <span class="pill">L2 业务 · 组件</span>
+          <span class="pill">Agent 1 · 长途出行</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"前方拥堵，建议绕行，多花 12 分钟"——做一个驾驶中的提示卡片</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>规范分：复用 Card / Button 组件，文字 / 颜色 / 间距全部 token 化</li>
+              <li>业务分：① 决策动作（绕 / 不绕）必须是主按钮　② "12 分钟"作为代价要醒目（次级强调而非次要文字）　③ 不能折叠到二级菜单</li>
+              <li>must_not：把"绕行"做成纯文字链；把"12 分钟"用 text-tertiary 显示</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">规范 4 + 业务 6 ＝ 满分 10</div>
+        </div>
+      </div>
+
+      <!-- 5. L2 Agent2 页面 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L2-A2-001</span>
+          <span class="pill">L2 业务 · 页面</span>
+          <span class="pill">Agent 2 · POI</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"POI 详情页：一家咖啡馆，要有简介 / 评分 / 玩法 / 周边"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>规范分：Hero 图、Tag、Button 全部走组件；零硬编码色值</li>
+              <li>业务分：① 核心动作（导航 / 收藏 / 分享）一屏可达　② 评价 / 玩法 / 周边分区清晰　③ 广告位不能压住主信息</li>
+              <li>must_not：把"导航"按钮藏在二级 Tab、用满屏 banner 推销</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">规范 4 + 业务 6 ＝ 满分 10</div>
+        </div>
+      </div>
+
+      <!-- 6. L2 Agent3 流程 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L2-A3-001</span>
+          <span class="pill">L2 业务 · 流程</span>
+          <span class="pill">Agent 3 · 点单</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"选菜 → 购物车 → 下单 → 等待"4 屏完整点单流程</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>规范分：4 屏组件复用一致，无自绘卡片或硬编码尺寸</li>
+              <li>业务分：① 每屏只有一个主 CTA　② 等待页有进度反馈　③ 异常态（缺货 / 支付失败）预留位置</li>
+              <li>must_not：让用户在购物车页和下单页都看到两个并列的"确认"按钮</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">规范 4 + 业务 6 ＝ 满分 10</div>
+        </div>
+      </div>
+
+      <!-- 7. L3 一致性 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L3-001</span>
+          <span class="pill">L3 跨域一致性 · 页面</span>
+          <span class="pill">公共卷</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"我在 POI 详情页用了 Button-primary 做'导航'按钮，在路线规划页也有'开始导航'按钮——两个页面要保持一致吗？怎么保证？"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>必须同 variant（primary）+ 同尺寸档位 + 同图标（命中对照表里"导航"那条）</li>
+              <li>判断标准：用户在两个页面看到这个按钮时，能否一眼认出"这是同一个操作"</li>
+              <li>must_not：一个用 primary 一个用 ghost、一个带图标一个不带、一个写"导航"一个写"开始导航"</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">指出 variant/尺寸/图标三要素 +6；说明文案也要统一 +2；提到通过共享 token 而非各自绑定来保证 +2 ＝ 满分 10</div>
+        </div>
+      </div>
+
+      <!-- 8. L4 陷阱 原子 -->
       <div class="case-card">
         <div class="case-meta">
           <span class="case-id">L4-TRAP-001</span>
-          <span class="pill">L4 · 陷阱 · 原子</span>
-          <span class="pill">满分 10</span>
+          <span class="pill">L4 陷阱 · 原子</span>
+          <span class="pill">公共卷</span>
         </div>
         <div class="case-row">
           <div class="case-key">Input</div>
@@ -1159,71 +1320,69 @@
           <div class="case-key">Expected</div>
           <div class="case-val">
             <ul>
-              <li>正确 token：<code>text-danger</code>（或 <code>color/semantic/danger</code>）</li>
-              <li><strong>不能给</strong> <code>color/red/500</code>（这是基础色板，不是语义色）</li>
-              <li><strong>不能给</strong> <code>#FF3B30</code>（硬编码）</li>
+              <li>正确：<code>text-danger</code>（或 <code>color/semantic/danger</code>）</li>
+              <li>must_not：<code>color/red/500</code>（基础色板，不是语义色）；<code>#FF3B30</code>（硬编码）</li>
             </ul>
           </div>
         </div>
         <div class="case-row">
           <div class="case-key">Scoring</div>
+          <div class="case-val">语义 token +6；明确反对基础色板/硬编码 +2；提到联动图标/背景一致性 +2；给出硬编码或基础色 此题判 0（陷阱题不给情面）</div>
+        </div>
+      </div>
+
+      <!-- 9. L4 Agent1 陷阱 流程 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L4-TRAP-A1-001</span>
+          <span class="pill">L4 陷阱 · 流程</span>
+          <span class="pill">Agent 1 · 长途出行</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"用户输入：导航到 200 公里外的目的地，当前续航 80 公里"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
           <div class="case-val">
             <ul>
-              <li>给出 <code>text-danger</code> 语义 token +6</li>
-              <li>明确指出"不要用基础色板/硬编码" +2</li>
-              <li>提到联动图标/背景一致性 +2</li>
-              <li>给硬编码或基础色 此题判 0（陷阱题不给情面）</li>
+              <li>规划路线前必须主动报警"续航不足"</li>
+              <li>同步给出沿途充电站建议（至少 1 个）</li>
+              <li>主按钮应该是"加入充电站"而非"继续导航"</li>
+              <li>must_not：直接出路线 + 一行小字"注意电量"；把充电站藏在二级菜单</li>
             </ul>
           </div>
         </div>
-      </div>
-
-      <!-- ===== 1.4 三个 agent 的业务示范题 ===== -->
-      <h4 style="margin-top:32px;">1.4　三个 Agent 的业务示范题</h4>
-      <p class="sub-desc">下面每个 agent 给一道"业务理解"的范题，作为出 L2 / L4 题的参照。<strong>关键不是输入需求，而是检查项 checklist</strong>——同时考"规范合规"与"业务正确"两条线。</p>
-
-      <div class="agent-card">
-        <div class="agent-card__head">
-          <span class="agent-card__name">Agent 1 · 长途出行向导</span>
-          <span class="agent-card__tag">L2 · 组件题</span>
-        </div>
-        <div class="agent-card__sample">
-          <b>Input</b>"前方拥堵，建议绕行，多花 12 分钟"
-          <ul style="margin:6px 0 0; padding-left:18px;">
-            <li>规范分（满 4）：复用 Card / Button 组件、文字/颜色/间距全部 token 化</li>
-            <li>业务分（满 6）：① 决策动作（绕 / 不绕）必须是主按钮 ② "12 分钟"作为代价要醒目 ③ 不能折叠到二级菜单</li>
-            <li>L4 陷阱：续航 80km、目的地 200km 时，必须主动报警 + 给充电站建议</li>
-          </ul>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">主动报警 +4；给出充电站 +3；主按钮指向充电而非继续 +3；任何一条缺失此题判 0</div>
         </div>
       </div>
 
-      <div class="agent-card">
-        <div class="agent-card__head">
-          <span class="agent-card__name">Agent 2 · POI 玩法和路线推荐</span>
-          <span class="agent-card__tag">L2 · 页面题</span>
+      <!-- 10. L4 Agent3 陷阱 流程 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">L4-TRAP-A3-001</span>
+          <span class="pill">L4 陷阱 · 流程</span>
+          <span class="pill">Agent 3 · 点单</span>
         </div>
-        <div class="agent-card__sample">
-          <b>Input</b>"POI 详情页：咖啡馆，含简介 / 评分 / 玩法 / 周边"
-          <ul style="margin:6px 0 0; padding-left:18px;">
-            <li>规范分（满 4）：Hero 图、Tag、Button 全部走组件；不出现硬编码色值</li>
-            <li>业务分（满 6）：① 核心动作（导航 / 收藏 / 分享）触手可达 ② 评价 / 玩法 / 周边分区清晰 ③ 广告位不能压住主信息</li>
-            <li>L4 陷阱：推荐 POI 当天闭店 → 必须有醒目状态标记，不能让用户点进去才发现</li>
-          </ul>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"用户在 21:55 浏览菜单，门店 22:00 打烊"</div>
         </div>
-      </div>
-
-      <div class="agent-card">
-        <div class="agent-card__head">
-          <span class="agent-card__name">Agent 3 · 车上点单餐饮</span>
-          <span class="agent-card__tag">L2 · 流程题</span>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>菜单页顶部必须有"5 分钟后打烊"醒目提示（warning 级别，非次要文字）</li>
+              <li>加入购物车按钮可点，但点结算前需要二次确认</li>
+              <li>must_not：让用户走完整个下单流程到支付完成才告知打烊；用 text-tertiary 显示提示</li>
+            </ul>
+          </div>
         </div>
-        <div class="agent-card__sample">
-          <b>Input</b>"选菜 → 购物车 → 下单 → 等待"4 屏完整流程
-          <ul style="margin:6px 0 0; padding-left:18px;">
-            <li>规范分（满 4）：4 屏组件复用一致，没有自绘卡片或硬编码尺寸</li>
-            <li>业务分（满 6）：① 每屏只有一个主 CTA ② 等待页有进度反馈 ③ 异常态预留位置</li>
-            <li>L4 陷阱：门店 5 分钟后打烊 → 必须在加购或结算前提示，不能下单后才告知</li>
-          </ul>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">提示前置 +4；视觉权重达 warning 级 +3；结算前二次确认 +3；下单后才告知 此题判 0</div>
         </div>
       </div>
 
@@ -1245,101 +1404,21 @@
           <span class="fold-tag">思辨补充</span>
         </summary>
         <div class="fold-body">
-          <p><strong>分工原则：标杆题手写、变体题 AI 扩、L2/L4 业务陷阱必须人写。</strong>AI 不知道你的业务，编出来的全是通用场景，没鉴别力；但围绕一道你写好的标杆题做"同主题换皮"，AI 做得又快又稳。</p>
-          <p>体量估算（3 个 agent）：手写约 12–20 道（每条能力线 1 道标杆 + L2/L4 各补 2–3 道），其余让 AI 扩到 24–40 道。一两个下午能搞定第一轮。</p>
+          <p><strong>分工：L1/L3 标杆题手写后 AI 扩变体；L2/L4 业务题必须人写。</strong>AI 不知道你的"打烊要前置"、"续航不足主动报警"这种业务红线，编出来全是通用陷阱，没鉴别力。</p>
+          <p>体量参考（3 个 agent）：手写约 12–20 道，AI 扩到 24–40 道，一两个下午能搞定第一轮。</p>
+          <p style="margin-top:10px;"><strong>AI 扩题提示词（直接复制）</strong></p>
+          <pre style="background: var(--bg-soft); border: 1px solid var(--border-default); border-radius: 4px; padding: 12px; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; overflow-x: auto; color: var(--text-primary);">你是测试用例设计师。基于下面这道标杆题，出 N 道变体。
 
-          <p style="margin-top:14px;"><strong>示例：给一道 L1 标杆题，AI 扩出 3 道变体</strong>（下面是真实可用的样例，业务不熟也能照搬结构）</p>
-
-          <div class="case-card" style="margin-top:8px;">
-            <div class="case-meta">
-              <span class="case-id">L1-SEED-001</span>
-              <span class="pill">L1 · 原子 · 基础（手写标杆）</span>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Input</div>
-              <div class="case-val">"这个次要说明文字看起来有点抢，想让它退到背景里一点，用哪个色？"</div>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Expected</div>
-              <div class="case-val">
-                <ul>
-                  <li>正确：<code>text-secondary</code> 或 <code>text-tertiary</code> 语义 token</li>
-                  <li>must_not：<code>color/gray/500</code>、<code>#999999</code>、<code>opacity: 0.6</code></li>
-                </ul>
-              </div>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Scoring</div>
-              <div class="case-val">命中语义 token +6；指出"不要用基础色板/透明度伪装" +2；说明何时用 secondary vs tertiary +2</div>
-            </div>
-          </div>
-
-          <p style="margin-top:10px;">把上面这道喂给 AI，加一句"出 3 道同能力线 + 同颗粒度的变体，换组件 / 换场景，不要跨到业务题"，会得到类似：</p>
-
-          <div class="case-card" style="margin-top:8px;">
-            <div class="case-meta">
-              <span class="case-id">L1-V1</span>
-              <span class="pill">L1 · 原子 · 变体（AI 扩）</span>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Input</div>
-              <div class="case-val">"按钮按下去那一下要有反馈色，用哪个？"</div>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Expected</div>
-              <div class="case-val"><code>state/pressed</code> 或 <code>bg-pressed</code> 语义 token；must_not：手动调深 10%、用 <code>filter: brightness()</code></div>
-            </div>
-          </div>
-
-          <div class="case-card" style="margin-top:8px;">
-            <div class="case-meta">
-              <span class="case-id">L1-V2</span>
-              <span class="pill">L1 · 原子 · 变体（AI 扩）</span>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Input</div>
-              <div class="case-val">"卡片之间挨得太紧，想拉开一档标准距离，用多少？"</div>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Expected</div>
-              <div class="case-val"><code>spacing/md</code>（或对应的 spacing token）；must_not：写死 <code>16px</code>、<code>margin: 1rem</code></div>
-            </div>
-          </div>
-
-          <div class="case-card" style="margin-top:8px;">
-            <div class="case-meta">
-              <span class="case-id">L1-V3</span>
-              <span class="pill">L1 · 原子 · 变体（AI 扩）</span>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Input</div>
-              <div class="case-val">"标题字号一档不够大，想升到能在 1 米外也看清那档，用哪个 text style？"</div>
-            </div>
-            <div class="case-row">
-              <div class="case-key">Expected</div>
-              <div class="case-val"><code>display/lg</code> 或 <code>heading/xl</code> text style；must_not：直接 <code>font-size: 32px; font-weight: 700;</code></div>
-            </div>
-          </div>
-
-          <p style="margin-top:14px;"><strong>给 AI 的扩题提示词（可直接复制）</strong></p>
-          <pre style="background: var(--bg-soft); border: 1px solid var(--border-default); border-radius: 4px; padding: 12px; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; overflow-x: auto; color: var(--text-primary);">你是测试用例设计师。我给你一道标杆题，请围绕它出 N 道变体。
-
-【标杆题】
-- 能力线：L1 规范知识
-- 颗粒度：原子
-- 题面：……
-- 标准答案 + must_not：……
+【标杆题】粘贴上面 10 道里的任意一道
 
 【硬约束】
 1. 能力线和颗粒度不许变
 2. 换组件 / 换场景，但考点同源
 3. 题面必须是"用户口语"，不能把答案 token 写进题面
 4. 每题给出：Input / Expected（含 must_not）/ Scoring（≤3 条）
-5. 禁止混入业务知识（那是 L2 的事）
+5. L1 题禁止混入业务知识，L2 题禁止混入纯规范题
 
 输出 N 道，编号 V1–VN。</pre>
-
-          <p style="margin-top:10px;"><strong>注意</strong>：L2 业务题和 L4 陷阱题不要让 AI 出——AI 不知道你的"打烊提示要前置"、"续航低于阈值要主动报警"这种业务红线，它编出来的陷阱全是通用陷阱，没鉴别力。这部分必须懂业务的人写。</p>
         </div>
       </details>
 
@@ -1396,7 +1475,7 @@
       <div class="callout">
         <div class="ico">i</div>
         <div>
-          <p>每个 Agent 的"业务分"细则要自己写一份；规范分细则三个 Agent 共用一份。具体打分点在 Step 1.4 的三张 agent 卡里有示范。</p>
+          <p>每个 Agent 的"业务分"细则要自己写一份；规范分细则三个 Agent 共用一份。具体打分点在 Step 1.3 范例库的 L2-A1 / L2-A2 / L2-A3 三道题里有示范。</p>
         </div>
       </div>
     </div>

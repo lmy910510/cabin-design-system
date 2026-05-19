@@ -5,7 +5,7 @@
 ## 在线预览
 
 - 组件总览：`index.html`
-- 知识工程训练方法论：`知识工程训练方法论.html`
+- 知识工程训练方法论：`knowledge-engineering.html`
 
 ## 目录结构
 

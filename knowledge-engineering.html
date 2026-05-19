@@ -489,6 +489,52 @@
     .callout p { margin: 0; }
     .callout p + p { margin-top: 6px; }
 
+    /* 折叠（思辨补充） */
+    .aside-fold {
+      margin: 14px 0 18px;
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      background: var(--bg-soft);
+    }
+    .aside-fold > summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      user-select: none;
+    }
+    .aside-fold > summary::-webkit-details-marker { display: none; }
+    .aside-fold > summary::before {
+      content: "▸";
+      font-size: 10px;
+      color: var(--text-tertiary);
+      transition: transform 0.15s;
+    }
+    .aside-fold[open] > summary::before { transform: rotate(90deg); }
+    .aside-fold > summary .fold-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      border: 1px solid var(--border-default);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+    .aside-fold .fold-body {
+      padding: 4px 16px 14px 30px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-top: 1px solid var(--border-default);
+      padding-top: 12px;
+    }
+    .aside-fold .fold-body p { margin: 6px 0; }
+    .aside-fold .fold-body ul { margin: 6px 0; }
+
     /* 列表 */
     ul, ol { padding-left: 22px; margin: 8px 0 14px; }
     ul li, ol li { margin: 4px 0; }
@@ -1021,6 +1067,23 @@
           <p><strong>公共卷 + 专业卷</strong>：L1 和 L3 是"<strong>设计系统本身</strong>"的考试，三个 agent 共用一份；L2 和 L4 是每个 agent 的"<strong>专业卷</strong>"，必须各出一份。以后再加第 4 个 agent，只需要补它的专业卷，公共卷不用重写。</p>
         </div>
       </div>
+
+      <details class="aside-fold">
+        <summary>
+          <span>为什么是 2 维，不是 3 维或 5 维？</span>
+          <span class="fold-tag">思辨补充</span>
+        </summary>
+        <div class="fold-body">
+          <p><strong>2 维不是最优解，是当前规模下的甜区。</strong>理论上可对到 Bloom 教育目标分类法的二维矩阵 + 软件测试金字塔；机器学习视角上，两个维度尽量正交是为了避免"分数涨了但说不清涨在哪"的因子纠缠。</p>
+          <p>不推荐一上来就 3+ 维的现实原因：</p>
+          <ul>
+            <li><strong>组合稀疏</strong>：~24 道题铺到 4×4×4=64 格，每格不到一道，方差盖过信号。</li>
+            <li><strong>评分成本</strong>：维度每加一条，打分工时是乘法增长，不是加法。</li>
+            <li><strong>决策粒度</strong>：2 维已能回答"补规范库 / 补业务库 / 补一致性 / 补容错"四类决策；再细团队反应不过来。</li>
+          </ul>
+          <p>什么时候该升级到 3 维：Agent &gt; 5 时加 <em>Agent 维度</em>；题库 &gt; 100 时加 <em>难度维度</em>；做多模型对比时加 <em>模型维度</em>。<strong>判据：当某个改进决策在现有维度里找不到对应格子，那个方向就是该加的下一维。</strong></p>
+        </div>
+      </details>
 
       <!-- ===== 1.2 一道用例长什么样 ===== -->
       <h4 style="margin-top:32px;">1.2　一道用例长什么样（6 个字段）</h4>

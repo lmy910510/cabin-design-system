@@ -1239,6 +1239,110 @@
         </div>
       </div>
 
+      <details class="aside-fold">
+        <summary>
+          <span>题目要全部手写吗？——手写标杆 + AI 扩变体</span>
+          <span class="fold-tag">思辨补充</span>
+        </summary>
+        <div class="fold-body">
+          <p><strong>分工原则：标杆题手写、变体题 AI 扩、L2/L4 业务陷阱必须人写。</strong>AI 不知道你的业务，编出来的全是通用场景，没鉴别力；但围绕一道你写好的标杆题做"同主题换皮"，AI 做得又快又稳。</p>
+          <p>体量估算（3 个 agent）：手写约 12–20 道（每条能力线 1 道标杆 + L2/L4 各补 2–3 道），其余让 AI 扩到 24–40 道。一两个下午能搞定第一轮。</p>
+
+          <p style="margin-top:14px;"><strong>示例：给一道 L1 标杆题，AI 扩出 3 道变体</strong>（下面是真实可用的样例，业务不熟也能照搬结构）</p>
+
+          <div class="case-card" style="margin-top:8px;">
+            <div class="case-meta">
+              <span class="case-id">L1-SEED-001</span>
+              <span class="pill">L1 · 原子 · 基础（手写标杆）</span>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Input</div>
+              <div class="case-val">"这个次要说明文字看起来有点抢，想让它退到背景里一点，用哪个色？"</div>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Expected</div>
+              <div class="case-val">
+                <ul>
+                  <li>正确：<code>text-secondary</code> 或 <code>text-tertiary</code> 语义 token</li>
+                  <li>must_not：<code>color/gray/500</code>、<code>#999999</code>、<code>opacity: 0.6</code></li>
+                </ul>
+              </div>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Scoring</div>
+              <div class="case-val">命中语义 token +6；指出"不要用基础色板/透明度伪装" +2；说明何时用 secondary vs tertiary +2</div>
+            </div>
+          </div>
+
+          <p style="margin-top:10px;">把上面这道喂给 AI，加一句"出 3 道同能力线 + 同颗粒度的变体，换组件 / 换场景，不要跨到业务题"，会得到类似：</p>
+
+          <div class="case-card" style="margin-top:8px;">
+            <div class="case-meta">
+              <span class="case-id">L1-V1</span>
+              <span class="pill">L1 · 原子 · 变体（AI 扩）</span>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Input</div>
+              <div class="case-val">"按钮按下去那一下要有反馈色，用哪个？"</div>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Expected</div>
+              <div class="case-val"><code>state/pressed</code> 或 <code>bg-pressed</code> 语义 token；must_not：手动调深 10%、用 <code>filter: brightness()</code></div>
+            </div>
+          </div>
+
+          <div class="case-card" style="margin-top:8px;">
+            <div class="case-meta">
+              <span class="case-id">L1-V2</span>
+              <span class="pill">L1 · 原子 · 变体（AI 扩）</span>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Input</div>
+              <div class="case-val">"卡片之间挨得太紧，想拉开一档标准距离，用多少？"</div>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Expected</div>
+              <div class="case-val"><code>spacing/md</code>（或对应的 spacing token）；must_not：写死 <code>16px</code>、<code>margin: 1rem</code></div>
+            </div>
+          </div>
+
+          <div class="case-card" style="margin-top:8px;">
+            <div class="case-meta">
+              <span class="case-id">L1-V3</span>
+              <span class="pill">L1 · 原子 · 变体（AI 扩）</span>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Input</div>
+              <div class="case-val">"标题字号一档不够大，想升到能在 1 米外也看清那档，用哪个 text style？"</div>
+            </div>
+            <div class="case-row">
+              <div class="case-key">Expected</div>
+              <div class="case-val"><code>display/lg</code> 或 <code>heading/xl</code> text style；must_not：直接 <code>font-size: 32px; font-weight: 700;</code></div>
+            </div>
+          </div>
+
+          <p style="margin-top:14px;"><strong>给 AI 的扩题提示词（可直接复制）</strong></p>
+          <pre style="background: var(--bg-soft); border: 1px solid var(--border-default); border-radius: 4px; padding: 12px; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; overflow-x: auto; color: var(--text-primary);">你是测试用例设计师。我给你一道标杆题，请围绕它出 N 道变体。
+
+【标杆题】
+- 能力线：L1 规范知识
+- 颗粒度：原子
+- 题面：……
+- 标准答案 + must_not：……
+
+【硬约束】
+1. 能力线和颗粒度不许变
+2. 换组件 / 换场景，但考点同源
+3. 题面必须是"用户口语"，不能把答案 token 写进题面
+4. 每题给出：Input / Expected（含 must_not）/ Scoring（≤3 条）
+5. 禁止混入业务知识（那是 L2 的事）
+
+输出 N 道，编号 V1–VN。</pre>
+
+          <p style="margin-top:10px;"><strong>注意</strong>：L2 业务题和 L4 陷阱题不要让 AI 出——AI 不知道你的"打烊提示要前置"、"续航低于阈值要主动报警"这种业务红线，它编出来的陷阱全是通用陷阱，没鉴别力。这部分必须懂业务的人写。</p>
+        </div>
+      </details>
+
       <!-- ===== 下一步：自动化评分 ===== -->
       <div class="next-card">
         <span class="next-tag">Next Step</span>

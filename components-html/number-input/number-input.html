@@ -1,0 +1,34 @@
+<!--
+  NumberInput · 最小可复制片段
+  使用前请：
+    1) 引入 design-system/tokens.css
+    2) 引入 components-html/number-input-item/number-input-item.css（子项视觉真源）
+    3) 引入 components-html/number-input/number-input.css（容器 layout）
+
+  Figma 节点：325:12188（COMPONENT），含 SLOT 属性 NumberInput-list。
+  下面用 .ni-list（与原代码兼容）；新调用方推荐 .number-input__list（语义更清晰）。
+-->
+
+<!-- 验证码 6 位 -->
+<ul class="number-input__list" aria-label="验证码">
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="focused"></span></li>
+  <li><span class="ni-item" data-state="default"></span></li>
+  <li><span class="ni-item" data-state="default"></span></li>
+</ul>
+
+<!-- 车牌 8 位（含 Special 槽） -->
+<ul class="number-input__list" aria-label="车牌输入">
+  <li><span class="ni-item" data-state="default">京</span></li>
+  <li><span class="ni-item" data-state="default">A</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="focused"></span></li>
+  <li><span class="ni-item" data-state="special">
+    <span class="ni-item__placeholder">新<br>能<br>源</span>
+  </span></li>
+</ul>

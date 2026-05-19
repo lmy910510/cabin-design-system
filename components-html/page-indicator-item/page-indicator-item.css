@@ -1,0 +1,35 @@
+/* =============================================================================
+ * PageIndicator-item / PageIndicator —— 分页指示点
+ *
+ * Figma 真值
+ *   PageIndicator-item ComponentSet  · 节点 325:13044
+ *     12 × 12 ELLIPSE
+ *     state=Active   → fill: text/primary       → --color-text-primary
+ *     state=Default  → fill: bg/item_tertiary   → --color-bg-item-tertiary
+ *
+ *   PageIndicator (容器) · 节点 325:13051
+ *     HORIZONTAL，gap = 12，counterAxis=CENTER
+ *
+ * .pi-item 设计为纯视觉真源；.pi-list 为容器（layout 壳）。
+ * .pi-item 通过 currentColor 让 fill 跟随 color，便于 Active 切换。
+ * ============================================================================ */
+
+.pi-item {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-bg-item-tertiary); /* state=Default */
+  flex-shrink: 0;
+}
+
+.pi-item[data-state="active"],
+.pi-item.is-active {
+  background: var(--color-text-primary);
+}
+
+/* ---------- 容器：PageIndicator ----------
+ * 容器视觉真源已迁移至 components-html/page-indicator/page-indicator.css
+ * （`.page-indicator__list` / `.pi-list`，对应 Figma 节点 325:13051）。
+ * 本文件不再声明 `.pi-list`，避免分叉；如需容器 layout，引入 page-indicator.css。
+ */

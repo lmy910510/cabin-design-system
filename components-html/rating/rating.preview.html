@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rating · 预览（Figma 1:1，2 个 variant）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="../icon/icon.css" />
+  <script src="../icon/icon-sprite-inline.js"></script>
+  <link rel="stylesheet" href="../rating-item/rating-item.css" />
+  <link rel="stylesheet" href="./rating.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    .toolbar { display: flex; gap: 24px; margin-bottom: 36px; }
+    .toolbar button {
+      padding: 0 24px; height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .h2-note {
+      display: block; margin-top: 4px;
+      font-size: 20px; line-height: 26px;
+      font-weight: 400; color: var(--color-text-secondary);
+    }
+    .variant-strip {
+      width: 100%;
+      max-width: 1040px;
+      box-sizing: border-box;
+      display: block;
+      padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: var(--space-md, 24px);
+      box-shadow: var(--shadow-medium);
+    }
+    .demo-row { display: flex; flex-direction: column; gap: 18px; }
+    .demo-row.inline { flex-direction: row; flex-wrap: wrap; gap: 36px; align-items: center; }
+    .demo-row .item-label {
+      font: 500 16px/20px var(--font-family-cn);
+      color: var(--color-text-secondary);
+      margin-left: 18px;
+    }
+    .demo-line { display: flex; align-items: center; }
+  </style>
+</head>
+<body>
+  <h1>Rating · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 301:9051（COMPONENT_SET）· 2 个 variant：Stars（5 颗星 + 分数）/ Single（1 颗星 + 分数）
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <!-- 1. Stars -->
+  <h2>1. Type = Stars
+    <span class="h2-note">5 颗 Rating-item + 分数文本（DIN Medium 24px 橙色）。Stars 内 gap 3，与 Score 间 gap 6。</span>
+  </h2>
+  <p class="figma-meta">Figma 301:9021 · HORIZONTAL · gap 6 · Stars 容器 gap 3 · Score 24px text-price</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <div class="demo-line">
+        <span class="rating rating--stars">
+          <span class="rating__stars">
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+          </span>
+          <span class="rating__score">5.0</span>
+        </span>
+        <span class="item-label">5.0（5 Full）</span>
+      </div>
+      <div class="demo-line">
+        <span class="rating rating--stars">
+          <span class="rating__stars">
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--half"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+          </span>
+          <span class="rating__score">4.5</span>
+        </span>
+        <span class="item-label">4.5（4 Full + 1 Half）—— Figma 默认形态</span>
+      </div>
+      <div class="demo-line">
+        <span class="rating rating--stars">
+          <span class="rating__stars">
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--solo"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--solo"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+          </span>
+          <span class="rating__score">3.0</span>
+        </span>
+        <span class="item-label">3.0（3 Full + 2 Solo）</span>
+      </div>
+      <div class="demo-line">
+        <span class="rating rating--stars">
+          <span class="rating__stars">
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+            <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+          </span>
+          <!-- 隐藏分数：Show Score=false → 删除 .rating__score -->
+        </span>
+        <span class="item-label">仅星星（Show Score=false）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Single -->
+  <h2>2. Type = Single
+    <span class="h2-note">紧凑模式：1 颗 Solo 橙星 + 分数。常用于列表项 / 小卡片。</span>
+  </h2>
+  <p class="figma-meta">Figma 301:9052 · HORIZONTAL · gap 3 · Rating-item Solo + Score</p>
+  <div class="variant-strip">
+    <div class="demo-row inline">
+      <div>
+        <span class="rating rating--single">
+          <span class="rating-item rating-item--solo"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+          <span class="rating__score">4.8</span>
+        </span>
+        <span class="item-label">4.8</span>
+      </div>
+      <div>
+        <span class="rating rating--single">
+          <span class="rating-item rating-item--solo"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+          <span class="rating__score">3.6</span>
+        </span>
+        <span class="item-label">3.6</span>
+      </div>
+      <div>
+        <span class="rating rating--single">
+          <span class="rating-item rating-item--solo"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+        </span>
+        <span class="item-label">仅星（隐藏分数）</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btnLight = document.getElementById('btn-light');
+    const btnDark  = document.getElementById('btn-dark');
+    function setTheme(t) {
+      document.documentElement.dataset.theme = t;
+      btnLight.setAttribute('aria-pressed', String(t === 'light'));
+      btnDark.setAttribute('aria-pressed', String(t === 'dark'));
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+  </script>
+</body>
+</html>

@@ -1,5 +1,8 @@
 # radio
 
+> ⚠️ **待补充：Figma 主组件清单中暂无独立的 Radio**。  
+> 当前 Figma `🤖座舱组件库-AI版` / Components 页里只列了 `Checkbox`，没有 `Radio` 主组件。本组件是 HTML 端的**前置抽象**：先按"与 checkbox 对称、外形改圆 + 实心圆点"做实现，等 Figma 把 Radio 抽成独立 component set 后，再做 1:1 对齐校准（尺寸 / 状态结构已留好，不需要重做）。
+
 单选，独立可复用控件。视觉规格与 [`checkbox`](../checkbox/checkbox.md) 节奏完全对称，仅外形（圆角 50% + 实心圆点）不同。
 
 由原生 `<input type="radio">` 的 `name` 属性提供单选互斥语义，零 JS。

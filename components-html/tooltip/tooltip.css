@@ -1,0 +1,154 @@
+/* =============================================================
+ * Tooltip · 气泡提示
+ * Figma：节点 315:11577（COMPONENT_SET）/ 8 个 variant
+ *   Direction × Alignment：
+ *     Top   × Start / Center / End
+ *     Bottom× Start / Center / End
+ *     Left  × Center
+ *     Right × Center
+ *
+ * 视觉真值：
+ *   bubble：
+ *     bg = --palette-cold-gray-9 (#1f2229)（深色卡片，不随主题翻；
+ *          mapping.md 这种"反色卡片"允许直接吃 palette 层）
+ *     圆角 24
+ *     padding 上下 18 / 左右 24
+ *     content 与 action 之间 gap 36
+ *   content-row：HORIZONTAL，gap 12
+ *     ├─ icon/info 42×42 (Show icon=true 显示)
+ *     └─ text Noto Sans SC Medium 28/28，white-9 opacity 0.9
+ *   action：Noto Sans SC Medium 28/28，--color-text-brand orange-5 (Show action=true)
+ *   arrow（紧贴 bubble 一侧）：36×18（top/bottom 方向时），
+ *     侧边 (left/right) 时翻转为 18×36
+ *     颜色 = bubble bg
+ *   arrow-wrapper：在 top/bottom 时是横向，padding 左右 42（决定 Start/Center/End 时箭头水平定位）
+ *                  在 left/right 时是竖向，padding 上下 18（箭头垂直居中）
+ *
+ * 实现策略：
+ *   - bubble 用普通 div + bg + radius 完成；
+ *   - 8 个 variant 的箭头形状相同，只是位置和旋转不同——用一个 .tooltip__arrow 伪元素 +
+ *     CSS 实现 8 种位置：[direction]-[alignment] 共 8 种组合；
+ *   - arrow 用 CSS triangle (transparent border) 完成，避免引入额外 SVG。
+ *
+ * 用法：见 ../tooltip/tooltip.md
+ * ============================================================= */
+
+.tooltip {
+  display: inline-flex;
+  position: relative;
+  /* tooltip 整体作为悬浮元素，外层定位由调用方用 absolute/fixed 管理；
+     这里只决定 bubble + arrow 的相对几何关系。 */
+}
+
+/* ===== bubble ===== */
+.tooltip__bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: 36px;
+  padding: 18px 24px;
+  background: var(--palette-cold-gray-9);
+  border-radius: 24px;
+  /* 防止 arrow 蹭到圆角内被裁剪：bubble 自身 overflow 默认 visible 即可 */
+  position: relative;
+  z-index: 1;
+}
+
+/* content-row：icon + text */
+.tooltip__content {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tooltip__icon {
+  /* 复用 .icon 系统，外层定 42×42 */
+  width: 42px;
+  height: 42px;
+  flex: none;
+  color: var(--palette-white-9);
+  opacity: 0.9; /* 与 text 视觉一致 */
+}
+.tooltip__icon .icon {
+  width: 42px;
+  height: 42px;
+}
+
+.tooltip__text {
+  font: 500 28px/28px var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  color: var(--palette-white-9);
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.tooltip__action {
+  font: 500 28px/28px var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  color: var(--color-text-brand, var(--palette-orange-5));
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ===== arrow ===== 用 CSS triangle 实现 36×18（或翻转后的 18×36） */
+.tooltip__arrow {
+  position: absolute;
+  width: 0;
+  height: 0;
+  /* 颜色由具体方向 case 设置 border-*-color */
+  z-index: 0;
+}
+
+/* ---------- Direction = Top（气泡在触发元素上方，箭头朝下）---------- */
+.tooltip[data-direction="top"] .tooltip__arrow {
+  bottom: -18px;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-top: 18px solid var(--palette-cold-gray-9);
+}
+.tooltip[data-direction="top"][data-alignment="start"] .tooltip__arrow {
+  left: 42px;
+}
+.tooltip[data-direction="top"][data-alignment="center"] .tooltip__arrow {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tooltip[data-direction="top"][data-alignment="end"] .tooltip__arrow {
+  right: 42px;
+}
+
+/* ---------- Direction = Bottom（气泡在下方，箭头朝上）---------- */
+.tooltip[data-direction="bottom"] .tooltip__arrow {
+  top: -18px;
+  border-left: 18px solid transparent;
+  border-right: 18px solid transparent;
+  border-bottom: 18px solid var(--palette-cold-gray-9);
+}
+.tooltip[data-direction="bottom"][data-alignment="start"] .tooltip__arrow {
+  left: 42px;
+}
+.tooltip[data-direction="bottom"][data-alignment="center"] .tooltip__arrow {
+  left: 50%;
+  transform: translateX(-50%);
+}
+.tooltip[data-direction="bottom"][data-alignment="end"] .tooltip__arrow {
+  right: 42px;
+}
+
+/* ---------- Direction = Right（气泡在左，箭头朝右；Alignment=Center 唯一）---------- */
+.tooltip[data-direction="right"] .tooltip__arrow {
+  right: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-left: 18px solid var(--palette-cold-gray-9);
+}
+
+/* ---------- Direction = Left（气泡在右，箭头朝左；Alignment=Center 唯一）---------- */
+.tooltip[data-direction="left"] .tooltip__arrow {
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 18px solid transparent;
+  border-bottom: 18px solid transparent;
+  border-right: 18px solid var(--palette-cold-gray-9);
+}

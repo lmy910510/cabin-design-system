@@ -1,0 +1,142 @@
+/* =============================================================================
+ * Input —— 文本输入框
+ *
+ * Figma 真值（节点 325:12311 Input ComponentSet）
+ *   width: 780, height: 84, radius: 24 (md)
+ *   padding: 0 24 (md), itemSpacing: 18 (sm), counterAxis=CENTER 子项垂直居中
+ *   bg: bg/item_quaternary
+ *
+ * 4 个 State：
+ *   Default   → 仅 placeholder（"请输入"，text/tertiary）
+ *   Focused   → input-text + cursor "｜"（text/primary）+ number + icon/fail + action
+ *   Filled    → input-text 文字（text/primary）+ number + icon/fail + action
+ *   MaxLength → input-text + number(text/price) + icon/fail + action
+ *
+ * 子件：
+ *   .input__field        flex:1 输入主区（HUG/FILL）
+ *   .input__placeholder  灰提示（text/tertiary, 32/32 Medium）
+ *   .input__text         真实输入文字（text/primary, 32/32 Medium）
+ *   .input__cursor       光标占位（text/primary, "｜"）
+ *   .input__number       字数计数（DIN Medium 28/28）
+ *   .input__fail         icon/fail 42×42 复用 sprite
+ *   .input__action       右侧动作区（line + icon/refresh）
+ * ============================================================================ */
+
+.input {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-sm);          /* 18 */
+  width: 780px;
+  height: 84px;
+  padding: 0 var(--space-md);    /* 0 24 */
+  border-radius: var(--space-md);/* 24 */
+  background: var(--color-bg-item-quaternary);
+  border: 0;
+  box-sizing: border-box;
+  font-family: "Noto Sans SC", "Noto Sans S Chinese", -apple-system, "PingFang SC", sans-serif;
+  color: var(--color-text-primary);
+}
+
+/* ---------- 中段输入区 ---------- */
+.input__field {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0;                        /* cursor 紧跟文本，无 gap */
+  height: 32px;                  /* 与文字行高一致，垂直居中由父级 align-items 完成 */
+  overflow: hidden;
+}
+
+.input__placeholder,
+.input__text,
+.input__cursor {
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 500;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+}
+
+.input__placeholder { color: var(--color-text-tertiary); }
+.input__text        { color: var(--color-text-primary); }
+.input__cursor {
+  color: var(--color-text-primary);
+  font-family: "Noto Sans S Chinese", "Noto Sans SC", sans-serif;
+  font-weight: 400;
+  flex-shrink: 0;
+  animation: input-blink 1s steps(1) infinite;
+}
+@keyframes input-blink {
+  0%, 50%   { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* ---------- 字数计数 ---------- */
+.input__number {
+  flex-shrink: 0;
+  font-family: "DIN", "DIN Pro", "DIN Next", -apple-system, sans-serif;
+  font-size: 28px;
+  line-height: 28px;
+  font-weight: 500;
+  color: var(--color-text-tertiary);
+}
+.input[data-state="maxlength"] .input__number,
+.input__number[data-overflow="true"] {
+  color: var(--color-text-price);
+}
+
+/* ---------- 清除按钮 / 右侧动作 ---------- */
+.input__fail,
+.input__refresh {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  color: var(--color-text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.input__fail svg,
+.input__refresh svg {
+  width: 30px;     /* 与 Figma icon 内圆同尺寸 */
+  height: 30px;
+  display: block;
+}
+.input__fail { color: var(--color-text-tertiary); }
+.input__fail:hover { color: var(--color-text-primary); }
+
+.input__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);          /* 18 */
+  flex-shrink: 0;
+}
+.input__action::before {
+  /* 分割线 1×24，border/secondary */
+  content: "";
+  width: 1px;
+  height: 24px;
+  background: var(--color-border-secondary);
+}
+
+/* ---------- button reset（兼容 button/a 调用） ---------- */
+button.input__fail,
+button.input__refresh {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ---------- 隐藏可选子件（按需 .is-hidden） ---------- */
+.is-hidden { display: none !important; }

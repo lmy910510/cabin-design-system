@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <title>SideMenu / Item · 预览（Figma 459:2790）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../icon/icon.css" />
+  <link rel="stylesheet" href="./side-menu-item.css" />
+  <style>
+    body {
+      margin: 0; padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 24px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    .banner {
+      background: var(--color-bg-warning-transparent, #fff7e6);
+      color: var(--color-text-warning, #b25e00);
+      padding: 14px 18px; border-radius: 12px;
+      font-size: 18px; line-height: 26px;
+      margin: 0 0 36px;
+    }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .strip {
+      display: flex; flex-direction: column; gap: 18px; padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+      max-width: 360px;
+    }
+    .strip--row { flex-direction: row; gap: 24px; max-width: none; }
+  </style>
+</head>
+<body>
+  <h1>SideMenu / Item · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 459:2790（COMPONENT_SET）· 4 variant：selected × hasText
+  </p>
+  <p class="banner">
+    ⚠️ 待与 Figma 对齐：Figma 节点暂无 description / Annotations，本实现按 design-system token + 与 TopBar / Tab-item 视觉节奏推导。结构与 variant 维度已对齐，规格待 Figma 补充后再精确回写。
+  </p>
+
+  <h2>1. selected=true, hasText=true</h2>
+  <p class="figma-meta">高亮底 + 反色文字</p>
+  <div class="strip">
+    <button type="button" class="side-menu-item is-selected" aria-current="page">
+      <span class="side-menu-item__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/star--fill"/></svg>
+      </span>
+      <span class="side-menu-item__label">收藏</span>
+    </button>
+  </div>
+
+  <h2>2. selected=false, hasText=true</h2>
+  <p class="figma-meta">透明底 + 主文字色</p>
+  <div class="strip">
+    <button type="button" class="side-menu-item">
+      <span class="side-menu-item__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/wifi--line"/></svg>
+      </span>
+      <span class="side-menu-item__label">网络</span>
+    </button>
+    <button type="button" class="side-menu-item">
+      <span class="side-menu-item__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/setting--line"/></svg>
+      </span>
+      <span class="side-menu-item__label">设置</span>
+    </button>
+  </div>
+
+  <h2>3. hasText=false（折叠态）</h2>
+  <p class="figma-meta">label 不渲染，宽度收缩；含 selected 两态</p>
+  <div class="strip strip--row">
+    <button type="button" class="side-menu-item is-collapsed is-selected" aria-current="page" aria-label="收藏">
+      <span class="side-menu-item__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/star--fill"/></svg>
+      </span>
+    </button>
+    <button type="button" class="side-menu-item is-collapsed" aria-label="网络">
+      <span class="side-menu-item__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/wifi--line"/></svg>
+      </span>
+    </button>
+    <button type="button" class="side-menu-item is-collapsed" aria-label="设置">
+      <span class="side-menu-item__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/setting--line"/></svg>
+      </span>
+    </button>
+  </div>
+</body>
+</html>

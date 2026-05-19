@@ -1,0 +1,86 @@
+/* =====================================================
+ * Avatar · 头像
+ * 1:1 映射自 Figma「🤖座舱组件库-AI版 / avatar」COMPONENT_SET 360:16621
+ * 4 个 variant：XS / SM / MD / LG（仅尺寸维度）
+ *
+ * Figma 实测取值：
+ *   - XS  48×48   (size 变量 VariableID:20:497)
+ *   - SM  72×72   (size 变量 VariableID:20:501)
+ *   - MD  84×84   (size 变量 VariableID:20:503)
+ *   - LG  150×150 (无 size 变量，写死 150)
+ *   - cornerRadius = 999（变量 144:378）= 圆形
+ *   - fill 为 IMAGE FILL（scaleMode = FILL，等价于 CSS object-fit:cover）
+ *   - 无 stroke、无 shadow、无 padding
+ *
+ * 实现选型：
+ *   - 用 <img class="avatar avatar--xs" /> 直接承载图片，
+ *     语义最准（无障碍可读 alt），并且天然支持 srcset / lazy。
+ *   - object-fit:cover 对齐 Figma scaleMode=FILL 的"裁切填充"行为。
+ *   - 圆形通过 border-radius:50% 实现，与 cornerRadius:999 等价。
+ *   - 4 个 variant 之间没有任何颜色 / 描边差异，**只有尺寸差异**，
+ *     所以 .avatar--xs/sm/md/lg 只覆写 width/height，其他视觉规格全部在 .avatar 基类。
+ *
+ * 没有图片时（占位）：
+ *   - 加 .avatar--placeholder（class），用 cold-gray 兜底背景，
+ *     不强制业务必须给 src；list-leading 在缺图时也能保留布局。
+ * ===================================================== */
+
+.avatar {
+  /* 圆形容器 + 裁切填充 */
+  display: inline-block;
+  border-radius: 50%;          /* 等价 Figma cornerRadius 999 */
+  object-fit: cover;            /* 等价 Figma scaleMode=FILL */
+  object-position: center;
+  overflow: hidden;             /* 兜底裁切（针对 div+背景图模式） */
+  flex-shrink: 0;               /* 在 flex 行里不被压扁 */
+  /* 默认背景，避免图片加载前露出透明 */
+  background-color: var(--color-bg-item-secondary, #eaedf2);
+  /* 重置可能干扰的元素默认 */
+  border: 0;
+  vertical-align: middle;
+}
+
+/* ============== 尺寸变体（4 个）============== */
+
+/* XS — 48×48，列表项 / 紧凑布局 */
+.avatar--xs {
+  width: 48px;
+  height: 48px;
+}
+
+/* SM — 72×72，评论 / 消息 */
+.avatar--sm {
+  width: 72px;
+  height: 72px;
+}
+
+/* MD — 84×84，卡片 / 联系人 */
+.avatar--md {
+  width: 84px;
+  height: 84px;
+}
+
+/* LG — 150×150，详情页 / 个人主页 */
+.avatar--lg {
+  width: 150px;
+  height: 150px;
+}
+
+/* ============== 占位状态（非 Figma 变体，工程兜底）==============
+ * Figma 没有"无图"状态，但工程上一定会遇到。给一个统一的兜底，
+ * 视觉上与图片头像同尺寸圆形，配色用语义 token，不破坏布局。
+ */
+.avatar--placeholder {
+  background-color: var(--color-bg-item-secondary, #eaedf2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  font-family: var(--font-family-cn, system-ui, sans-serif);
+  font-weight: 500;
+  /* 字号按尺寸递增；保持视觉重量一致 */
+}
+.avatar--placeholder.avatar--xs { font-size: 18px; line-height: 1; }
+.avatar--placeholder.avatar--sm { font-size: 28px; line-height: 1; }
+.avatar--placeholder.avatar--md { font-size: 32px; line-height: 1; }
+.avatar--placeholder.avatar--lg { font-size: 56px; line-height: 1; }

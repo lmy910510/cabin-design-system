@@ -1,6 +1,6 @@
 # list-leading（列表行左侧装饰槽）
 
-> HTML 端独立左槽组件。Figma 当前 `list` 主组件把左侧 icon 直接画在内部（60×60 线形 icon），尚未拆成独立 component set；HTML 端先把它独立出来，与 `list-content` / `list-action` 同等地位。后续 Figma 补充 component set 后，本组件的 type 维度直接对齐即可，无需返工。
+> ⚠️ **待与 Figma 对齐**：Figma 主组件清单中暂无独立的 `list-leading` component set。当前 `list` 主组件（388:17634）把左侧 icon 直接画在内部（60×60 线形 icon），尚未拆成独立 component。HTML 端先把它独立出来，与 `list-content` / `list-action` 同等地位；后续 Figma 补充 component set 后，本组件的 type 维度直接对齐即可，无需返工。
 
 list-leading 是 list 行的**左侧装饰槽**，承载图标、复选框、单选、头像、序号等"行首附件"。它本身只是 60×60 居中容器，不带背景 / padding / 圆角，**视觉真源来自被它内嵌的真组件**（如 `.checkbox`、未来的 `.radio` / `.avatar`）。
 

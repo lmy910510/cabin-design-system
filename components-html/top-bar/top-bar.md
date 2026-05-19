@@ -34,10 +34,13 @@
 | `.top-bar--title` + `.top-bar__title`(42px Medium) | title |
 | `.top-bar--back` + `.top-bar__back-text`(36px Medium) | back |
 | `.top-bar--title-actions` | title-actions（覆盖 right gap=30） |
-| `.top-bar--button-avatar` + `.top-bar__tab-list/__tab-item/__tab-item-label/__tab-item-indicator` + `.top-bar__avatar` | button-avatar |
+| `.top-bar--button-avatar` + `.top-bar__tab-list` 复合 `.tab`(layout 容器) + 子项调用公共组件 `.tab-item` / `.tab-item--active` + `.top-bar__avatar` | button-avatar |
 | `.top-bar--select-actions` + `.top-bar__select/__select-checkbox/__select-label` | select-actions |
 
-> 所有 `__tab-*` `__avatar` `__select-*` 都在 TopBar 命名空间下，**不污染** button/checkbox 等基础组件。
+> 所有 `__avatar` `__select-*` 都在 TopBar 命名空间下，**不污染** button/checkbox 等基础组件。
+> Tab 容器布局（HORIZONTAL+gap72+center）的真源是公共组件
+> `components-html/tab/tab.css`；Tab 项视觉（72×54、label 36px、active indicator 48×6）
+> 的真源是 `components-html/tab-item/tab-item.css`。TopBar 不再自带这两套样式，避免分叉。
 
 ---
 
@@ -48,6 +51,8 @@
 ```html
 <link rel="stylesheet" href="../../design-system/tokens.css" />
 <link rel="stylesheet" href="../button/button.css" />     <!-- back/title-actions/button-avatar/select-actions 都复用 .btn -->
+<link rel="stylesheet" href="../tab-item/tab-item.css" /> <!-- 仅 button-avatar 用：左侧 Tab 项视觉 -->
+<link rel="stylesheet" href="../tab/tab.css" />           <!-- 仅 button-avatar 用：左侧 Tab 容器 layout -->
 <link rel="stylesheet" href="./top-bar.css" />
 <script src="../icon/icon-sprite-inline.js"></script>     <!-- back 用了 icon/back--line -->
 ```
@@ -88,12 +93,9 @@
 <!-- button-avatar -->
 <header class="top-bar top-bar--button-avatar">
   <div class="top-bar__left">
-    <ul class="top-bar__tab-list" role="tablist">
-      <li><button type="button" class="top-bar__tab-item is-active" role="tab" aria-selected="true">
-        <span class="top-bar__tab-item-label">标签</span>
-        <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
-      </button></li>
-      <!-- 其余 3 个 tab-item，去掉 .is-active 与 aria-selected="true" -->
+    <ul class="top-bar__tab-list tab" role="tablist">
+      <li><button type="button" class="tab-item tab-item--active" role="tab" aria-selected="true">标签</button></li>
+      <!-- 其余 3 个 .tab-item，去掉 .tab-item--active 与 aria-selected="true" -->
     </ul>
   </div>
   <div class="top-bar__right">
@@ -142,7 +144,7 @@ TopBar 的 width 由**业务容器**决定（`width: 100%`），高度恒定 156
 
 > 极窄场景（< 1100）超出 left+right 自然总宽时，需要业务层决定收缩策略（Tab 横向滚动 / 头像隐藏等），TopBar 组件自身**不主动隐藏内容**。
 >
-> 预览页 `top-bar.preview.html` 中所有 variant strip 默认按 **1560**（中控主屏典型尺寸）渲染，可直接对照视觉。
+> 预览页 `top-bar.preview.html` 中所有 variant strip 走 `max-width:1040`、`width:100%` 的舒展容器（与 `list-leading.preview` 同款），iframe 内可直接看到不挤的真实形态。组件本身仍按 1560 设计，业务真宽 1560 / 1920 时由 `width:100%` 自然撑开。
 
 ---
 
@@ -196,4 +198,4 @@ TopBar 是 AppFrame 的 TopBar slot 默认填充。AppFrame 已经把 TopBar 作
 - [x] Light / Dark token 自动反色
 - [x] 与 AppFrame 解耦：AppFrame 不再自带 TopBar 样式，AppFrame preview 引用 `top-bar.css`
 - [x] index.html 导航已接入 top-bar
-- [x] 弹性布局合约成立：left 贴左 / right 贴右 / 中间留白由 `space-between` 自动吸收，预览页所有 variant 默认 1560 宽渲染
+- [x] 弹性布局合约成立：left 贴左 / right 贴右 / 中间留白由 `space-between` 自动吸收；预览页 strip 走 max-width:1040 舒展容器，iframe 内不挤

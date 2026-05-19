@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PageIndicator-item · 预览</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="./page-indicator-item.css" />
+  <link rel="stylesheet" href="../page-indicator/page-indicator.css" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--color-bg-page);
+      color: var(--color-text-primary);
+      font-family: -apple-system, "PingFang SC", sans-serif;
+      padding: 40px;
+    }
+    .preview { display: flex; flex-direction: column; gap: 40px; max-width: 760px; }
+    .preview__title { font-size: 14px; color: var(--color-text-tertiary); margin: 0 0 12px; }
+    .row {
+      padding: 32px;
+      border: 1px dashed var(--color-border-secondary);
+      border-radius: 16px;
+      background: var(--color-bg-container-primary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .toolbar {
+      position: fixed; top: 16px; right: 24px; display: flex; gap: 8px;
+      background: var(--color-bg-container-primary);
+      border: 1px solid var(--color-border-secondary);
+      border-radius: 8px; padding: 4px;
+    }
+    .toolbar button {
+      appearance: none; border: 0; background: transparent;
+      color: var(--color-text-secondary);
+      padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 6px;
+    }
+    .toolbar button.is-active { background: var(--color-bg-item-quaternary); color: var(--color-text-primary); }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <button data-theme-set="light" class="is-active">Light</button>
+    <button data-theme-set="dark">Dark</button>
+  </div>
+
+  <div class="preview">
+
+    <section>
+      <h3 class="preview__title">单点 · Active / Default</h3>
+      <div class="row" style="gap:24px;">
+        <span class="pi-item" data-state="active"></span>
+        <span class="pi-item" data-state="default"></span>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="preview__title">PageIndicator 容器（4 页 / 当前第 1 页）</h3>
+      <div class="row">
+        <ul class="pi-list">
+          <li><span class="pi-item" data-state="active"></span></li>
+          <li><span class="pi-item" data-state="default"></span></li>
+          <li><span class="pi-item" data-state="default"></span></li>
+          <li><span class="pi-item" data-state="default"></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="preview__title">交互 Demo（点击切换当前页）</h3>
+      <div class="row">
+        <ul class="pi-list" id="demo">
+          <li><span class="pi-item" data-state="active"></span></li>
+          <li><span class="pi-item" data-state="default"></span></li>
+          <li><span class="pi-item" data-state="default"></span></li>
+          <li><span class="pi-item" data-state="default"></span></li>
+          <li><span class="pi-item" data-state="default"></span></li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-theme-set]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.documentElement.dataset.theme = btn.dataset.themeSet;
+        document.querySelectorAll('[data-theme-set]').forEach((b) =>
+          b.classList.toggle('is-active', b === btn));
+      });
+    });
+    const demo = document.getElementById('demo');
+    if (demo) {
+      demo.addEventListener('click', (e) => {
+        const li = e.target.closest('li');
+        if (!li) return;
+        demo.querySelectorAll('.pi-item').forEach((d) => d.dataset.state = 'default');
+        const dot = li.querySelector('.pi-item');
+        if (dot) dot.dataset.state = 'active';
+      });
+    }
+  </script>
+</body>
+</html>

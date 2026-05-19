@@ -1,0 +1,120 @@
+/* =============================================================
+ * NumberInput-item · 数字输入子项（单格）
+ * Figma：节点 323:12150（COMPONENT_SET）/ 5 个 variant
+ *
+ * 视觉真值（Figma 1:1）：
+ *   - 统一尺寸 90 × 102（VERTICAL，primary=CENTER，counter=CENTER）
+ *   - 圆角 18px (--space-sm 同值)
+ *   - 全部 variant 都带 SOLID 描边
+ *   - text 字符  DIN Medium 48 / 48
+ *   - placeholder Noto Sans SC Medium 24 / 24，竖排
+ *     （Figma 真值：textAutoResize=WIDTH_AND_HEIGHT，width=24，height=72，
+ *      content="新\n能\n源" —— 用真换行符强制每字一行，
+ *      文本块 24×72 在 90×102 容器内居中放置）
+ *
+ * 5 个 variant（State）：
+ *   Default      bg=item_quaternary  border=secondary(1px)   text=primary
+ *   Focused      bg=item_quaternary  border=active(3px)      （空内容）
+ *   Special      bg=transparent      border=secondary(2px)   placeholder
+ *                                                            （竖排，3 字 24×72）
+ *   error        bg=warning_tansp.   border=warning(1px)     text=warning
+ *   特殊态-选中  bg=positive(12%)    border=positive(3px)    （空内容）
+ *
+ * 注：本组件**不应单独使用**——是 NumberInput 容器（验证码 / 车牌输入）的子项。
+ *     NumberInput 容器没有独立组件目录，演示在本组件 preview 的"综合"段。
+ *
+ * 用法：
+ *   <span class="ni-item" data-state="default">A</span>
+ *   <span class="ni-item" data-state="focused"></span>
+ *   <span class="ni-item" data-state="special">
+ *     <span class="ni-item__placeholder">新<br>能<br>源</span>
+ *   </span>
+ *   <span class="ni-item" data-state="error">F</span>
+ *   <span class="ni-item" data-state="picked"></span>
+ * ============================================================= */
+
+.ni-item {
+  /* 容器：90×102，圆角 18，VERTICAL，居中对齐 */
+  box-sizing: border-box;
+  width: 90px;
+  height: 102px;
+  border-radius: var(--space-sm); /* 18 */
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+
+  /* 默认描边宽度 = 1，Focused / 特殊态-选中会覆盖到 3 */
+  border: 1px solid var(--color-border-secondary);
+  background: var(--color-bg-item-quaternary);
+
+  /* text 字符样式 */
+  font-family: "DIN", "DIN Pro", "Helvetica Neue", Arial, sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 48px;
+  color: var(--color-text-primary);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ====== State variants ====== */
+
+/* Default：默认就是 .ni-item 自身，无需额外规则 */
+
+/* Focused：等待输入，3px active 描边，空内容（业务方不要塞 text） */
+.ni-item[data-state="focused"] {
+  border-width: 3px;
+  border-color: var(--color-border-active);
+}
+
+/* Special：竖排占位，无背景填充（透明），2px 次级描边
+   （Figma 真值 strokeWeight=2，弱视觉；用于车牌"新能源"提示槽）
+   容器仍是 90×102，仅切换底色 + 描边 + 字色；
+   竖排逻辑由 .ni-item__placeholder 内层节点承担。 */
+.ni-item[data-state="special"] {
+  background: transparent;
+  border-width: 2px;
+  border-color: var(--color-border-secondary);
+  color: var(--color-text-tertiary);
+}
+
+/* Special 内层文本块：
+   Figma 真值 width=24（单字宽）/ height=72（3 字高）
+   字号 24/24，居中对齐；3 个 CJK 字通过真换行（<br>）逐字成行，
+   或使用 `<span class="ni-item__placeholder">新<br>能<br>源</span>`。 */
+.ni-item__placeholder {
+  display: inline-block;
+  width: 24px;
+  /* height 由内容自然撑出 24×3=72，与 Figma 真值一致 */
+  font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 24px;
+  text-align: center;
+  color: inherit;
+  white-space: normal;
+}
+
+/* error：警示色描边 + 浅警示底 + 警示色文字 */
+.ni-item[data-state="error"] {
+  background: var(--color-bg-warning-transparent);
+  border-color: var(--color-border-warning);
+  color: var(--color-text-warning);
+}
+
+/* 特殊态-选中（picked）：positive 12% 底 + positive 3px 描边，空内容
+   主要用于"车牌新能源 已选中"的态 */
+.ni-item[data-state="picked"] {
+  background: var(--color-bg-positive);
+  border-width: 3px;
+  border-color: var(--color-border-positive);
+}
+
+/* ====== NumberInput 容器（验证码/车牌输入行） ======
+ * 容器视觉真源已迁移至 components-html/number-input/number-input.css
+ * （`.number-input__list` / `.ni-list`，对应 Figma 节点 325:12188）。
+ * 本文件不再声明 `.ni-list`，避免分叉；如需容器 layout，引入 number-input.css。
+ */

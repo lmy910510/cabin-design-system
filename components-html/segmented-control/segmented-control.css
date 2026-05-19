@@ -1,0 +1,36 @@
+/* =============================================================
+ * SegmentedControl · 分段控制器容器
+ * Figma：节点 464:43476（COMPONENT，含 SLOT 属性 list）
+ *
+ * 视觉真值：
+ *   layout HORIZONTAL，gap 0
+ *   padding xxs (6) 四周
+ *   背景 bg/container_primary（≈ 浅灰胶囊底）
+ *   描边 border/on_inverse 1px
+ *   圆角 999（胶囊形）
+ *   子项：SegmentedControl-item，水平 Fill 自动均分
+ *
+ * 设计契约：
+ *   - 容器只负责"胶囊壳 + 子项排布 + 间距 + 描边"
+ *   - 子项视觉真源：components-html/segmented-control-item/segmented-control-item.css
+ *   - 推荐 2~5 个 item
+ * ============================================================= */
+
+.segmented-control {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 0;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--color-bg-container-primary, var(--color-bg-page-secondary, #f5f6f8));
+  border: 1px solid var(--color-border-on-inverse, var(--color-border-secondary, transparent));
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 子项 fill 均分 —— 与 sc-item 自身的 flex:1 配合 */
+.segmented-control > .sc-item {
+  flex: 1 1 0;
+  min-width: 0;
+}

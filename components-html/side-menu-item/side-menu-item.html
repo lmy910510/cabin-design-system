@@ -1,0 +1,38 @@
+<!--
+  SideMenu / Item · 最小可复制片段
+  Figma 节点：459:2790（COMPONENT_SET）
+    - selected: true | false
+    - hasText:  true | false
+
+  ⚠️ Figma 暂无 description，下列样式按 design-system token 推导。
+-->
+
+<!-- selected=true, hasText=true（默认） -->
+<button type="button" class="side-menu-item is-selected" aria-current="page">
+  <span class="side-menu-item__icon" aria-hidden="true">
+    <svg><use href="../icon/icon.svg#icon/star--fill"/></svg>
+  </span>
+  <span class="side-menu-item__label">收藏</span>
+</button>
+
+<!-- selected=false, hasText=true -->
+<button type="button" class="side-menu-item">
+  <span class="side-menu-item__icon" aria-hidden="true">
+    <svg><use href="../icon/icon.svg#icon/wifi--line"/></svg>
+  </span>
+  <span class="side-menu-item__label">网络</span>
+</button>
+
+<!-- selected=true, hasText=false（折叠态） -->
+<button type="button" class="side-menu-item is-selected is-collapsed" aria-current="page" aria-label="收藏">
+  <span class="side-menu-item__icon" aria-hidden="true">
+    <svg><use href="../icon/icon.svg#icon/star--fill"/></svg>
+  </span>
+</button>
+
+<!-- selected=false, hasText=false -->
+<button type="button" class="side-menu-item is-collapsed" aria-label="网络">
+  <span class="side-menu-item__icon" aria-hidden="true">
+    <svg><use href="../icon/icon.svg#icon/wifi--line"/></svg>
+  </span>
+</button>

@@ -1,0 +1,15 @@
+<!--
+  Tab · 最小可复制片段
+  使用前请：
+    1) 引入 design-system/tokens.css
+    2) 引入 components-html/tab-item/tab-item.css（子项视觉）
+    3) 引入 components-html/tab/tab.css（容器布局）
+
+  默认 4 项（1 Active + 3 Default）；项数任意，全部用 .tab-item 子组件。
+-->
+<ul class="tab" role="tablist" aria-label="标签栏">
+  <li><button type="button" class="tab-item tab-item--active" role="tab" aria-selected="true">推荐</button></li>
+  <li><button type="button" class="tab-item" role="tab" aria-selected="false">附近</button></li>
+  <li><button type="button" class="tab-item" role="tab" aria-selected="false">收藏</button></li>
+  <li><button type="button" class="tab-item" role="tab" aria-selected="false">历史</button></li>
+</ul>

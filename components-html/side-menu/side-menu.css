@@ -1,0 +1,50 @@
+/* =============================================================
+ * SideMenu · 侧栏导航容器
+ * Figma：节点 436:1770（COMPONENT_SET，2 variant）
+ *   mode: expanded | collapsed
+ * 含 SLOT 属性 nav-list；结构包含 nav-group / footer 两个 frame。
+ *
+ * ⚠️ Figma description 为 null。下列 padding / 宽度 / 间距 按 design-system
+ * token + 与 TopBar 视觉节奏推导，待 Figma 补充后回写。
+ *
+ * 真值（暂定）：
+ *   expanded：宽度 360，padding 24/24，gap 12
+ *   collapsed：宽度 108（icon 60 + 左右 padding 24），padding 24/24，gap 12
+ *   背景 --color-bg-page-secondary
+ * ============================================================= */
+
+.side-menu {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 12px;
+  width: 360px;
+  padding: 24px;
+  background: var(--color-bg-page-secondary, #f5f6f8);
+  box-sizing: border-box;
+  min-height: 480px;     /* 演示用最小高度，业务侧通常拉满 viewport */
+}
+
+/* mode = collapsed —— 宽度收缩，子项折叠（业务侧需要把所有 .side-menu-item 切到 .is-collapsed） */
+.side-menu.is-collapsed,
+.side-menu[data-mode="collapsed"] {
+  width: 108px;
+}
+
+/* nav-group：上半部分导航列表 */
+.side-menu__nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* footer：底部固定区（如 设置 / 退出） */
+.side-menu__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: none;
+}

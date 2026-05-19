@@ -1,0 +1,45 @@
+/* =============================================================
+ * PageIndicator · 页面指示器容器
+ * Figma：节点 325:13051（COMPONENT）
+ *
+ * 视觉真值：
+ *   外层 PageIndicator HORIZONTAL，gap = 0
+ *     └─ PageIndicator-list (SLOT) HORIZONTAL，gap = 12，counterAxis=CENTER
+ *          └─ PageIndicator-item × N（视觉真源在 page-indicator-item.css）
+ *
+ * 默认：4 个 PageIndicator-item（1 Active + 3 Default），整体 84 × 12
+ *
+ * 设计契约：
+ *   - 容器**零视觉**，layout 壳
+ *   - 任何时刻只有一个 .pi-item 处于 active 态
+ *   - 子项视觉真源：page-indicator-item.css
+ * ============================================================= */
+
+.page-indicator {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;                         /* Figma 外层 gap=0 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* SLOT：PageIndicator-list */
+.page-indicator__list,
+.pi-list {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;                      /* Figma SLOT itemSpacing=12 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-indicator__list > li,
+.pi-list > li {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+}

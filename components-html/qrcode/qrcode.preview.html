@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QRCode · 预览</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="./qrcode.css" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--color-bg-page);
+      color: var(--color-text-primary);
+      font-family: -apple-system, "PingFang SC", sans-serif;
+      padding: 40px;
+    }
+    .preview { display: flex; flex-direction: column; gap: 40px; max-width: 1200px; }
+    .preview__title { font-size: 14px; color: var(--color-text-tertiary); margin: 0 0 12px; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, max-content);
+      gap: 24px;
+      align-items: start;
+    }
+    .grid__cell {
+      display: flex; flex-direction: column; gap: 8px; align-items: center;
+    }
+    .grid__caption { font-size: 12px; color: var(--color-text-tertiary); }
+    .toolbar {
+      position: fixed; top: 16px; right: 24px; display: flex; gap: 8px;
+      background: var(--color-bg-container-primary);
+      border: 1px solid var(--color-border-secondary);
+      border-radius: 8px; padding: 4px;
+    }
+    .toolbar button {
+      appearance: none; border: 0; background: transparent;
+      color: var(--color-text-secondary);
+      padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 6px;
+    }
+    .toolbar button.is-active { background: var(--color-bg-item-quaternary); color: var(--color-text-primary); }
+  </style>
+</head>
+<body>
+  <script src="../icon/icon-sprite-inline.js"></script>
+
+  <div class="toolbar">
+    <button data-theme-set="light" class="is-active">Light</button>
+    <button data-theme-set="dark">Dark</button>
+  </div>
+
+  <div class="preview">
+
+    <section>
+      <h3 class="preview__title">Type=Circle · 4 个 State</h3>
+      <div class="grid">
+        <div class="grid__cell">
+          <div class="qrcode" data-type="circle" data-state="default">
+            <div class="qrcode__pattern" aria-label="二维码"></div>
+          </div>
+          <span class="grid__caption">Default</span>
+        </div>
+        <div class="grid__cell">
+          <div class="qrcode" data-type="circle" data-state="inactive">
+            <p class="qrcode__hint">请勾选下方隐私协议</p>
+            <div class="qrcode__placeholder"></div>
+          </div>
+          <span class="grid__caption">Inactive</span>
+        </div>
+        <div class="grid__cell">
+          <div class="qrcode" data-type="circle" data-state="loading">
+            <div class="qrcode__loading" role="status" aria-label="加载中"></div>
+          </div>
+          <span class="grid__caption">Loading</span>
+        </div>
+        <div class="grid__cell">
+          <div class="qrcode" data-type="circle" data-state="expired">
+            <button class="qrcode__refresh" type="button" aria-label="刷新二维码">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+            </button>
+          </div>
+          <span class="grid__caption">Expired</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="preview__title">Type=Square · 4 个 State</h3>
+      <div class="grid">
+        <div class="grid__cell">
+          <div class="qrcode" data-type="square" data-state="default">
+            <div class="qrcode__pattern" aria-label="二维码"></div>
+          </div>
+          <span class="grid__caption">Default</span>
+        </div>
+        <div class="grid__cell">
+          <div class="qrcode" data-type="square" data-state="inactive">
+            <p class="qrcode__hint">请勾选下方隐私协议</p>
+            <div class="qrcode__placeholder"></div>
+          </div>
+          <span class="grid__caption">Inactive</span>
+        </div>
+        <div class="grid__cell">
+          <div class="qrcode" data-type="square" data-state="loading">
+            <div class="qrcode__loading" role="status" aria-label="加载中"></div>
+          </div>
+          <span class="grid__caption">Loading</span>
+        </div>
+        <div class="grid__cell">
+          <div class="qrcode" data-type="square" data-state="expired">
+            <button class="qrcode__refresh" type="button" aria-label="刷新二维码">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+            </button>
+          </div>
+          <span class="grid__caption">Expired</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="preview__title">使用真二维码图片（替换 .qrcode__pattern 为 &lt;img&gt;）</h3>
+      <div class="grid">
+        <div class="grid__cell">
+          <div class="qrcode" data-type="square" data-state="default">
+            <img class="qrcode__pattern"
+                 alt="示例二维码"
+                 src="data:image/svg+xml;utf8,&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 100 100&quot;&gt;&lt;rect width=&quot;100&quot; height=&quot;100&quot; fill=&quot;%23fff&quot;/&gt;&lt;g fill=&quot;%231F222A&quot;&gt;&lt;rect x=&quot;10&quot; y=&quot;10&quot; width=&quot;25&quot; height=&quot;25&quot;/&gt;&lt;rect x=&quot;15&quot; y=&quot;15&quot; width=&quot;15&quot; height=&quot;15&quot; fill=&quot;%23fff&quot;/&gt;&lt;rect x=&quot;19&quot; y=&quot;19&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;65&quot; y=&quot;10&quot; width=&quot;25&quot; height=&quot;25&quot;/&gt;&lt;rect x=&quot;70&quot; y=&quot;15&quot; width=&quot;15&quot; height=&quot;15&quot; fill=&quot;%23fff&quot;/&gt;&lt;rect x=&quot;74&quot; y=&quot;19&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;10&quot; y=&quot;65&quot; width=&quot;25&quot; height=&quot;25&quot;/&gt;&lt;rect x=&quot;15&quot; y=&quot;70&quot; width=&quot;15&quot; height=&quot;15&quot; fill=&quot;%23fff&quot;/&gt;&lt;rect x=&quot;19&quot; y=&quot;74&quot; width=&quot;7&quot; height=&quot;7&quot;/&gt;&lt;rect x=&quot;42&quot; y=&quot;42&quot; width=&quot;16&quot; height=&quot;16&quot;/&gt;&lt;/g&gt;&lt;/svg&gt;" />
+          </div>
+          <span class="grid__caption">Square + &lt;img&gt;</span>
+        </div>
+        <div class="grid__cell">
+          <div class="qrcode" data-type="circle" data-state="default">
+            <div class="qrcode__pattern" aria-label="二维码"></div>
+          </div>
+          <span class="grid__caption">Circle 占位（默认实现）</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-theme-set]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        document.documentElement.dataset.theme = btn.dataset.themeSet;
+        document.querySelectorAll('[data-theme-set]').forEach((b) =>
+          b.classList.toggle('is-active', b === btn));
+      });
+    });
+  </script>
+</body>
+</html>

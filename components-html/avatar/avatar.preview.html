@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Avatar · 预览（Figma 1:1，4 个尺寸）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="./avatar.css" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 48px;
+      line-height: 54px;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0 0 36px;
+      color: var(--color-text-secondary);
+      font-size: 22px;
+      line-height: 30px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .toolbar button {
+      padding: 0 24px;
+      height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+    h2 {
+      margin: 60px 0 8px;
+      font-size: 32px;
+      line-height: 38px;
+      font-weight: 700;
+    }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .h2-note {
+      display: block;
+      margin-top: 4px;
+      font-size: 20px;
+      line-height: 26px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+
+    /* ============================================================
+     * variant-strip：沿用 line / top-bar 这次定下的等宽规范
+     * - 严格 block 容器 + max-width:1040
+     * - 5 条 strip 严格等宽
+     * ============================================================ */
+    .variant-strip {
+      width: 100%;
+      max-width: 1040px;
+      box-sizing: border-box;
+      display: block;
+      padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: var(--space-md, 24px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* 单 variant 演示行：左侧头像 + 右侧规格说明 */
+    .demo-row {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .demo-row .meta {
+      font: 400 18px/26px var(--font-family-cn);
+      color: var(--color-text-secondary);
+    }
+    .demo-row .meta strong {
+      color: var(--color-text-primary);
+      font-weight: 600;
+    }
+
+    /* 4 尺寸并排对照 */
+    .size-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+    .size-row .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .size-row .item-label {
+      font: 500 16px/20px var(--font-family-cn);
+      color: var(--color-text-secondary);
+    }
+
+    /* 联系人示例 */
+    .contact {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .contact + .contact {
+      margin-top: 24px;
+    }
+    .contact .name {
+      font: 600 22px/28px var(--font-family-cn);
+      color: var(--color-text-primary);
+    }
+    .contact .desc {
+      font: 400 18px/24px var(--font-family-cn);
+      color: var(--color-text-secondary);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Avatar · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 360:16621（COMPONENT_SET）· 4 个尺寸 variant：XS 48 / SM 72 / MD 84 / LG 150
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <!-- 1. XS -->
+  <h2>1. Size = XS（48×48）
+    <span class="h2-note">列表项、紧凑布局。圆形容器，IMAGE Fill。</span>
+  </h2>
+  <p class="figma-meta">Figma 360:16617 · 48×48 · radius 999 · object-fit cover</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <img class="avatar avatar--xs" id="img-xs" alt="示例头像 XS" />
+      <div class="meta">
+        <strong>XS · 48×48</strong><br/>
+        列表项 / 紧凑布局；圆形裁切；图像走 <code>object-fit: cover</code>。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. SM -->
+  <h2>2. Size = SM（72×72）
+    <span class="h2-note">评论区、消息列表。</span>
+  </h2>
+  <p class="figma-meta">Figma 360:16618 · 72×72 · radius 999 · object-fit cover</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <img class="avatar avatar--sm" id="img-sm" alt="示例头像 SM" />
+      <div class="meta">
+        <strong>SM · 72×72</strong><br/>
+        评论 / 消息列表；与 16-18px 文本搭配适配。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. MD -->
+  <h2>3. Size = MD（84×84）
+    <span class="h2-note">卡片、联系人列表。</span>
+  </h2>
+  <p class="figma-meta">Figma 360:16619 · 84×84 · radius 999 · object-fit cover</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <img class="avatar avatar--md" id="img-md" alt="示例头像 MD" />
+      <div class="meta">
+        <strong>MD · 84×84</strong><br/>
+        中型卡片头部；与 22px 用户名 + 18px 副标题为标准搭配。
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. LG -->
+  <h2>4. Size = LG（150×150）
+    <span class="h2-note">个人主页、详情页大头像。</span>
+  </h2>
+  <p class="figma-meta">Figma 360:16620 · 150×150 · radius 999 · object-fit cover</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <img class="avatar avatar--lg" id="img-lg" alt="示例头像 LG" />
+      <div class="meta">
+        <strong>LG · 150×150</strong><br/>
+        个人资料 / 详情页主视觉位；建议居中放置，下方接姓名与简介。
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 综合对照 + 占位 + 联系人示例 -->
+  <h2>5. 综合对照
+    <span class="h2-note">4 个尺寸并排，便于直观比较；右半区演示「占位」与「联系人卡片用法」。</span>
+  </h2>
+  <p class="figma-meta">非 Figma 节点；预览页自定义对照组（含工程兜底 placeholder）</p>
+  <div class="variant-strip">
+    <!-- 5a 4 尺寸并排 -->
+    <div class="size-row" style="margin-bottom:36px;">
+      <div class="item">
+        <img class="avatar avatar--xs" id="img-xs2" alt="示例 XS" />
+        <span class="item-label">XS · 48</span>
+      </div>
+      <div class="item">
+        <img class="avatar avatar--sm" id="img-sm2" alt="示例 SM" />
+        <span class="item-label">SM · 72</span>
+      </div>
+      <div class="item">
+        <img class="avatar avatar--md" id="img-md2" alt="示例 MD" />
+        <span class="item-label">MD · 84</span>
+      </div>
+      <div class="item">
+        <img class="avatar avatar--lg" id="img-lg2" alt="示例 LG" />
+        <span class="item-label">LG · 150</span>
+      </div>
+    </div>
+
+    <hr style="border:0;border-top:1px solid var(--color-border-tertiary);margin:0 0 24px;" />
+
+    <!-- 5b 占位 placeholder（工程兜底） -->
+    <div class="size-row" style="margin-bottom:36px;">
+      <div class="item">
+        <span class="avatar avatar--xs avatar--placeholder">张</span>
+        <span class="item-label">占位 XS</span>
+      </div>
+      <div class="item">
+        <span class="avatar avatar--sm avatar--placeholder">李</span>
+        <span class="item-label">占位 SM</span>
+      </div>
+      <div class="item">
+        <span class="avatar avatar--md avatar--placeholder">王</span>
+        <span class="item-label">占位 MD</span>
+      </div>
+      <div class="item">
+        <span class="avatar avatar--lg avatar--placeholder">赵</span>
+        <span class="item-label">占位 LG</span>
+      </div>
+    </div>
+
+    <hr style="border:0;border-top:1px solid var(--color-border-tertiary);margin:0 0 24px;" />
+
+    <!-- 5c 联系人卡片示例 -->
+    <div>
+      <div class="contact">
+        <img class="avatar avatar--xs" id="img-xs3" alt="李雷" />
+        <div>
+          <div class="name">李雷</div>
+          <div class="desc">XS · 列表场景，头像 + 姓名同一行</div>
+        </div>
+      </div>
+      <div class="contact">
+        <img class="avatar avatar--md" id="img-md3" alt="韩梅梅" />
+        <div>
+          <div class="name">韩梅梅</div>
+          <div class="desc">MD · 联系人卡片用法，头像旁可带副标题</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 主题切换
+    const btnLight = document.getElementById('btn-light');
+    const btnDark = document.getElementById('btn-dark');
+    function setTheme(t) {
+      document.documentElement.dataset.theme = t;
+      btnLight.setAttribute('aria-pressed', String(t === 'light'));
+      btnDark.setAttribute('aria-pressed', String(t === 'dark'));
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+
+    // ============================================================
+    // 离线示例图：用 inline SVG (data URI) 作为 img.src
+    //   - 不依赖外网；任何场景都能稳定渲染
+    //   - 4 张图用不同渐变 + 字母，便于识别和区分尺寸
+    // ============================================================
+    function svgAvatar({ bg1, bg2, label }) {
+      const svg = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${bg1}"/>
+      <stop offset="100%" stop-color="${bg2}"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" fill="url(#g)"/>
+  <text x="100" y="125" text-anchor="middle"
+        font-family="Inter, system-ui, -apple-system, sans-serif"
+        font-size="100" font-weight="700" fill="#ffffff" opacity="0.92">${label}</text>
+</svg>`.trim();
+      return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    const SAMPLES = {
+      a: svgAvatar({ bg1: '#3D7BFA', bg2: '#7AA8FF', label: 'A' }),
+      b: svgAvatar({ bg1: '#FF7A45', bg2: '#FFB36C', label: 'B' }),
+      c: svgAvatar({ bg1: '#22C7A1', bg2: '#7BE7C7', label: 'C' }),
+      d: svgAvatar({ bg1: '#9B6CFF', bg2: '#C9A8FF', label: 'D' }),
+    };
+
+    // 主区 4 个 variant：用同一张图（A），凸显「同图不同尺寸」的对照
+    document.getElementById('img-xs').src = SAMPLES.a;
+    document.getElementById('img-sm').src = SAMPLES.a;
+    document.getElementById('img-md').src = SAMPLES.a;
+    document.getElementById('img-lg').src = SAMPLES.a;
+
+    // 综合对照行：用 4 种不同图，让尺寸差更直观
+    document.getElementById('img-xs2').src = SAMPLES.a;
+    document.getElementById('img-sm2').src = SAMPLES.b;
+    document.getElementById('img-md2').src = SAMPLES.c;
+    document.getElementById('img-lg2').src = SAMPLES.d;
+
+    // 联系人示例
+    document.getElementById('img-xs3').src = SAMPLES.b;
+    document.getElementById('img-md3').src = SAMPLES.c;
+  </script>
+</body>
+</html>

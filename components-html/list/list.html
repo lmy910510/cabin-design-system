@@ -4,7 +4,7 @@
     1. design-system 三件套（tokens.css / shadows.css / text-styles.css）
     2. 三个独立槽：list-leading.css / list-content.css / list-action.css
     3. 整行：list.css（最后引入，仅行级布局）
-    4. 槽位内嵌的真组件按需：checkbox.css / radio.css / button.css / switch.css / tag.css
+    4. 槽位内嵌的真组件按需：checkbox.css / radio.css / button.css / switch.css / tag.css / badge.css
 
   list 本身只负责行级布局 + 分隔线，所有视觉来自三个槽。
 -->
@@ -93,7 +93,7 @@
       <div class="list-content__title-row">
         <div class="list-content__title-group">
           <span class="list-content__title">系统更新</span>
-          <span class="list-content__badge" aria-hidden="true"></span>
+          <span class="badge badge--circle" aria-hidden="true"></span>
         </div>
         <span class="tag tag--large tag--tinted">新版本</span>
       </div>

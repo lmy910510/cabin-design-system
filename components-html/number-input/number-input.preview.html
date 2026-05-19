@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NumberInput · 预览（Figma 325:12188）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../number-input-item/number-input-item.css" />
+  <link rel="stylesheet" href="./number-input.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .strip {
+      padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+      display: flex; flex-direction: column; gap: 36px;
+    }
+  </style>
+</head>
+<body>
+  <h1>NumberInput · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 325:12188（COMPONENT）· HORIZONTAL · 外层 gap 0 · SLOT gap 24
+    · 子项视觉来源 <code>.ni-item</code>
+  </p>
+
+  <h2>1. 验证码 · 6 位（焦点在第 4 位）</h2>
+  <p class="figma-meta">number-input__list · 6 × NumberInput-item</p>
+  <div class="strip">
+    <ul class="number-input__list" aria-label="验证码 6 位">
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="focused"></span></li>
+      <li><span class="ni-item" data-state="default"></span></li>
+      <li><span class="ni-item" data-state="default"></span></li>
+    </ul>
+  </div>
+
+  <h2>2. 车牌 · 8 位（含 Special 槽）</h2>
+  <p class="figma-meta">最后一格 data-state="special"，竖排"新能源"占位</p>
+  <div class="strip">
+    <ul class="number-input__list" aria-label="车牌 8 位">
+      <li><span class="ni-item" data-state="default">京</span></li>
+      <li><span class="ni-item" data-state="default">A</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="focused"></span></li>
+      <li><span class="ni-item" data-state="special">
+        <span class="ni-item__placeholder">新<br>能<br>源</span>
+      </span></li>
+    </ul>
+  </div>
+
+  <h2>3. 错误态展示</h2>
+  <p class="figma-meta">data-state="error" 警示色描边 + 浅警示底</p>
+  <div class="strip">
+    <ul class="number-input__list" aria-label="校验失败">
+      <li><span class="ni-item" data-state="error">A</span></li>
+      <li><span class="ni-item" data-state="error">B</span></li>
+      <li><span class="ni-item" data-state="error">C</span></li>
+      <li><span class="ni-item" data-state="error">D</span></li>
+    </ul>
+  </div>
+
+  <h2>4. 任意位数（4 / 8 / 12）</h2>
+  <p class="figma-meta">通过 SLOT 增减子项控制位数</p>
+  <div class="strip">
+    <ul class="number-input__list" aria-label="4 位">
+      <li><span class="ni-item" data-state="default">1</span></li>
+      <li><span class="ni-item" data-state="default">2</span></li>
+      <li><span class="ni-item" data-state="default">3</span></li>
+      <li><span class="ni-item" data-state="focused"></span></li>
+    </ul>
+    <ul class="number-input__list" aria-label="8 位">
+      <li><span class="ni-item" data-state="default">1</span></li>
+      <li><span class="ni-item" data-state="default">2</span></li>
+      <li><span class="ni-item" data-state="default">3</span></li>
+      <li><span class="ni-item" data-state="default">4</span></li>
+      <li><span class="ni-item" data-state="default">5</span></li>
+      <li><span class="ni-item" data-state="default">6</span></li>
+      <li><span class="ni-item" data-state="default">7</span></li>
+      <li><span class="ni-item" data-state="focused"></span></li>
+    </ul>
+    <ul class="number-input__list" aria-label="12 位">
+      <li><span class="ni-item" data-state="default">1</span></li>
+      <li><span class="ni-item" data-state="default">2</span></li>
+      <li><span class="ni-item" data-state="default">3</span></li>
+      <li><span class="ni-item" data-state="default">4</span></li>
+      <li><span class="ni-item" data-state="default">5</span></li>
+      <li><span class="ni-item" data-state="default">6</span></li>
+      <li><span class="ni-item" data-state="default">7</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">9</span></li>
+      <li><span class="ni-item" data-state="default">A</span></li>
+      <li><span class="ni-item" data-state="default">B</span></li>
+      <li><span class="ni-item" data-state="focused"></span></li>
+    </ul>
+  </div>
+</body>
+</html>

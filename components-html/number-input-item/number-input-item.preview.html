@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NumberInput-item · 预览（Figma 1:1，5 variant + NumberInput 容器）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="./number-input-item.css" />
+  <link rel="stylesheet" href="../number-input/number-input.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 72px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    .toolbar { display: flex; gap: 24px; margin-bottom: 36px; }
+    .toolbar button {
+      padding: 0 24px; height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .h2-note {
+      display: block; margin-top: 4px;
+      font-size: 20px; line-height: 26px;
+      font-weight: 400; color: var(--color-text-secondary);
+    }
+    .variant-strip {
+      max-width: 1280px;
+      box-sizing: border-box;
+      padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+    }
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 90px);
+      column-gap: 60px; row-gap: 16px;
+      align-items: end;
+    }
+    .variant-grid .label {
+      grid-row: 2;
+      font-size: 20px; line-height: 24px;
+      color: var(--color-text-secondary);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>NumberInput-item · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 323:12150（COMPONENT_SET）· 90×102 · 圆角 18 · 5 个 State
+    · 综合段使用 <code>.ni-list</code> 容器还原 NumberInput（节点 325:12188）真实排布
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <!-- 1. 5 个 variant 一览 -->
+  <h2>1. 5 个 State 一览
+    <span class="h2-note">Default / Focused / Special / error / 特殊态-选中（picked）</span>
+  </h2>
+  <p class="figma-meta">Figma 323:12150 · variantOptions: Default | Focused | Special | error | 特殊态-选中</p>
+  <div class="variant-strip">
+    <div class="variant-grid">
+      <span class="ni-item" data-state="default">A</span>
+      <span class="ni-item" data-state="focused"></span>
+      <span class="ni-item" data-state="special"><span class="ni-item__placeholder">新<br>能<br>源</span></span>
+      <span class="ni-item" data-state="error">F</span>
+      <span class="ni-item" data-state="picked"></span>
+
+      <span class="label">Default</span>
+      <span class="label">Focused</span>
+      <span class="label">Special</span>
+      <span class="label">error</span>
+      <span class="label">picked</span>
+    </div>
+  </div>
+
+  <!-- 2. 综合：验证码输入（6 位） -->
+  <h2>2. 综合：验证码 6 位输入
+    <span class="h2-note">已输入 3 位 → 第 4 位 Focused（待输入），后 2 位 Default（空）</span>
+  </h2>
+  <p class="figma-meta">Figma 325:12188 · NumberInput · HORIZONTAL · gap 24 · 默认 4-6 项</p>
+  <div class="variant-strip">
+    <ul class="ni-list" aria-label="验证码输入">
+      <li><span class="ni-item" data-state="default">9</span></li>
+      <li><span class="ni-item" data-state="default">2</span></li>
+      <li><span class="ni-item" data-state="default">3</span></li>
+      <li><span class="ni-item" data-state="focused"></span></li>
+      <li><span class="ni-item" data-state="default"></span></li>
+      <li><span class="ni-item" data-state="default"></span></li>
+    </ul>
+  </div>
+
+  <!-- 3. 综合：车牌号输入（8 位，含 special / picked） -->
+  <h2>3. 综合：车牌号 8 位输入（含"新能源"槽）
+    <span class="h2-note">前 7 位常规 + 最后一位 Special（提示）或 picked（已选中"新能源"）</span>
+  </h2>
+  <p class="figma-meta">真实业务场景：新能源车牌输入</p>
+  <div class="variant-strip" style="display:flex; flex-direction:column; gap:36px;">
+    <ul class="ni-list" aria-label="车牌号输入（默认状态）">
+      <li><span class="ni-item" data-state="default">京</span></li>
+      <li><span class="ni-item" data-state="default">A</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="focused"></span></li>
+      <li><span class="ni-item" data-state="special"><span class="ni-item__placeholder">新<br>能<br>源</span></span></li>
+    </ul>
+    <ul class="ni-list" aria-label="车牌号输入（已选中新能源）">
+      <li><span class="ni-item" data-state="default">京</span></li>
+      <li><span class="ni-item" data-state="default">A</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="default">8</span></li>
+      <li><span class="ni-item" data-state="picked"></span></li>
+    </ul>
+  </div>
+
+  <!-- 4. 综合：error 校验失败 -->
+  <h2>4. 综合：error 校验失败
+    <span class="h2-note">用于"输入完成 → 后端校验不通过"的视觉反馈</span>
+  </h2>
+  <p class="figma-meta">所有格子切到 error，warning 色描边 + warning 文字</p>
+  <div class="variant-strip">
+    <ul class="ni-list" aria-label="验证码错误">
+      <li><span class="ni-item" data-state="error">9</span></li>
+      <li><span class="ni-item" data-state="error">2</span></li>
+      <li><span class="ni-item" data-state="error">3</span></li>
+      <li><span class="ni-item" data-state="error">4</span></li>
+      <li><span class="ni-item" data-state="error">5</span></li>
+      <li><span class="ni-item" data-state="error">6</span></li>
+    </ul>
+  </div>
+
+  <script>
+    const btnLight = document.getElementById('btn-light');
+    const btnDark  = document.getElementById('btn-dark');
+    function setTheme(t) {
+      document.documentElement.dataset.theme = t;
+      btnLight.setAttribute('aria-pressed', String(t === 'light'));
+      btnDark.setAttribute('aria-pressed', String(t === 'dark'));
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+  </script>
+</body>
+</html>

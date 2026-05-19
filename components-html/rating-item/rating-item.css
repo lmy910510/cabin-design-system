@@ -1,0 +1,62 @@
+/* =============================================================
+ * Rating-item · 评分子项（单颗星）
+ * Figma：节点 301:8952（COMPONENT_SET）/ 3 个 variant：Full / Half / Solo
+ * 视觉真值：
+ *   外层尺寸统一 24×24
+ *   Full：圆角 6，背景 orange-5 `--palette-orange-5` (#fa6800)，内嵌 18×18 white-9 star
+ *   Half：圆角 6，背景 cold-gray-2 `--palette-cold-gray-2` (#dee2e8)，内嵌 18×18 white-9 star
+ *   Solo：无背景，内嵌 24×24 orange-5 star（轮廓位）
+ *
+ * 实现策略：
+ *   - 外层 .rating-item 24×24 flex 居中
+ *   - 内嵌 svg.icon 用 sprite #icon/star--fill
+ *   - Full / Half 用底板色 + 18px star + 白色 currentColor
+ *   - Solo 无底板 + 24px star + 橙色 currentColor
+ *
+ * 用法（详见 [Rating](../rating/rating.md)）：
+ *   <span class="rating-item rating-item--full">
+ *     <svg class="icon"><use href="#icon/star--fill"/></svg>
+ *   </span>
+ * ============================================================= */
+
+.rating-item {
+  box-sizing: border-box;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  flex: none;
+}
+
+/* Full：橙底 + 白星 18×18 */
+.rating-item--full {
+  background: var(--palette-orange-5);
+  color: var(--palette-white-9); /* icon currentColor 取这里 */
+}
+.rating-item--full .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Half：浅灰底 + 白星 18×18（Figma 配色：背景 cold-gray-2 + 白色 star，
+   表达"未达半"的弱状态；和"全填充橙"形成同形位的色阶对照） */
+.rating-item--half {
+  background: var(--palette-cold-gray-2);
+  color: var(--palette-white-9);
+}
+.rating-item--half .icon {
+  width: 18px;
+  height: 18px;
+}
+
+/* Solo：无底 + 橙星 24×24（Figma 真值是面形 star + 橙色，不是 line） */
+.rating-item--solo {
+  background: transparent;
+  color: var(--palette-orange-5);
+}
+.rating-item--solo .icon {
+  width: 24px;
+  height: 24px;
+}

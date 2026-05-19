@@ -1,0 +1,65 @@
+/* =============================================================
+ * Toast · 轻提示
+ * Figma：节点 305:11208（COMPONENT，单态）
+ *
+ * 视觉真值：
+ *   layout = HORIZONTAL，gap 12，counterAxis=CENTER
+ *   padding = 18 / 24（上下 / 左右）
+ *   cornerRadius = 24
+ *   背景 = rgba(31,34,41) ≈ var(--color-bg-overlay-strong) / 不透明深色
+ *   icon/fail = 42×42，颜色白
+ *   label = 28/28（具体行高 Figma 未给死，按 1×字号），白色
+ *
+ * 属性：
+ *   Show icon (Boolean, 默认 true)：是否显示左侧图标
+ *
+ * 用法约定：
+ *   - 文案保持简短（建议 ≤ 10 字）
+ *   - 居中显示在屏幕中央，不遮挡关键操作
+ *   - 默认图标为 fail；通过更换 icon sprite 切到 success / warning
+ * ============================================================= */
+
+.toast {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 24px;
+  border-radius: 24px;
+
+  /* Figma rgba(31,34,41) —— 不随主题切换的"深色 toast"底色 */
+  background: rgb(31, 34, 41);
+  color: #ffffff;
+
+  /* 文本 */
+  font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 28px;
+  white-space: nowrap;
+
+  /* 浮层质感：与 Figma 文档使用场景一致（页面悬浮层） */
+  box-shadow: var(--shadow-medium, 0 12px 32px rgba(0, 0, 0, 0.18));
+}
+
+/* 左侧图标 sprite —— 42×42 */
+.toast__icon {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+.toast__icon svg { width: 100%; height: 100%; }
+
+/* Show icon = false —— 隐藏左槽（结构上不渲染节点也行；
+   保留 .toast--no-icon 给纯样式调用方使用） */
+.toast--no-icon .toast__icon { display: none; }
+
+.toast__label {
+  display: inline-block;
+  color: inherit;
+}

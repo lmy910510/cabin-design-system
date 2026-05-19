@@ -11,15 +11,16 @@
  *   title-row：水平布局，gap = 12，align-items=center
  *     ├─ title-group（水平 hbox / gap=0 / align=start / hug）
  *     │   ├─ title       32/32 Medium，色 text/primary
- *     │   └─ Badge       12×12 圆点 #ff293b（red-5）—— 由 boolean Show Badge 控制可见
+ *     │   └─ Badge       12×12 圆点 红色（视觉真源 = ../badge/badge.css，
+ *     │                  这里只内嵌 <span class="badge badge--circle">）
  *     └─ Tag             Tag 组件 Large/Tinted（高 36 / 内边距 6 / 圆角 6）
  *                        —— 由 boolean Show Tag 控制可见。
  *
  *   description（仅 Subtitle 显示）：宽度 fill，28/36 Regular，色 text/secondary
  *
  * 与 Figma boolean 属性对应：
- *   Show Badge#388:311 → 是否渲染 .list-content__badge
- *   Show Tag#388:314   → 是否渲染 .list-content__tag
+ *   Show Badge#388:311 → 是否渲染 .badge.badge--circle
+ *   Show Tag#388:314   → 是否渲染独立的 .tag 实例
  *
  * 用法：
  *   <!-- Title 形态：标题 + Badge + Tag -->
@@ -27,9 +28,9 @@
  *     <div class="list-content__title-row">
  *       <div class="list-content__title-group">
  *         <span class="list-content__title">标题文本</span>
- *         <span class="list-content__badge" aria-hidden="true"></span>
+ *         <span class="badge badge--circle" aria-hidden="true"></span>
  *       </div>
- *       <span class="list-content__tag">标签文案</span>
+ *       <span class="tag tag--large tag--tinted">标签文案</span>
  *     </div>
  *   </div>
  *
@@ -38,14 +39,16 @@
  *     <div class="list-content__title-row">
  *       <div class="list-content__title-group">
  *         <span class="list-content__title">标题文本</span>
- *         <span class="list-content__badge" aria-hidden="true"></span>
+ *         <span class="badge badge--circle" aria-hidden="true"></span>
  *       </div>
- *       <span class="list-content__tag">标签文案</span>
+ *       <span class="tag tag--large tag--tinted">标签文案</span>
  *     </div>
  *     <p class="list-content__description">解释信息解释信息解释信息</p>
  *   </div>
  *
  *   要隐藏 Badge / Tag 直接删除对应节点即可（与 Figma boolean=false 等价）。
+ *
+ *   依赖：调用方需引入 ../badge/badge.css 与 ../tag/tag.css。
  * ============================================================= */
 
 
@@ -93,18 +96,30 @@
   white-space: nowrap;
 }
 
-/* Badge：12×12 红圆点（Figma badge type=circle, fill=red-5 #ff293b） */
+/* Badge：12×12 红圆点（Figma badge type=circle, fill=red-5 #ff293b）
+   ⚠️ 视觉真源已迁至独立 .badge 组件（components-html/badge/badge.css）。
+   list-content 不再自己画红点，调用方需同时引入 ../badge/badge.css，
+   并在标题旁直接放 <span class="badge badge--circle" aria-hidden="true"></span>。
+
+   .list-content__badge 仍作为兼容别名保留，等价于 .badge.badge--circle，
+   方便存量 HTML 渐进迁移。新代码请直接用 .badge.badge--circle。
+   下面只保留**位置微调**（视觉外观由 badge.css 提供）。 */
+.list-content__title-group .badge--circle,
+.list-content__badge {
+  /* 视觉对齐：Figma 中红点位于标题右上角，与 title 顶端对齐
+     title-group 的 align-items=flex-start 已经能让 badge 贴顶。
+     但 32px 行高里红点显得偏低 —— 用一点点上 margin 微调到顶部 4px 处。 */
+  margin-top: 4px;
+}
+
+/* 兼容旧 class（无 .badge 时仍能渲染最低限度的红点） */
 .list-content__badge {
   display: inline-block;
   width: 12px;
   height: 12px;
   border-radius: 6px;
-  background: var(--palette-red-5); /* 与 Figma badge 颜色严格一致 */
+  background: var(--color-bg-warning);
   flex: none;
-  /* 视觉对齐：Figma 中红点位于标题右上角，与 title 顶端对齐
-     title-group 的 align-items=flex-start 已经能让 badge 贴顶。
-     但 32px 行高里红点显得偏低 —— 用一点点上 margin 微调到顶部 4px 处。 */
-  margin-top: 4px;
 }
 
 /* Tag：视觉真源已迁至独立 .tag 组件（components-html/tag/tag.css）

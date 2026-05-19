@@ -1,0 +1,126 @@
+/* =============================================================================
+ * QRCode —— 二维码块
+ *
+ * Figma 真值（节点 330:13207 ComponentSet）
+ *   8 个变体 = Type{Circle, Square} × State{Default, Inactive, Loading, Expired}
+ *   外框：360×360，padding=24（md），布局 VERTICAL，主轴/副轴均 CENTER
+ *
+ *   Circle → 圆形外框，border-radius: full（999），Default 态有 border 3px border/tertiary
+ *   Square → 方形外框，border-radius: 36 (xl)，Default 态同有 border 3px border/tertiary
+ *
+ *   背景：
+ *     Default      → bg/container_primary（白）
+ *     Inactive     → bg/item_quaternary
+ *     Loading      → bg/item_quaternary
+ *     Expired      → bg/item_quaternary
+ *
+ *   内容：
+ *     Default      → 实际二维码（这里通过 .qrcode__pattern 占位 / 用户用 <img> 替换）
+ *     Inactive     → hint-text "请勾选下方隐私协议"（32 Medium / text-primary）
+ *                  + qr-placeholder 168×168（bg/item_secondary，opacity 0.6）
+ *     Loading      → 旋转 ring（120×120，无 sprite，纯 CSS）
+ *     Expired      → icon/refresh 120×120（用 sprite refresh--line）
+ *
+ *   注：Figma Default 态有完整的 logo + brand-icon 多层渐变，UI 库实现里
+ *        把它简化为可被实际二维码图片/canvas 替换的占位，不强行还原。
+ * ============================================================================ */
+
+.qrcode {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 360px;
+  height: 360px;
+  padding: var(--space-md);          /* 24 */
+  box-sizing: border-box;
+  background: var(--color-bg-container-primary);
+  border: 0;
+  font-family: "Noto Sans SC", -apple-system, "PingFang SC", sans-serif;
+}
+
+/* ---------- 形状 ---------- */
+.qrcode[data-type="circle"] { border-radius: 999px; }
+.qrcode[data-type="square"] { border-radius: 36px; }   /* xl */
+
+/* ---------- State：Default 有边框，背景白 ---------- */
+.qrcode[data-state="default"] {
+  background: var(--color-bg-container-primary);
+  border: 3px solid var(--color-border-tertiary);
+}
+
+/* Inactive / Loading / Expired 共用：弱化背景 */
+.qrcode[data-state="inactive"],
+.qrcode[data-state="loading"],
+.qrcode[data-state="expired"] {
+  background: var(--color-bg-item-quaternary);
+  border: 0;
+}
+
+/* ---------- Default 内容：二维码主体 ---------- */
+.qrcode__pattern {
+  width: 312px;     /* 360 - 24*2 */
+  height: 312px;
+  display: block;
+  /* 占位棋盘格背景，实际使用时建议替换为 <img class="qrcode__pattern" src="..."> */
+  background-color: var(--color-text-primary);
+  background-image:
+    linear-gradient(45deg, transparent 48%, var(--color-bg-container-primary) 48% 52%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, var(--color-bg-container-primary) 48% 52%, transparent 52%);
+  background-size: 12px 12px;
+  border-radius: 4px;
+}
+
+/* ---------- Inactive 内容：hint + 灰底占位 ---------- */
+.qrcode__hint {
+  margin: 0;
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  text-align: center;
+  margin-bottom: 24px;
+}
+.qrcode__placeholder {
+  width: 168px;
+  height: 168px;
+  background: var(--color-bg-item-secondary);
+  opacity: 0.6;
+  border-radius: 4px;
+}
+
+/* ---------- Loading 内容：旋转环 120×120 ---------- */
+.qrcode__loading {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 12px solid var(--color-bg-item-tertiary);
+  border-top-color: var(--color-text-primary);
+  animation: qrcode-spin 0.9s linear infinite;
+}
+@keyframes qrcode-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ---------- Expired 内容：刷新图标 120×120 ---------- */
+.qrcode__refresh {
+  width: 120px;
+  height: 120px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0;
+  margin: 0;
+}
+.qrcode__refresh svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.qrcode__refresh:hover { opacity: 0.7; }

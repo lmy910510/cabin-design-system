@@ -1,0 +1,51 @@
+/* =============================================================
+ * Tab · 标签栏容器
+ * Figma：节点 319:11934（COMPONENT）
+ *
+ * 视觉真值：
+ *   layoutMode = HORIZONTAL
+ *   primaryAxisAlignItems = MIN（左对齐）
+ *   counterAxisAlignItems = CENTER（垂直居中）
+ *   itemSpacing = 72（token 7xl）
+ *   width  = HUG （由子项与 gap 决定；4 项时为 4×72 + 3×72 = 504）
+ *   height = HUG （由子项决定；统一为 54）
+ *   无背景、无边框、无 padding —— 容器是纯 layout 壳
+ *
+ * 子项：
+ *   全部 .tab-item / .tab-item--active 实例
+ *   不要在 .tab 内重新声明 tab-item 视觉，避免分叉
+ *
+ * 依赖：
+ *   - design-system/tokens.css（间距 token）
+ *   - components-html/tab-item/tab-item.css（子项视觉真源）
+ *
+ * 用法：
+ *   <ul class="tab" role="tablist">
+ *     <li><button class="tab-item tab-item--active" role="tab">推荐</button></li>
+ *     <li><button class="tab-item" role="tab">附近</button></li>
+ *     <li><button class="tab-item" role="tab">收藏</button></li>
+ *     <li><button class="tab-item" role="tab">历史</button></li>
+ *   </ul>
+ *
+ * 已知调用方：
+ *   - top-bar.css（.top-bar__tab-list 复合 .tab 类，复用 layout）
+ * ============================================================= */
+
+.tab {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;            /* counterAxis CENTER */
+  justify-content: flex-start;    /* primaryAxis MIN */
+  gap: 72px;                      /* token 7xl，对应 Figma itemSpacing */
+  height: 54px;                   /* 与 tab-item 同高，避免容器高度漂移 */
+
+  /* 当被用在 <ul> 上时去掉默认列表样式 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 当业务侧确实需要更紧凑/更宽松的 gap 时，用 modifier 显式表达，
+   不要直接在 .tab 上覆盖 gap，保持视觉真值与 Figma 一致 */
+.tab--gap-lg { gap: 36px; }       /* token 4xl，常用于 480 高度的紧凑栏 */
+.tab--gap-7xl { gap: 72px; }      /* 默认值显式 alias，便于阅读 */

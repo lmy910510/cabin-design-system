@@ -1,0 +1,61 @@
+<!--
+  Input · 最小骨架
+  4 个 State 通过 data-state 切换：default / focused / filled / maxlength
+  子件按需出现，多余的添加 .is-hidden 即可。
+-->
+
+<!-- Default：仅 placeholder -->
+<div class="input" data-state="default">
+  <div class="input__field">
+    <span class="input__placeholder">请输入</span>
+  </div>
+</div>
+
+<!-- Focused：input-text + cursor + number + fail + action -->
+<div class="input" data-state="focused">
+  <div class="input__field">
+    <span class="input__text">正在输入</span>
+    <span class="input__cursor">｜</span>
+  </div>
+  <span class="input__number">10/15</span>
+  <button class="input__fail" type="button" aria-label="清除">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/close--line"/></svg>
+  </button>
+  <span class="input__action">
+    <button class="input__refresh" type="button" aria-label="刷新">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+    </button>
+  </span>
+</div>
+
+<!-- Filled：已输入完成 -->
+<div class="input" data-state="filled">
+  <div class="input__field">
+    <span class="input__text">文本信息内容输入完成</span>
+  </div>
+  <span class="input__number">10/15</span>
+  <button class="input__fail" type="button" aria-label="清除">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/close--line"/></svg>
+  </button>
+  <span class="input__action">
+    <button class="input__refresh" type="button" aria-label="刷新">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+    </button>
+  </span>
+</div>
+
+<!-- MaxLength：number 变 price 警示色 -->
+<div class="input" data-state="maxlength">
+  <div class="input__field">
+    <span class="input__text">文本信息内容超出了字数限制警示</span>
+  </div>
+  <span class="input__number">15/15</span>
+  <button class="input__fail" type="button" aria-label="清除">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/close--line"/></svg>
+  </button>
+  <span class="input__action">
+    <button class="input__refresh" type="button" aria-label="刷新">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+    </button>
+  </span>
+</div>

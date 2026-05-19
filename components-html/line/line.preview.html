@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Line · 预览（Figma 1:1，4 个 variant）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="./line.css" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 48px;
+      line-height: 54px;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0 0 36px;
+      color: var(--color-text-secondary);
+      font-size: 22px;
+      line-height: 30px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .toolbar button {
+      padding: 0 24px;
+      height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+    h2 {
+      margin: 60px 0 8px;
+      font-size: 32px;
+      line-height: 38px;
+      font-weight: 700;
+    }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .h2-note {
+      display: block;
+      margin-top: 4px;
+      font-size: 20px;
+      line-height: 26px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+
+    /* ============================================================
+     * variant-strip：沿用 top-bar 这次定下的等宽规范
+     * - 严格 block 容器 + max-width:1040
+     * - 子项 width:100%，5 条 strip 严格等宽
+     * 业务上 line 自身宽度其实就是父容器宽度，所以 strip 给一个白色"舞台"
+     * 让线条颜色（浅灰）能被看清。
+     * ============================================================ */
+    .variant-strip {
+      width: 100%;
+      max-width: 1040px;
+      box-sizing: border-box;
+      display: block;
+      padding: 36px 24px;
+      background: var(--color-bg-card-primary);
+      border-radius: var(--space-md, 24px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* 垂直线 demo 容器：用 flex 行模拟 toolbar 用法 */
+    .v-row {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      height: 60px;
+      font: 500 24px/28px var(--font-family-cn);
+      color: var(--color-text-primary);
+    }
+
+    /* 紧凑示意：把 4 种水平线一次叠在同一个卡片里，便于直接对比 */
+    .stack-row + .stack-row {
+      margin-top: 36px;
+    }
+    .stack-label {
+      font: 500 18px/22px var(--font-family-cn);
+      color: var(--color-text-secondary);
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Line · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 10:1333（COMPONENT_SET）· 4 个 variant：Primary / Secondary / Vertical / Dashed
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <!-- 1. Primary -->
+  <h2>1. Type = Primary
+    <span class="h2-note">一级分割线（实测 #DEE2E8 ≈ cold-gray-2）。用于列表项之间、卡片内主要分区。</span>
+  </h2>
+  <p class="figma-meta">Figma 10:1342 · solid 1px · `--color-border-secondary`</p>
+  <div class="variant-strip">
+    <hr class="line line--primary" />
+  </div>
+
+  <!-- 2. Secondary -->
+  <h2>2. Type = Secondary
+    <span class="h2-note">二级分割线（实测 #EAEDF2 ≈ cold-gray-1，比 Primary 更浅一档）。用于次级分区。</span>
+  </h2>
+  <p class="figma-meta">Figma 393:17791 · solid 1px · `--color-border-tertiary`</p>
+  <div class="variant-strip">
+    <hr class="line line--secondary" />
+  </div>
+
+  <!-- 3. Vertical -->
+  <h2>3. Type = Vertical
+    <span class="h2-note">垂直分割线，高度由父容器撑开。用于工具栏按钮分隔、并排数据分隔。</span>
+  </h2>
+  <p class="figma-meta">Figma 10:1340 · solid 1px · `--color-border-secondary` · height 跟随父级（这里 60px）</p>
+  <div class="variant-strip">
+    <div class="v-row">
+      <span>32 公里</span>
+      <span class="line line--vertical"></span>
+      <span>预计 25 分钟</span>
+      <span class="line line--vertical"></span>
+      <span>剩余电量 78%</span>
+    </div>
+  </div>
+
+  <!-- 4. Dashed -->
+  <h2>4. Type = Dashed
+    <span class="h2-note">虚线分割线（颜色同 Primary，浏览器默认 4-4 节奏）。用于占位提示、可选区域边界。</span>
+  </h2>
+  <p class="figma-meta">Figma 286:7774 · dashed 1px · `--color-border-secondary`</p>
+  <div class="variant-strip">
+    <hr class="line line--dashed" />
+  </div>
+
+  <!-- 5. 综合对照（4 种叠在一起，方便看深浅差） -->
+  <h2>5. 综合对照
+    <span class="h2-note">把 4 种 variant 放在同一张卡片里直接比较视觉强度。Primary 与 Secondary 差 1 档灰；Dashed 节奏感最弱；Vertical 走垂直方向。</span>
+  </h2>
+  <p class="figma-meta">非 Figma 节点；预览页自定义对照组</p>
+  <div class="variant-strip">
+    <div class="stack-row">
+      <div class="stack-label">Primary（深一档）</div>
+      <hr class="line line--primary" />
+    </div>
+    <div class="stack-row">
+      <div class="stack-label">Secondary（浅一档）</div>
+      <hr class="line line--secondary" />
+    </div>
+    <div class="stack-row">
+      <div class="stack-label">Dashed（虚线）</div>
+      <hr class="line line--dashed" />
+    </div>
+    <div class="stack-row">
+      <div class="stack-label">Vertical（垂直，高 60px）</div>
+      <div class="v-row">
+        <span>A</span>
+        <span class="line line--vertical"></span>
+        <span>B</span>
+        <span class="line line--vertical"></span>
+        <span>C</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 主题切换
+    const btnLight = document.getElementById('btn-light');
+    const btnDark = document.getElementById('btn-dark');
+    function setTheme(t) {
+      document.documentElement.dataset.theme = t;
+      btnLight.setAttribute('aria-pressed', String(t === 'light'));
+      btnDark.setAttribute('aria-pressed', String(t === 'dark'));
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+  </script>
+</body>
+</html>

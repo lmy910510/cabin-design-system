@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tab-item · 预览（Figma 1:1，2 个 variant）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="./tab-item.css" />
+  <link rel="stylesheet" href="../tab/tab.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    .toolbar { display: flex; gap: 24px; margin-bottom: 36px; }
+    .toolbar button {
+      padding: 0 24px; height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .h2-note {
+      display: block; margin-top: 4px;
+      font-size: 20px; line-height: 26px;
+      font-weight: 400; color: var(--color-text-secondary);
+    }
+    .variant-strip {
+      width: 100%;
+      max-width: 1040px;
+      box-sizing: border-box;
+      display: block;
+      padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: var(--space-md, 24px);
+      box-shadow: var(--shadow-medium);
+    }
+    .demo-row { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 36px; }
+    .demo-row .item { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .demo-row .item-label {
+      font: 500 16px/20px var(--font-family-cn);
+      color: var(--color-text-secondary);
+    }
+
+    /* 综合段使用正式 .tab 容器（components-html/tab/tab.css），
+       不再自定义 .mock-tab-bar，保持视觉真值同源 */
+  </style>
+</head>
+<body>
+  <h1>Tab-item · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 318:11881（COMPONENT_SET）· 2 个 variant：Active / Default
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <!-- 1. Active -->
+  <h2>1. State = Active
+    <span class="h2-note">选中态：label 主色 + 底部 48×6 indicator（同色）。布局 VERTICAL，gap 12。</span>
+  </h2>
+  <p class="figma-meta">Figma 318:11900 · 72×54 · label 36px text-primary · indicator 48×6 同色</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <div class="item">
+        <span class="tab-item" data-state="active">推荐</span>
+        <span class="item-label">短文案 2 字</span>
+      </div>
+      <div class="item">
+        <span class="tab-item" data-state="active">附近热门</span>
+        <span class="item-label">4 字</span>
+      </div>
+      <div class="item">
+        <span class="tab-item tab-item--active">标签</span>
+        <span class="item-label">modifier 写法</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Default -->
+  <h2>2. State = Default
+    <span class="h2-note">未选中态：仅 label，色 text-secondary。布局 HORIZONTAL，主轴 CENTER。</span>
+  </h2>
+  <p class="figma-meta">Figma 318:11903 · 72×54 · label 36px text-secondary · 无 indicator</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <div class="item">
+        <span class="tab-item" data-state="default">推荐</span>
+        <span class="item-label">短文案</span>
+      </div>
+      <div class="item">
+        <span class="tab-item" data-state="default">附近</span>
+        <span class="item-label">2 字</span>
+      </div>
+      <div class="item">
+        <span class="tab-item">标签</span>
+        <span class="item-label">省略 data-state（默认 default）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 综合：完整 Tab 容器（gap 72，复用公共 .tab） -->
+  <h2>3. 综合：1 Active + N Default 的完整 Tab 行
+    <span class="h2-note">使用公共组件 <code>.tab</code> 包裹（gap 72），与 Figma Tab 组件 1:1。</span>
+  </h2>
+  <p class="figma-meta">Figma 319:11934 · HORIZONTAL · gap 72 · 默认 4 项 · 容器零视觉</p>
+  <div class="variant-strip">
+    <div class="demo-row" style="gap:36px;">
+      <ul class="tab" role="tablist" aria-label="Tab 容器示意">
+        <li><span class="tab-item" data-state="active">推荐</span></li>
+        <li><span class="tab-item" data-state="default">附近</span></li>
+        <li><span class="tab-item" data-state="default">收藏</span></li>
+        <li><span class="tab-item" data-state="default">历史</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const btnLight = document.getElementById('btn-light');
+    const btnDark  = document.getElementById('btn-dark');
+    function setTheme(t) {
+      document.documentElement.dataset.theme = t;
+      btnLight.setAttribute('aria-pressed', String(t === 'light'));
+      btnDark.setAttribute('aria-pressed', String(t === 'dark'));
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+  </script>
+</body>
+</html>

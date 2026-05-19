@@ -1,0 +1,39 @@
+<!--
+  Pagination · 最小可复制片段
+  使用前请：
+    1) 引入 design-system/tokens.css、shadows.css
+    2) 引入 components-html/icon/icon.svg sprite
+    3) 引入 components-html/pagination-prev/pagination-prev.css
+    4) 引入 components-html/pagination-next/pagination-next.css
+    5) 引入 components-html/pagination/pagination.css
+
+  Figma 节点：458:42138（COMPONENT）
+-->
+
+<!-- 中间页：左右都启用 -->
+<nav class="pagination" aria-label="分页">
+  <button type="button" class="pagination-prev" aria-label="上一页">
+    <span class="pagination-prev__icon" aria-hidden="true">
+      <svg><use href="../icon/icon.svg#icon/back--fill"/></svg>
+    </span>
+  </button>
+  <button type="button" class="pagination-next" aria-label="下一页">
+    <span class="pagination-next__icon" aria-hidden="true">
+      <svg><use href="../icon/icon.svg#icon/enter--fill"/></svg>
+    </span>
+  </button>
+</nav>
+
+<!-- 首页：上一页禁用 -->
+<nav class="pagination" aria-label="分页">
+  <button type="button" class="pagination-prev" aria-label="上一页" disabled>
+    <span class="pagination-prev__icon" aria-hidden="true">
+      <svg><use href="../icon/icon.svg#icon/back--fill"/></svg>
+    </span>
+  </button>
+  <button type="button" class="pagination-next" aria-label="下一页">
+    <span class="pagination-next__icon" aria-hidden="true">
+      <svg><use href="../icon/icon.svg#icon/enter--fill"/></svg>
+    </span>
+  </button>
+</nav>

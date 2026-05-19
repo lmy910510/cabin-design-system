@@ -1,0 +1,38 @@
+<!--
+  NumberInput-item · 最小 HTML 骨架
+  Figma 节点：323:12150（COMPONENT_SET）
+
+  引入：
+    <link rel="stylesheet" href="../../design-system/tokens.css" />
+    <link rel="stylesheet" href="../number-input-item/number-input-item.css" />
+
+  完整变体见 number-input-item.preview.html
+-->
+
+<!-- Default：默认态，显示已输入字符 -->
+<span class="ni-item" data-state="default">A</span>
+
+<!-- Focused：聚焦态，3px active 描边，空内容（不要写文字） -->
+<span class="ni-item" data-state="focused"></span>
+
+<!-- Special：竖排占位，常见于车牌"新能源"提示槽 -->
+<span class="ni-item" data-state="special">新能源</span>
+
+<!-- error：输入校验失败，警示色 -->
+<span class="ni-item" data-state="error">F</span>
+
+<!-- 特殊态-选中：positive 色，常见于"新能源 已选中" -->
+<span class="ni-item" data-state="picked"></span>
+
+
+<!-- 容器：NumberInput 行（gap 24，HORIZONTAL）-->
+<ul class="ni-list" aria-label="车牌输入">
+  <li><span class="ni-item" data-state="default">京</span></li>
+  <li><span class="ni-item" data-state="default">A</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="default">8</span></li>
+  <li><span class="ni-item" data-state="focused"></span></li>
+  <li><span class="ni-item" data-state="special">新能源</span></li>
+</ul>

@@ -1,0 +1,49 @@
+/* =============================================================
+ * NumberInput · 数字输入容器（验证码 / 车牌 / 密码逐位输入）
+ * Figma：节点 325:12188（COMPONENT）
+ *
+ * 视觉真值：
+ *   外层 NumberInput  HORIZONTAL，gap = 0
+ *     └─ NumberInput-list (SLOT)  HORIZONTAL，gap = 24（token md）
+ *          └─ NumberInput-item × N（视觉真源在 number-input-item.css）
+ *
+ * 默认：8 个 NumberInput-item 实例（约 888 × 102，随子项数量自适应 HUG）
+ *
+ * 设计契约：
+ *   - 容器自身**零视觉**（无背景 / 无边框 / 无 padding / 无圆角），
+ *     真实的"格子"视觉全部来自 .ni-item（number-input-item.css）。
+ *   - .ni-list（SLOT 等价物）只承担 layout：横向、24 间距、居中对齐。
+ *   - 不在本文件重写 .ni-item，避免分叉。
+ *
+ * 已知调用方：
+ *   - number-input-item.preview.html 综合段（已迁移至本文件做 SSOT）
+ * ============================================================= */
+
+.number-input {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0;                         /* Figma 外层 gap=0 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* SLOT：NumberInput-list —— 真正承载子格子的横向 stack */
+.number-input__list,
+.ni-list {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;                      /* Figma SLOT itemSpacing=24 */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.number-input__list > li,
+.ni-list > li {
+  display: inline-flex;
+  align-items: center;
+  list-style: none;
+}

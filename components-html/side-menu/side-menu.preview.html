@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <title>SideMenu · 预览（Figma 436:1770）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../icon/icon.css" />
+  <link rel="stylesheet" href="../side-menu-item/side-menu-item.css" />
+  <link rel="stylesheet" href="./side-menu.css" />
+  <style>
+    body {
+      margin: 0; padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 24px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    .banner {
+      background: var(--color-bg-warning-transparent, #fff7e6);
+      color: var(--color-text-warning, #b25e00);
+      padding: 14px 18px; border-radius: 12px;
+      font-size: 18px; line-height: 26px;
+      margin: 0 0 36px;
+    }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .strip {
+      display: flex; gap: 36px; padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+      align-items: stretch;
+    }
+  </style>
+</head>
+<body>
+  <h1>SideMenu · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 436:1770（COMPONENT_SET）· mode = expanded / collapsed · SLOT nav-list · nav-group + footer
+  </p>
+  <p class="banner">
+    ⚠️ 待与 Figma 对齐：Figma 节点暂无 description / Annotations，宽度 / padding / 间距按 token + 视觉节奏推导。结构与 variant 维度已对齐，规格待 Figma 补充后再精确回写。
+  </p>
+
+  <h2>1. mode = expanded</h2>
+  <p class="figma-meta">.side-menu · 360 × 480+ · 子项 hasText=true</p>
+  <div class="strip">
+    <aside class="side-menu" aria-label="主导航 expanded">
+      <div class="side-menu__nav-group">
+        <button type="button" class="side-menu-item is-selected" aria-current="page">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/star--fill"/></svg>
+          </span>
+          <span class="side-menu-item__label">收藏</span>
+        </button>
+        <button type="button" class="side-menu-item">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/wifi--line"/></svg>
+          </span>
+          <span class="side-menu-item__label">网络</span>
+        </button>
+        <button type="button" class="side-menu-item">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/list--line"/></svg>
+          </span>
+          <span class="side-menu-item__label">列表</span>
+        </button>
+        <button type="button" class="side-menu-item">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/info--line"/></svg>
+          </span>
+          <span class="side-menu-item__label">关于</span>
+        </button>
+      </div>
+      <div class="side-menu__footer">
+        <button type="button" class="side-menu-item">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/setting--line"/></svg>
+          </span>
+          <span class="side-menu-item__label">设置</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <h2>2. mode = collapsed</h2>
+  <p class="figma-meta">.side-menu.is-collapsed · 108 × 480+ · 子项 hasText=false</p>
+  <div class="strip">
+    <aside class="side-menu is-collapsed" aria-label="主导航 collapsed">
+      <div class="side-menu__nav-group">
+        <button type="button" class="side-menu-item is-collapsed is-selected" aria-current="page" aria-label="收藏">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/star--fill"/></svg>
+          </span>
+        </button>
+        <button type="button" class="side-menu-item is-collapsed" aria-label="网络">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/wifi--line"/></svg>
+          </span>
+        </button>
+        <button type="button" class="side-menu-item is-collapsed" aria-label="列表">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/list--line"/></svg>
+          </span>
+        </button>
+        <button type="button" class="side-menu-item is-collapsed" aria-label="关于">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/info--line"/></svg>
+          </span>
+        </button>
+      </div>
+      <div class="side-menu__footer">
+        <button type="button" class="side-menu-item is-collapsed" aria-label="设置">
+          <span class="side-menu-item__icon" aria-hidden="true">
+            <svg><use href="../icon/icon.svg#icon/setting--line"/></svg>
+          </span>
+        </button>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>

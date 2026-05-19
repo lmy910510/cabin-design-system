@@ -1,0 +1,23 @@
+<!--
+  Pagination-prev · 最小可复制片段
+  使用前请：
+    1) 引入 design-system/tokens.css
+    2) 引入 components-html/icon/icon.svg sprite
+    3) 引入 components-html/pagination-prev/pagination-prev.css
+
+  Figma 节点：458:41252（COMPONENT_SET，Disabled 2 variant）
+-->
+
+<!-- Disabled = False（默认） -->
+<button type="button" class="pagination-prev" aria-label="上一页">
+  <span class="pagination-prev__icon" aria-hidden="true">
+    <svg><use href="../icon/icon.svg#icon/back--fill"/></svg>
+  </span>
+</button>
+
+<!-- Disabled = True（首页时禁用） -->
+<button type="button" class="pagination-prev" aria-label="上一页" disabled>
+  <span class="pagination-prev__icon" aria-hidden="true">
+    <svg><use href="../icon/icon.svg#icon/back--fill"/></svg>
+  </span>
+</button>

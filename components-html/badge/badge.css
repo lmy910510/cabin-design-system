@@ -1,0 +1,83 @@
+/* =====================================================
+ * Badge · 徽标
+ * 1:1 映射自 Figma「🤖座舱组件库-AI版 / Badge」COMPONENT_SET 299:8722
+ * 2 个 variant：circle / ribbon
+ *
+ * Figma 实测取值：
+ *   - circle：12×12，cornerRadius 6（全圆），fill = #FF293B (red-5)
+ *             绑定变量 VariableID:325:12861（实际值 = red-5）
+ *   - ribbon：高 30，宽 hug（min 30），padding L12/R12，cornerRadius 18（胶囊）
+ *             fill = #FF293B (red-5)，文本 24px DIN Medium，
+ *             文本色 = white-9 (90% 白)，居中
+ *
+ * 语义 token 选型（已核 tokens-mapping.md）：
+ *   - 红色背景 = red-5 = `--color-bg-warning`（语义匹配，warning 即"未读/提醒"）
+ *   - ribbon 文字色 = white-9 = `--color-text-primary-inverse`（Light 主题）
+ *   两者在 dark 主题下也已正确翻转，无需特殊处理。
+ *
+ * 用法：
+ *   <!-- 圆点徽标 -->
+ *   <span class="badge badge--circle" aria-hidden="true"></span>
+ *
+ *   <!-- 数字徽标 -->
+ *   <span class="badge badge--ribbon">99+</span>
+ *   <span class="badge badge--ribbon">3</span>
+ * ===================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-warning);
+  color: var(--color-text-primary-inverse);
+  /* 在 flex 父级里不要被压扁 */
+  flex-shrink: 0;
+  /* 重置 user-agent */
+  border: 0;
+  box-sizing: border-box;
+  /* 视觉重心居中（数字徽标场景） */
+  vertical-align: middle;
+}
+
+/* ============== variant: circle ==============
+ * 12×12 红色小圆点，无文本，纯状态指示
+ * 对应 Figma node 299:8723 */
+.badge--circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;          /* = Figma cornerRadius 6（全圆）*/
+  /* 圆点不需要文字，但万一带也不允许显示 */
+  font-size: 0;
+  line-height: 0;
+}
+
+/* ============== variant: ribbon ==============
+ * 胶囊形 + 数字文本，高 30，padding L12/R12，radius 18
+ * 对应 Figma node 299:8725 */
+.badge--ribbon {
+  height: 30px;
+  min-width: 30px;             /* Figma min 30，保证 1 位数也是规整圆胶囊 */
+  padding: 0 12px;
+  border-radius: 18px;
+  /* 文字：24px DIN Medium / 行高 24（Figma 真值）
+     DIN 是 Figma 原字体；Web 上若无 DIN 则 fallback 到 SF Mono / Inter，
+     保证窄数字、居中对齐效果接近 */
+  font-family: "DIN", "DIN Alternate", "Inter", "SF Pro Display",
+               system-ui, -apple-system, sans-serif;
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 500;
+  /* 防止极端长度文本撑破气泡 */
+  white-space: nowrap;
+  overflow: hidden;
+  /* Figma 文字色 white-9（90% 白），CSS 用语义 token；
+     但 Light 主题下 --color-text-primary-inverse = white-9 完全对齐，
+     dark 主题下也正确翻转为 coldGray-9，徽标背景仍为红，对比度仍达标。 */
+}
+
+/* ============== 工程补充：尺寸钩子（不破坏 Figma） ==============
+ * Figma 只定义了 ribbon 一个尺寸（高 30）。
+ * 但实际上 list-leading 60×60 槽内的 badge 与 top-bar 80 高度区里的 badge
+ * 有时会需要更紧凑的尺寸。这里**不擅自增加新 variant**，仅留出钩子注释，
+ * 等业务方真要用时再回 Figma 提需求新增 variant，避免组件库分叉。
+ * ============================================================= */

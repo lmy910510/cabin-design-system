@@ -1,0 +1,66 @@
+/* =============================================================
+ * Rating · 评分组件
+ * Figma：节点 301:9051（COMPONENT_SET）/ 2 个 variant：Stars / Single
+ * 视觉真值：
+ *   Stars：HORIZONTAL，gap 6
+ *     ├─ Stars 容器（HORIZONTAL，gap 3）—— 5 颗 Rating-item
+ *     └─ Score（DIN Medium 24/24，color = --color-text-price = orange-5）
+ *   Single：HORIZONTAL，gap 3
+ *     ├─ Rating-item × 1（Solo 默认）
+ *     └─ Score（同上）
+ *
+ * 视觉真源：
+ *   - 单颗星视觉 → ../rating-item/rating-item.css（**不在这里重画**）
+ *   - 颜色 / 字号 → tokens.css
+ *
+ * 用法：
+ *   <!-- 4.5 分（多星） -->
+ *   <span class="rating rating--stars">
+ *     <span class="rating__stars">
+ *       <span class="rating-item rating-item--full"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+ *       …(共 4 个 full + 1 个 half)…
+ *     </span>
+ *     <span class="rating__score">4.5</span>
+ *   </span>
+ *
+ *   <!-- 紧凑单星 -->
+ *   <span class="rating rating--single">
+ *     <span class="rating-item rating-item--solo"><svg class="icon"><use href="#icon/star--fill"/></svg></span>
+ *     <span class="rating__score">4.8</span>
+ *   </span>
+ *
+ *   隐藏分数：删除 .rating__score 节点（与 Figma boolean Show Score=false 等价）
+ * ============================================================= */
+
+.rating {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+}
+
+.rating--stars {
+  gap: 6px;
+}
+
+.rating--single {
+  gap: 3px;
+}
+
+/* Stars 容器：5 颗星，gap 3 */
+.rating__stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Score 文本：DIN Medium 24/24，橙色（--color-text-price）
+   DIN 不在系统字体里时回落到 Inter / SF Pro Display，确保等宽数字对齐 */
+.rating__score {
+  font: 500 24px/24px DIN, "DIN Medium", "Inter", "SF Pro Display",
+    system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-price);
+  /* 视觉对齐：DIN 自带的 baseline 偏低，手动微调让分数和星星顶端齐 */
+  display: inline-flex;
+  align-items: center;
+}

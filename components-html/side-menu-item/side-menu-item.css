@@ -1,0 +1,86 @@
+/* =============================================================
+ * SideMenu / Item · 侧栏导航项
+ * Figma：节点 459:2790（COMPONENT_SET，4 variant）
+ *   selected: true | false
+ *   hasText:  true | false
+ *
+ * ⚠️ Figma 当前 description 为 null，下列具体 padding / 字号 / 颜色
+ * 为对齐 design-system token + 与 TopBar / Tab-item 视觉节奏推导，
+ * 待 Figma 补充 description / Annotations 后再做精确回写。
+ *
+ * 真值（暂定）：
+ *   item 容器：HORIZONTAL，gap 24，padding 24/30，圆角 24
+ *   icon 槽：60×60（与 list-leading 一致）
+ *   label：28/36 Medium
+ *   selected=true：背景 --color-bg-item-primary，文字反色
+ *   selected=false：背景透明，文字 --color-text-primary
+ *   hasText=false（折叠态）：仅渲染 icon 槽，label 不显示
+ * ============================================================= */
+
+.side-menu-item {
+  /* layout */
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 30px;
+  border: 0;
+  border-radius: 24px;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background .15s ease, color .15s ease;
+
+  /* 文字 */
+  font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 36px;
+  color: var(--color-text-primary);
+  text-align: left;
+}
+
+.side-menu-item:hover { background: rgba(0, 0, 0, 0.04); }
+
+/* selected = true */
+.side-menu-item.is-selected,
+.side-menu-item[aria-current="page"],
+.side-menu-item[data-selected="true"] {
+  background: var(--color-bg-item-primary);
+  color: var(--color-text-primary-inverse);
+}
+
+/* hasText = false（折叠态）：宽度收缩，仅 icon */
+.side-menu-item.is-collapsed,
+.side-menu-item[data-has-text="false"] {
+  width: auto;
+  padding: 24px;
+  justify-content: center;
+}
+
+.side-menu-item.is-collapsed .side-menu-item__label,
+.side-menu-item[data-has-text="false"] .side-menu-item__label {
+  display: none;
+}
+
+/* icon 槽 60×60，与 list-leading 一致 */
+.side-menu-item__icon {
+  flex: none;
+  width: 60px;
+  height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+.side-menu-item__icon svg { width: 36px; height: 36px; fill: currentColor; }
+
+.side-menu-item__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

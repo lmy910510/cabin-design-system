@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Badge · 预览（Figma 1:1，2 个 variant）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="../icon/icon.css" />
+  <link rel="stylesheet" href="./badge.css" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 48px;
+      line-height: 54px;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0 0 36px;
+      color: var(--color-text-secondary);
+      font-size: 22px;
+      line-height: 30px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .toolbar button {
+      padding: 0 24px;
+      height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+    h2 {
+      margin: 60px 0 8px;
+      font-size: 32px;
+      line-height: 38px;
+      font-weight: 700;
+    }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .h2-note {
+      display: block;
+      margin-top: 4px;
+      font-size: 20px;
+      line-height: 26px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+
+    .variant-strip {
+      width: 100%;
+      max-width: 1040px;
+      box-sizing: border-box;
+      display: block;
+      padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: var(--space-md, 24px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* badge-host：把 badge 叠在某个元素的右上角（图标 / 头像） */
+    .badge-host {
+      position: relative;
+      display: inline-flex;
+      vertical-align: middle;
+    }
+    .badge-host > .badge--circle {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+    }
+    .badge-host > .badge--ribbon {
+      position: absolute;
+      top: -10px;
+      right: -16px;
+    }
+
+    /* 演示行 */
+    .demo-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 36px;
+    }
+    .demo-row .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .demo-row .item-label {
+      font: 500 16px/20px var(--font-family-cn);
+      color: var(--color-text-secondary);
+    }
+
+    /* 模拟 icon 容器（无 sprite 时也能渲染色块） */
+    .mock-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--color-bg-item-secondary, #eaedf2);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      font: 700 18px/1 var(--font-family-cn);
+    }
+
+    /* 标题 + 圆点（list-content 真实使用形态） */
+    .title-with-badge {
+      display: inline-flex;
+      align-items: flex-start;
+      gap: 6px;
+      font: 500 32px/32px var(--font-family-cn);
+      color: var(--color-text-primary);
+    }
+    .title-with-badge .badge--circle {
+      margin-top: 4px; /* 与 list-content.css 中红点视觉对齐策略一致 */
+    }
+  </style>
+</head>
+<body>
+  <h1>Badge · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 299:8722（COMPONENT_SET）· 2 个 variant：circle 12×12 / ribbon 高30 胶囊
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <!-- 1. circle -->
+  <h2>1. type = circle（12×12）
+    <span class="h2-note">圆点徽标，无文本，纯状态指示。Figma 颜色 #FF293B = red-5 = `--color-bg-warning`。</span>
+  </h2>
+  <p class="figma-meta">Figma 299:8723 · 12×12 · radius 6 · fill red-5</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <div class="item">
+        <span class="badge badge--circle" aria-hidden="true"></span>
+        <span class="item-label">单独 circle</span>
+      </div>
+      <div class="item">
+        <span class="badge-host">
+          <span class="mock-icon">通</span>
+          <span class="badge badge--circle" aria-hidden="true"></span>
+        </span>
+        <span class="item-label">叠在图标右上</span>
+      </div>
+      <div class="item">
+        <span class="title-with-badge">
+          系统更新<span class="badge badge--circle" aria-hidden="true"></span>
+        </span>
+        <span class="item-label">嵌在标题（list-content 形态）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ribbon -->
+  <h2>2. type = ribbon（高 30，胶囊）
+    <span class="h2-note">数字徽标。文本 24px，超过 99 显示 99+。</span>
+  </h2>
+  <p class="figma-meta">Figma 299:8725 · 高30 · padding 0/12 · radius 18 · fill red-5 · text 24px white-9</p>
+  <div class="variant-strip">
+    <div class="demo-row">
+      <div class="item">
+        <span class="badge badge--ribbon">1</span>
+        <span class="item-label">1 位数</span>
+      </div>
+      <div class="item">
+        <span class="badge badge--ribbon">8</span>
+        <span class="item-label">单字</span>
+      </div>
+      <div class="item">
+        <span class="badge badge--ribbon">12</span>
+        <span class="item-label">2 位数</span>
+      </div>
+      <div class="item">
+        <span class="badge badge--ribbon">99</span>
+        <span class="item-label">最大边界</span>
+      </div>
+      <div class="item">
+        <span class="badge badge--ribbon">99+</span>
+        <span class="item-label">超出（推荐）</span>
+      </div>
+      <div class="item">
+        <span class="badge-host">
+          <span class="mock-icon">消</span>
+          <span class="badge badge--ribbon">5</span>
+        </span>
+        <span class="item-label">叠在图标右上</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 综合对照 -->
+  <h2>3. 综合对照
+    <span class="h2-note">两种变体同时出现的场景，用于对比形态差异。</span>
+  </h2>
+  <p class="figma-meta">非 Figma 节点；预览页自定义对照组</p>
+  <div class="variant-strip">
+    <div class="demo-row" style="gap:60px;">
+      <div class="item">
+        <span class="badge-host">
+          <span class="mock-icon">A</span>
+          <span class="badge badge--circle" aria-hidden="true"></span>
+        </span>
+        <span class="item-label">circle 状态点</span>
+      </div>
+      <div class="item">
+        <span class="badge-host">
+          <span class="mock-icon">B</span>
+          <span class="badge badge--ribbon">3</span>
+        </span>
+        <span class="item-label">ribbon 数字</span>
+      </div>
+      <div class="item">
+        <span class="badge-host">
+          <span class="mock-icon">C</span>
+          <span class="badge badge--ribbon">99+</span>
+        </span>
+        <span class="item-label">ribbon 溢出</span>
+      </div>
+      <div class="item">
+        <span class="title-with-badge">
+          通知中心<span class="badge badge--circle" aria-hidden="true"></span>
+        </span>
+        <span class="item-label">标题红点（含义=未读）</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btnLight = document.getElementById('btn-light');
+    const btnDark = document.getElementById('btn-dark');
+    function setTheme(t) {
+      document.documentElement.dataset.theme = t;
+      btnLight.setAttribute('aria-pressed', String(t === 'light'));
+      btnDark.setAttribute('aria-pressed', String(t === 'dark'));
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+  </script>
+</body>
+</html>

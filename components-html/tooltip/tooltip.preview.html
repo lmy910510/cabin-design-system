@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tooltip · 预览（Figma 1:1，8 个 variant）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="../icon/icon.css" />
+  <script src="../icon/icon-sprite-inline.js"></script>
+  <link rel="stylesheet" href="./tooltip.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    .toolbar { display: flex; gap: 24px; margin-bottom: 36px; }
+    .toolbar button {
+      padding: 0 24px; height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .h2-note {
+      display: block; margin-top: 4px;
+      font-size: 20px; line-height: 26px;
+      font-weight: 400; color: var(--color-text-secondary);
+    }
+    .variant-strip {
+      width: 100%;
+      max-width: 1040px;
+      box-sizing: border-box;
+      display: block;
+      padding: 60px 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: var(--space-md, 24px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* 演示用 grid，给 tooltip 一些喘气空间 */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px 36px;
+      align-items: center;
+      justify-items: start;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px 36px;
+      align-items: center;
+      justify-items: start;
+    }
+
+    .demo-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .demo-cell .cell-label {
+      font: 500 16px/20px var(--font-family-cn);
+      color: var(--color-text-secondary);
+    }
+
+    /* 让 tooltip 周围留白足够看到箭头 */
+    .demo-cell .tooltip {
+      margin: 24px 36px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Tooltip · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 315:11577（COMPONENT_SET）· 8 个 variant：Top/Bottom × Start/Center/End + Left/Right Center
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <!-- 1. Top × Start/Center/End -->
+  <h2>1. Direction = Top
+    <span class="h2-note">气泡在触发元素上方，箭头朝下；Alignment 控制箭头水平位置。</span>
+  </h2>
+  <p class="figma-meta">Figma 315:11749 / 315:11578 / 315:11683 · arrow 36×18</p>
+  <div class="variant-strip">
+    <div class="grid-3">
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="top" data-alignment="start">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">操作</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">Top-Start</span>
+      </div>
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="top" data-alignment="center">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">操作</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">Top-Center（默认）</span>
+      </div>
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="top" data-alignment="end">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">操作</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">Top-End</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Bottom × Start/Center/End -->
+  <h2>2. Direction = Bottom
+    <span class="h2-note">气泡在下方，箭头朝上。</span>
+  </h2>
+  <p class="figma-meta">Figma 315:11741 / 315:11576 / 315:11595</p>
+  <div class="variant-strip">
+    <div class="grid-3">
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="bottom" data-alignment="start">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">操作</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">Bottom-Start</span>
+      </div>
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="bottom" data-alignment="center">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">操作</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">Bottom-Center</span>
+      </div>
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="bottom" data-alignment="end">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">操作</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">Bottom-End</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Left / Right -->
+  <h2>3. Direction = Left / Right
+    <span class="h2-note">侧向气泡，Alignment 仅 Center。箭头翻转为 18×36。</span>
+  </h2>
+  <p class="figma-meta">Figma 315:11819（Left-Center）/ 315:11785（Right-Center）</p>
+  <div class="variant-strip">
+    <div class="grid-2">
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="left">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">操作</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">Left-Center（气泡在右）</span>
+      </div>
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="right">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">操作</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">Right-Center（气泡在左）</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. boolean 矩阵 -->
+  <h2>4. Show icon × Show action 组合
+    <span class="h2-note">两个 boolean 各 2 个值，共 4 种内容形态。Direction 固定 Top-Center 便于对比。</span>
+  </h2>
+  <p class="figma-meta">Show icon ∈ {true, false} × Show action ∈ {true, false}</p>
+  <div class="variant-strip">
+    <div class="grid-2">
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="top" data-alignment="center">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">气泡提示</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">知道了</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">icon ✓ + action ✓（默认）</span>
+      </div>
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="top" data-alignment="center">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__text">点击试试看</span>
+            </div>
+            <span class="tooltip__action" role="button" tabindex="0">查看详情</span>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">icon ✗ + action ✓</span>
+      </div>
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="top" data-alignment="center">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__icon"><svg class="icon"><use href="#icon/info--line"/></svg></span>
+              <span class="tooltip__text">这个按钮可以收藏当前位置</span>
+            </div>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">icon ✓ + action ✗</span>
+      </div>
+      <div class="demo-cell">
+        <div class="tooltip" data-direction="top" data-alignment="center">
+          <div class="tooltip__bubble">
+            <div class="tooltip__content">
+              <span class="tooltip__text">轻提示文案</span>
+            </div>
+          </div>
+          <span class="tooltip__arrow" aria-hidden="true"></span>
+        </div>
+        <span class="cell-label">icon ✗ + action ✗（轻提示）</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const btnLight = document.getElementById('btn-light');
+    const btnDark  = document.getElementById('btn-dark');
+    function setTheme(t) {
+      document.documentElement.dataset.theme = t;
+      btnLight.setAttribute('aria-pressed', String(t === 'light'));
+      btnDark.setAttribute('aria-pressed', String(t === 'dark'));
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+  </script>
+</body>
+</html>

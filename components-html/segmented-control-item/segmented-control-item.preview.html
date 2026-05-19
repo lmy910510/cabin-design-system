@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <title>SegmentedControl-item · 预览（Figma 464:42275）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="./segmented-control-item.css" />
+  <style>
+    body {
+      margin: 0; padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .strip {
+      display: flex; gap: 36px; padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+      align-items: center;
+    }
+    /* 单独展示时，flex:1 没意义，给个固定宽度演示 */
+    .demo-w { flex: none; width: 240px; }
+  </style>
+</head>
+<body>
+  <h1>SegmentedControl-item · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 464:42275（COMPONENT_SET）· State=Active / Default · 单独不使用，下面以固定宽度展示视觉
+  </p>
+
+  <h2>State = Active</h2>
+  <p class="figma-meta">背景 = bg/container_primary · 阴影 = Shadow/Medium</p>
+  <div class="strip">
+    <button type="button" class="sc-item is-active demo-w" role="tab" aria-selected="true">推荐</button>
+  </div>
+
+  <h2>State = Default</h2>
+  <p class="figma-meta">背景透明 · 文字 = --color-text-secondary</p>
+  <div class="strip">
+    <button type="button" class="sc-item demo-w" role="tab" aria-selected="false">附近</button>
+  </div>
+</body>
+</html>

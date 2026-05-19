@@ -1,0 +1,25 @@
+<!--
+  Toast · 最小可复制片段
+  使用前请：
+    1) 引入 design-system/tokens.css、shadows.css
+    2) 引入 components-html/icon/icon.css 与 icon.svg sprite（图标版本）
+    3) 引入 components-html/toast/toast.css
+
+  Figma 节点：305:11208（COMPONENT，含 Boolean 属性 Show icon）
+
+  注意：Figma 默认 icon 为 icon/fail，本地 sprite 当前未补充 fail / success / warning，
+       预览暂用 icon/info--fill 占位，待 sprite 扩展后替换 use href 即可。
+-->
+
+<!-- 默认：Show icon = true -->
+<div class="toast" role="status" aria-live="polite">
+  <span class="toast__icon" aria-hidden="true">
+    <svg><use href="../icon/icon.svg#icon/info--fill"/></svg>
+  </span>
+  <span class="toast__label">操作失败</span>
+</div>
+
+<!-- Show icon = false：纯文字提示 -->
+<div class="toast toast--no-icon" role="status" aria-live="polite">
+  <span class="toast__label">已复制到剪贴板</span>
+</div>

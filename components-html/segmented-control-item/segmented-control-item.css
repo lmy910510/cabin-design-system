@@ -1,0 +1,51 @@
+/* =============================================================
+ * SegmentedControl-item · 分段控制器子项
+ * Figma：节点 464:42275（COMPONENT_SET，2 variant：State=Active / Default）
+ *
+ * 视觉真值：
+ *   - State=Active：高亮背景 + 阴影，水平/垂直居中
+ *   - State=Default：透明背景，水平/垂直居中
+ *   - Label 文本属性
+ *
+ * 真实 padding / 字号：来自父容器（SegmentedControl）和文本 token；
+ *   item 自身只承担 background / shadow / radius / 文字色切换。
+ *
+ * 设计约定：
+ *   - 不单独使用，作为 SegmentedControl 容器的子节点
+ *   - 横向 Fill 自动均分（容器侧用 flex:1 控制）
+ * ============================================================= */
+
+.sc-item {
+  /* layout */
+  flex: 1 1 0;                         /* 与 SegmentedControl 容器搭配，Fill 均分 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 84px;                         /* 经验值：与 36 padding + 字号 28/36 平衡（容器 padding xxs=6） */
+  padding: 0 24px;                     /* 横向内边距，给文字留呼吸 */
+  border: 0;
+  border-radius: 999px;                /* 与父容器一致，胶囊形 */
+  background: transparent;             /* Default：透明 */
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+
+  /* 文字 */
+  font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 36px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* State=Active：高亮背景 + 阴影 + 主色文字 */
+.sc-item.is-active,
+.sc-item[aria-selected="true"],
+.sc-item[data-state="active"] {
+  background: var(--color-bg-card-primary, #ffffff);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-medium, 0 4px 12px rgba(0, 0, 0, 0.08));
+}

@@ -1,0 +1,28 @@
+<!--
+  QRCode · 最小骨架
+  data-type:  circle | square
+  data-state: default | inactive | loading | expired
+-->
+
+<!-- Default · Square：用 <img> 替换 .qrcode__pattern 即可换成真二维码 -->
+<div class="qrcode" data-type="square" data-state="default">
+  <div class="qrcode__pattern" aria-label="二维码"></div>
+</div>
+
+<!-- Inactive · Square：未授权 -->
+<div class="qrcode" data-type="square" data-state="inactive">
+  <p class="qrcode__hint">请勾选下方隐私协议</p>
+  <div class="qrcode__placeholder" aria-hidden="true"></div>
+</div>
+
+<!-- Loading · Circle：加载中 -->
+<div class="qrcode" data-type="circle" data-state="loading">
+  <div class="qrcode__loading" role="status" aria-label="加载中"></div>
+</div>
+
+<!-- Expired · Circle：已过期，点击刷新 -->
+<div class="qrcode" data-type="circle" data-state="expired">
+  <button class="qrcode__refresh" type="button" aria-label="刷新二维码">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+  </button>
+</div>

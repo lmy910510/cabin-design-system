@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pagination-prev · 预览（Figma 458:41252）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../icon/icon.css" />
+  <link rel="stylesheet" href="./pagination-prev.css" />
+  <style>
+    body {
+      margin: 0; padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .strip {
+      display: flex; gap: 36px; padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+      align-items: center;
+    }
+    .ruler { outline: 1px dashed var(--color-border-primary); }
+  </style>
+</head>
+<body>
+  <h1>Pagination-prev · Figma 1:1 预览</h1>
+  <p class="subtitle">Figma 458:41252（COMPONENT_SET）· 72×72 · icon/back 36×36 · Disabled 2 variant</p>
+
+  <h2>Disabled = False（默认）</h2>
+  <p class="figma-meta">color = #1F2229 (≈ --color-text-primary)</p>
+  <div class="strip">
+    <button type="button" class="pagination-prev ruler" aria-label="上一页">
+      <span class="pagination-prev__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/back--fill"/></svg>
+      </span>
+    </button>
+  </div>
+
+  <h2>Disabled = True（已在首页）</h2>
+  <p class="figma-meta">color = #D0D5DC (≈ --color-text-disabled)</p>
+  <div class="strip">
+    <button type="button" class="pagination-prev ruler" aria-label="上一页" disabled>
+      <span class="pagination-prev__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/back--fill"/></svg>
+      </span>
+    </button>
+  </div>
+</body>
+</html>

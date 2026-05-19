@@ -11,6 +11,10 @@
        2) 引入 components-html/button/button.css（多个 variant 复用 .btn）
        3) 引入 components-html/top-bar/top-bar.css
        4) 注入图标 sprite：<script src="../icon/icon-sprite-inline.js"></script>
+       5) 仅 style=button-avatar 时额外引入：
+          - components-html/tab/tab.css       （左侧 Tab 容器布局来源）
+          - components-html/tab-item/tab-item.css（左侧 Tab 项视觉来源）
+          模板上把 .top-bar__tab-list 与 .tab 复合，子项使用 .tab-item。
 
      共享骨架：高 156，左右 padding 42，HORIZONTAL SPACE_BETWEEN
      变体切换：在 .top-bar 上加 .top-bar--<variant>
@@ -62,23 +66,11 @@
      ============================================================ -->
 <header class="top-bar top-bar--button-avatar">
   <div class="top-bar__left">
-    <ul class="top-bar__tab-list" role="tablist">
-      <li><button type="button" class="top-bar__tab-item is-active" role="tab" aria-selected="true">
-        <span class="top-bar__tab-item-label">标签</span>
-        <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
-      </button></li>
-      <li><button type="button" class="top-bar__tab-item" role="tab" aria-selected="false">
-        <span class="top-bar__tab-item-label">标签</span>
-        <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
-      </button></li>
-      <li><button type="button" class="top-bar__tab-item" role="tab" aria-selected="false">
-        <span class="top-bar__tab-item-label">标签</span>
-        <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
-      </button></li>
-      <li><button type="button" class="top-bar__tab-item" role="tab" aria-selected="false">
-        <span class="top-bar__tab-item-label">标签</span>
-        <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
-      </button></li>
+    <ul class="top-bar__tab-list tab" role="tablist">
+      <li><button type="button" class="tab-item tab-item--active" role="tab" aria-selected="true">标签</button></li>
+      <li><button type="button" class="tab-item" role="tab" aria-selected="false">标签</button></li>
+      <li><button type="button" class="tab-item" role="tab" aria-selected="false">标签</button></li>
+      <li><button type="button" class="tab-item" role="tab" aria-selected="false">标签</button></li>
     </ul>
   </div>
   <div class="top-bar__right">

@@ -29,6 +29,11 @@
  *   - design-system/tokens.css（颜色、间距、圆角）
  *   - components-html/button/button.css（back / title-actions / button-avatar /
  *     select-actions 都复用 .btn--secondary / .btn--danger / .btn--md / .btn--icon-only）
+ *   - components-html/tab/tab.css（仅 style=button-avatar 需要；左侧 4-Tab 容器
+ *     直接复用 .tab 的 layout，本文件不再写 flex+gap72）
+ *   - components-html/tab-item/tab-item.css（仅 style=button-avatar 需要；左侧
+ *     Tab 项直接调用 .tab-item / .tab-item--active 公共组件，本文件不再自带
+ *     tab-item 视觉样式）
  *
  * 注意：
  *   - `.top-bar__title` 字色：Figma 文本未绑 token（写死 #1F2229），CSS 用
@@ -105,9 +110,9 @@
  *   Figma 真值（466:9806 tab frame）：
  *     left.tab 容器：padding-top=18，width=768，height=72
  *     里面是 Tab 实例：HUG，gap=72（7xl）
- *       Tab-item 高度=54（4xl），垂直布局，gap=12
- *         label 36px Medium
- *         active 项底部多一根 indicator 48×6（3xl × xxs），居中
+ *       Tab-item（72×54，VERTICAL，gap=12，active 含 48×6 indicator）
+ *       —— 视觉真源是公共组件 .tab-item（components-html/tab-item/tab-item.css），
+ *       本文件不再重写 tab 样式；如需切换状态，在元素上加 .tab-item--active 即可。
  *
  *   right itemSpacing=30 (lg)，包含：
  *     - secondary md Button（"按钮"）
@@ -122,48 +127,12 @@
 }
 
 .top-bar__tab-list {
-  display: flex;
-  align-items: center;
-  gap: 72px;                                    /* itemSpacing 7xl */
-  height: 54px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  /* layout（flex / gap72 / center / list-reset）来自公共组件 .tab——
+     模板上把 .top-bar__tab-list 与 .tab 复合即可。这里不再重复声明，
+     仅保留类名作为 TopBar 内部的语义钩子（例如调试时用 querySelector） */
 }
-.top-bar__tab-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-xs);                         /* 12 */
-  height: 54px;
-  cursor: pointer;
-  font-size: 36px;
-  line-height: 36px;
-  font-weight: 500;
-  color: var(--color-text-secondary);           /* default */
-  letter-spacing: 0;
-  white-space: nowrap;
-  background: transparent;
-  border: none;
-  padding: 0;
-  font-family: inherit;
-}
-.top-bar__tab-item-label {
-  display: block;
-}
-.top-bar__tab-item-indicator {
-  width: 48px;                                  /* 3xl */
-  height: 6px;                                  /* xxs */
-  border-radius: 3px;
-  background: var(--color-text-primary);
-  display: none;
-}
-.top-bar__tab-item.is-active {
-  color: var(--color-text-primary);
-}
-.top-bar__tab-item.is-active .top-bar__tab-item-indicator {
-  display: block;
-}
+/* 注：tab 项视觉（72×54、label 36px、active indicator 48×6 等）全部由
+   公共组件 .tab-item 提供，本文件不再写 .top-bar__tab-item 系列规则。 */
 
 .top-bar__avatar {
   width: 72px;                                  /* 7xl */

@@ -1,0 +1,16 @@
+<!--
+  SegmentedControl · 最小可复制片段
+  使用前请：
+    1) 引入 design-system/tokens.css、shadows.css
+    2) 引入 components-html/segmented-control-item/segmented-control-item.css
+    3) 引入 components-html/segmented-control/segmented-control.css
+
+  Figma 节点：464:43476（COMPONENT，SLOT 属性 list）
+-->
+
+<!-- 3 段：第一段 Active -->
+<div class="segmented-control" role="tablist" aria-label="视图切换">
+  <button type="button" class="sc-item is-active" role="tab" aria-selected="true">推荐</button>
+  <button type="button" class="sc-item" role="tab" aria-selected="false">附近</button>
+  <button type="button" class="sc-item" role="tab" aria-selected="false">收藏</button>
+</div>

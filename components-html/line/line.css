@@ -1,0 +1,68 @@
+/* =====================================================
+ * Line · 分割线
+ * 1:1 映射自 Figma「🤖座舱组件库-AI版 / Line」COMPONENT_SET 10:1333
+ * 4 个 variant：Primary / Secondary / Vertical / Dashed
+ *
+ * Figma 实测取值（boundVariables 已核对，见 line.md）：
+ *   - Primary  stroke = #DEE2E8 = palette-cold-gray-2 → 我们语义层 `--color-border-secondary`
+ *   - Secondary stroke = #EAEDF2 = palette-cold-gray-1 → `--color-border-tertiary`
+ *   - Vertical stroke = #DEE2E8（同 Primary）
+ *   - Dashed   stroke = #DEE2E8（同 Primary，但虚线节奏 4-4）
+ *   - strokeWeight = 1px（所有 variant 一致）
+ *
+ * 实现选型：
+ *   - 水平线（Primary / Secondary / Dashed）：用 <hr> 元素或 div + border-top，
+ *     这里采用「block 元素 + border-top」，因为 <hr> 在不同浏览器默认 margin 不一，且不
+ *     方便和 flex 列表对齐。block + border-top 让父容器决定宽度，与 Figma "宽度可自适应拉伸" 一致。
+ *   - 垂直线（Vertical）：display:inline-block + border-left + height:100%，
+ *     高度由父容器（如 toolbar 行）撑开，与 Figma "高度可自适应拉伸" 一致。
+ * ===================================================== */
+
+.line {
+  /* 公共：清掉 user-agent 默认（针对 hr 兜底） */
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  /* block 占满父级宽度，方便在卡片/列表里直接用 */
+  display: block;
+  width: 100%;
+  /* 自身高度由 border 提供（实际 1px），保证多个 line 在 flex 列里不会塌掉 */
+  height: 0;
+  /* 让浏览器在 1px 边附近不做亚像素聚合（Retina 上更利落） */
+  flex-shrink: 0;
+}
+
+/* 1. Primary — 一级，主分隔
+   颜色 = palette-cold-gray-2 = `--color-border-secondary`
+   （命名差一档是历史遗留，详 line.md「token 对照说明」）*/
+.line--primary {
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+/* 2. Secondary — 二级，更弱的分隔
+   颜色 = palette-cold-gray-1 = `--color-border-tertiary` */
+.line--secondary {
+  border-top: 1px solid var(--color-border-tertiary);
+}
+
+/* 3. Dashed — 虚线（4-4 节奏） */
+.line--dashed {
+  border-top: 1px dashed var(--color-border-secondary);
+}
+
+/* 4. Vertical — 垂直线
+   - 不再走 width:100% / height:0；改为高度由父级撑开。
+   - inline-block 是为了能直接夹在 toolbar 的 flex 行里。 */
+.line--vertical {
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  /* 默认最小高度，避免没有父级高度时彻底看不到；业务用时父级会撑开 */
+  min-height: 30px;
+  border-top: 0;
+  border-left: 1px solid var(--color-border-secondary);
+  vertical-align: middle;
+  /* 在 flex 父级里收住自身宽度，避免被 align-items:stretch 拉成 1px+ */
+  flex-shrink: 0;
+}

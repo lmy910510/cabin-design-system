@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toast · 预览（Figma 305:11208）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../icon/icon.css" />
+  <link rel="stylesheet" href="./toast.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .strip {
+      display: flex; flex-wrap: wrap; gap: 36px;
+      padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+    }
+  </style>
+</head>
+<body>
+  <h1>Toast · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 305:11208（COMPONENT）· HORIZONTAL · gap 12 · padding 18/24 · 圆角 24
+    · Boolean 属性 <code>Show icon</code>
+  </p>
+
+  <p style="
+    background: var(--color-bg-warning-transparent, #fff7e6);
+    color: var(--color-text-warning, #b25e00);
+    padding: 14px 18px; border-radius: 12px;
+    font-size: 18px; line-height: 26px;
+    margin: 0 0 32px;">
+    ⚠️ 待与 Figma 对齐：本地 icon sprite 暂未补充 <code>fail / success / warning</code> 三个状态图标，
+    预览暂用 <code>info</code> 占位。待 sprite 扩展后，把 <code>&lt;use href&gt;</code> 切到对应 ID 即可，组件结构不变。
+  </p>
+
+  <h2>1. Show icon = true（默认）</h2>
+  <p class="figma-meta">Figma 305:11208 · icon/fail 42×42 · label 28/28</p>
+  <div class="strip">
+    <div class="toast" role="status" aria-live="polite">
+      <span class="toast__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/info--fill"/></svg>
+      </span>
+      <span class="toast__label">操作失败</span>
+    </div>
+
+    <div class="toast" role="status" aria-live="polite">
+      <span class="toast__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/info--fill"/></svg>
+      </span>
+      <span class="toast__label">已保存</span>
+    </div>
+
+    <div class="toast" role="status" aria-live="polite">
+      <span class="toast__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/info--fill"/></svg>
+      </span>
+      <span class="toast__label">网络异常</span>
+    </div>
+  </div>
+
+  <h2>2. Show icon = false（纯文字）</h2>
+  <p class="figma-meta">Boolean 属性切到 false，左槽不渲染</p>
+  <div class="strip">
+    <div class="toast toast--no-icon" role="status" aria-live="polite">
+      <span class="toast__label">已复制到剪贴板</span>
+    </div>
+    <div class="toast toast--no-icon" role="status" aria-live="polite">
+      <span class="toast__label">收藏成功</span>
+    </div>
+  </div>
+
+  <h2>3. 文案长度边界
+    <span style="display:block;margin-top:4px;font-size:20px;line-height:26px;font-weight:400;color:var(--color-text-secondary)">建议 ≤ 10 字；超长时容器随内容横向 HUG</span>
+  </h2>
+  <div class="strip">
+    <div class="toast" role="status">
+      <span class="toast__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/info--fill"/></svg>
+      </span>
+      <span class="toast__label">没有更多了</span>
+    </div>
+    <div class="toast" role="status">
+      <span class="toast__icon" aria-hidden="true">
+        <svg><use href="../icon/icon.svg#icon/info--fill"/></svg>
+      </span>
+      <span class="toast__label">网络连接不稳定，请稍后重试</span>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Input · 预览</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="./input.css" />
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--color-bg-page);
+      color: var(--color-text-primary);
+      font-family: -apple-system, "PingFang SC", sans-serif;
+      padding: 40px;
+    }
+    .preview { display: flex; flex-direction: column; gap: 32px; max-width: 900px; }
+    .preview__title { font-size: 14px; color: var(--color-text-tertiary); margin: 0 0 12px; }
+    .preview__group { display: flex; flex-direction: column; gap: 16px; }
+    .toolbar {
+      position: fixed; top: 16px; right: 24px; display: flex; gap: 8px;
+      background: var(--color-bg-container-primary);
+      border: 1px solid var(--color-border-secondary);
+      border-radius: 8px; padding: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .toolbar button {
+      appearance: none; border: 0; background: transparent;
+      color: var(--color-text-secondary);
+      padding: 6px 10px; font-size: 12px; cursor: pointer; border-radius: 6px;
+    }
+    .toolbar button.is-active { background: var(--color-bg-item-quaternary); color: var(--color-text-primary); }
+    .input__refresh:hover { transform: rotate(60deg); transition: transform 0.2s; }
+  </style>
+</head>
+<body>
+  <!-- 内嵌 icon sprite -->
+  <script src="../icon/icon-sprite-inline.js"></script>
+
+  <div class="toolbar">
+    <button data-theme-set="light" class="is-active">Light</button>
+    <button data-theme-set="dark">Dark</button>
+  </div>
+
+  <div class="preview">
+
+    <section>
+      <h3 class="preview__title">State = Default（仅 placeholder）</h3>
+      <div class="preview__group">
+        <div class="input" data-state="default">
+          <div class="input__field">
+            <span class="input__placeholder">请输入</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="preview__title">State = Focused（input-text + 闪烁光标 + 计数 + 清除 + 刷新）</h3>
+      <div class="preview__group">
+        <div class="input" data-state="focused">
+          <div class="input__field">
+            <span class="input__text">正在输入</span>
+            <span class="input__cursor">｜</span>
+          </div>
+          <span class="input__number">10/15</span>
+          <button class="input__fail" type="button" aria-label="清除">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/close--line"/></svg>
+          </button>
+          <span class="input__action">
+            <button class="input__refresh" type="button" aria-label="刷新">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+            </button>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="preview__title">State = Filled（已输入完成）</h3>
+      <div class="preview__group">
+        <div class="input" data-state="filled">
+          <div class="input__field">
+            <span class="input__text">文本信息内容输入完成</span>
+          </div>
+          <span class="input__number">10/15</span>
+          <button class="input__fail" type="button" aria-label="清除">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/close--line"/></svg>
+          </button>
+          <span class="input__action">
+            <button class="input__refresh" type="button" aria-label="刷新">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+            </button>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="preview__title">State = MaxLength（计数变 price 警示色）</h3>
+      <div class="preview__group">
+        <div class="input" data-state="maxlength">
+          <div class="input__field">
+            <span class="input__text">文本信息内容超出了字数限制警示</span>
+          </div>
+          <span class="input__number">15/15</span>
+          <button class="input__fail" type="button" aria-label="清除">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/close--line"/></svg>
+          </button>
+          <span class="input__action">
+            <button class="input__refresh" type="button" aria-label="刷新">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#icon/refresh--line"/></svg>
+            </button>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="preview__title">变体：仅 input-text，无计数无 action（最小用法）</h3>
+      <div class="preview__group">
+        <div class="input" data-state="filled">
+          <div class="input__field">
+            <span class="input__text">仅文本</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('[data-theme-set]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const t = btn.dataset.themeSet;
+        document.documentElement.dataset.theme = t;
+        document.querySelectorAll('[data-theme-set]').forEach((b) =>
+          b.classList.toggle('is-active', b === btn));
+      });
+    });
+  </script>
+</body>
+</html>

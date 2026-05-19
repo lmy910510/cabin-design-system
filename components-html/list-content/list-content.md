@@ -19,11 +19,11 @@ list-content 是 list 行的**中间内容槽**，承载主标题、未读红点
 
 | Figma boolean | HTML 控制                                                                |
 | ------------- | ------------------------------------------------------------------------ |
-| `Show Badge`  | 是否渲染 `.list-content__badge`（12×12 红点）                              |
+| `Show Badge`  | 是否在标题旁内嵌 `<span class="badge badge--circle">`（独立 [badge](../badge/badge.md) 组件，12×12 红点） |
 | `Show Tag`    | 是否在标题行右侧内嵌 `<span class="tag …">`（独立 [tag](../tag/tag.md) 组件）|
 
 > 直接增删对应节点即可，与 Figma boolean=true/false 等价。
-> Tag 视觉真源已抽到独立 `tag` 组件，本组件只负责把它放在标题行右侧的位置上。
+> Tag / Badge 视觉真源都已抽到独立组件，本组件只负责把它们放在标题行的位置上。
 
 ---
 
@@ -36,7 +36,7 @@ list-content 是 list 行的**中间内容槽**，承载主标题、未读红点
 | title-row gap     | 12px（title-group 与 tag 之间）                                   |
 | 标题字号          | 32 / 32 / Medium（Noto Sans SC）                                  |
 | 标题色            | `--color-text-primary` = `#1f2229`                                |
-| Badge             | 12 × 12，圆角 6，背景 `--palette-red-5` = `#ff293b`               |
+| Badge             | 内嵌独立 `.badge.badge--circle` 组件（12×12，背景 `--color-bg-warning` = red-5），视觉真源在 [`badge.md`](../badge/badge.md) |
 | Tag               | 内嵌独立 `.tag` 组件（默认 Large/Tinted），视觉真源在 [`tag.md`](../tag/tag.md) |
 | description 字号  | 28 / 36 / Regular                                                 |
 | description 色    | `--color-text-secondary` = `#828997`                              |
@@ -51,7 +51,7 @@ list-content 是 list 行的**中间内容槽**，承载主标题、未读红点
   <div class="list-content__title-row">
     <div class="list-content__title-group">
       <span class="list-content__title">标题文本</span>
-      <span class="list-content__badge" aria-hidden="true"></span>
+      <span class="badge badge--circle" aria-hidden="true"></span>
     </div>
     <span class="tag tag--large tag--tinted">标签文案</span>
   </div>
@@ -62,7 +62,7 @@ list-content 是 list 行的**中间内容槽**，承载主标题、未读红点
   <div class="list-content__title-row">
     <div class="list-content__title-group">
       <span class="list-content__title">标题文本</span>
-      <span class="list-content__badge" aria-hidden="true"></span>
+      <span class="badge badge--circle" aria-hidden="true"></span>
     </div>
     <span class="tag tag--large tag--tinted">标签文案</span>
   </div>

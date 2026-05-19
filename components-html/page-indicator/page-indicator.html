@@ -1,0 +1,17 @@
+<!--
+  PageIndicator · 最小可复制片段
+  使用前请：
+    1) 引入 design-system/tokens.css
+    2) 引入 components-html/page-indicator-item/page-indicator-item.css（子项视觉真源）
+    3) 引入 components-html/page-indicator/page-indicator.css（容器 layout）
+
+  Figma 节点：325:13051（COMPONENT，含 SLOT 属性 PageIndicator-list）
+-->
+
+<!-- 4 页 / 当前第 1 页（默认 variant） -->
+<ul class="page-indicator__list" role="tablist" aria-label="页码">
+  <li><span class="pi-item" data-state="active" aria-current="true"></span></li>
+  <li><span class="pi-item" data-state="default"></span></li>
+  <li><span class="pi-item" data-state="default"></span></li>
+  <li><span class="pi-item" data-state="default"></span></li>
+</ul>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <title>SegmentedControl · 预览（Figma 464:43476）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../segmented-control-item/segmented-control-item.css" />
+  <link rel="stylesheet" href="./segmented-control.css" />
+  <style>
+    body {
+      margin: 0; padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 { margin: 0 0 12px; font-size: 48px; line-height: 54px; font-weight: 700; }
+    .subtitle { margin: 0 0 36px; color: var(--color-text-secondary); font-size: 22px; line-height: 30px; }
+    h2 { margin: 60px 0 8px; font-size: 32px; line-height: 38px; font-weight: 700; }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .strip {
+      display: flex; flex-direction: column; gap: 24px; padding: 36px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+    }
+    .container { width: 720px; max-width: 100%; }
+  </style>
+</head>
+<body>
+  <h1>SegmentedControl · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 464:43476（COMPONENT）· 胶囊壳 padding 6 · 子项 Fill 均分 · SLOT 属性 list
+  </p>
+
+  <h2>1. 默认 3 段（第 1 段 Active）</h2>
+  <p class="figma-meta">.segmented-control · 3 × sc-item</p>
+  <div class="strip">
+    <div class="container">
+      <div class="segmented-control" role="tablist" aria-label="视图切换">
+        <button type="button" class="sc-item is-active" role="tab" aria-selected="true">推荐</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">附近</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">收藏</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>2. 任意段数（2 / 4 / 5）</h2>
+  <p class="figma-meta">通过 SLOT 增减子项；建议 2~5 个</p>
+  <div class="strip">
+    <div class="container">
+      <div class="segmented-control" role="tablist">
+        <button type="button" class="sc-item is-active" role="tab" aria-selected="true">日</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">月</button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="segmented-control" role="tablist">
+        <button type="button" class="sc-item" role="tab" aria-selected="false">推荐</button>
+        <button type="button" class="sc-item is-active" role="tab" aria-selected="true">附近</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">收藏</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">历史</button>
+      </div>
+    </div>
+    <div class="container">
+      <div class="segmented-control" role="tablist">
+        <button type="button" class="sc-item" role="tab" aria-selected="false">全部</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">正在播放</button>
+        <button type="button" class="sc-item is-active" role="tab" aria-selected="true">最近添加</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">收藏</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">历史</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>3. 点击切换演示</h2>
+  <p class="figma-meta">仅一个 Active；JS 切换 .is-active / aria-selected</p>
+  <div class="strip">
+    <div class="container">
+      <div class="segmented-control" role="tablist" id="demo">
+        <button type="button" class="sc-item is-active" role="tab" aria-selected="true">日视图</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">周视图</button>
+        <button type="button" class="sc-item" role="tab" aria-selected="false">月视图</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const demo = document.getElementById('demo');
+    demo.addEventListener('click', (e) => {
+      const t = e.target.closest('.sc-item');
+      if (!t || !demo.contains(t)) return;
+      demo.querySelectorAll('.sc-item').forEach(x => {
+        const on = x === t;
+        x.classList.toggle('is-active', on);
+        x.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+    });
+  </script>
+</body>
+</html>

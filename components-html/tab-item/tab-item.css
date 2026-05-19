@@ -1,0 +1,79 @@
+/* =============================================================
+ * Tab-item · 标签栏子项
+ * Figma：节点 318:11881（COMPONENT_SET）/ 2 个 variant：Active / Default
+ * 视觉真值：
+ *   尺寸 72×54 (HUG×FIXED)，clipsContent
+ *   label：Noto Sans SC Medium 36/36，text-align center
+ *     - Active   color = --color-text-primary   (cold-gray-9)
+ *     - Default  color = --color-text-secondary (cold-gray-7)
+ *   indicator (仅 Active)：48×6，color = --color-text-primary
+ *   Active 布局 VERTICAL，gap 12，counterAxis=CENTER
+ *   Default 布局 HORIZONTAL，主轴 CENTER（label 在框内居中）
+ *
+ * 注：Tab-item 是 Tab 组件的子项；独立预览也用作 Tab 组件落地的视觉真源。
+ *
+ * 用法：
+ *   <span class="tab-item" data-state="default">推荐</span>
+ *   <span class="tab-item" data-state="active">推荐</span>
+ *   <!-- 或 -->
+ *   <span class="tab-item tab-item--active">推荐</span>
+ *   <!-- 也可作为 <button>（TopBar 的 button-avatar 变体即如此调用）：
+ *        本组件已 reset button 默认 border/background/padding，无需额外覆盖 -->
+ *   <button type="button" class="tab-item tab-item--active">推荐</button>
+ * ============================================================= */
+
+.tab-item {
+  /* Figma 72×54，但 label 文本可能比 72 宽，所以 width=HUG。这里用
+     min-width:72 + height:54 还原"短文案 72/长文案 hug"的直觉。 */
+  box-sizing: border-box;
+  min-width: 72px;
+  height: 54px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* Active 时 label 在上、indicator 在下 */
+  gap: 12px;
+  overflow: hidden;
+
+  /* button reset：当 .tab-item 作用在 <button> 上时，去掉浏览器默认
+     border / 背景 / padding / font 继承，避免出现"按钮带边框"的样式。 */
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+
+  /* label 视觉 */
+  font: 500 36px/36px var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  color: var(--color-text-secondary);
+  text-align: center;
+  white-space: nowrap;
+
+  /* 交互可达性：默认是 div/span，但常作为 button 行为，给手势暗示 */
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Active 态：label 变深 + 显示 indicator（伪元素） */
+.tab-item[data-state="active"],
+.tab-item--active {
+  color: var(--color-text-primary);
+}
+
+.tab-item[data-state="active"]::after,
+.tab-item--active::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 6px;
+  background: currentColor; /* 与 label 同色，currentColor 既匹配 active 态深色，也方便日后改主题 */
+  flex: none;
+}
+
+/* Default 态：仅 label，无 indicator——默认就是这个状态。
+   Figma 真值：Default 是 HORIZONTAL+counterAxis=MIN（即 label 顶对齐）；
+   Active 是 VERTICAL+primaryAxis=MIN（label 顶对齐 + indicator 在下）。
+   两态 label 都从 y=0 开始，因此这里 .tab-item 的 flex-start 已直接还原，
+   Default 态不需要再覆盖 justify-content。 */

@@ -1,0 +1,28 @@
+/* =============================================================
+ * Pagination · 分页器容器（胶囊形）
+ * Figma：节点 458:42138（COMPONENT，单态）
+ *
+ * 视觉真值：
+ *   layout HORIZONTAL，gap 6
+ *   padding 0 / 6（上下 0，左右 6）
+ *   背景 #FFFFFF（≈ var(--color-bg-card-primary)）
+ *   圆角 999（胶囊形）
+ *   阴影 Shadow/Medium
+ *   子项：内嵌 Pagination-prev / Pagination-next 实例
+ *
+ * 设计契约：
+ *   - 容器仅负责"胶囊壳 + 子项排布"，箭头视觉 100% 来自子组件 css
+ *   - 通过子按钮的 disabled 属性表达 Pagination-prev/next 的 Disabled variant
+ *   - 不在本文件重写 .pagination-prev / .pagination-next，避免分叉
+ * ============================================================= */
+
+.pagination {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  padding: 0 6px;
+  background: var(--color-bg-card-primary, #ffffff);
+  border-radius: 999px;
+  box-shadow: var(--shadow-medium, 0 6px 16px rgba(0, 0, 0, 0.10));
+}

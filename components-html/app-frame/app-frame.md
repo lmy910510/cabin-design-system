@@ -1,8 +1,12 @@
 # AppFrame · 全局应用框架
 
 > Figma 节点：`436:1772` ·「🤖座舱组件库-AI版 / AppFrame」· 1920×1080
-> 已实现：SideMenu 2 modes（expanded / collapsed）。
-> **TopBar 已拆为独立组件** → 见 [`components-html/top-bar/`](../top-bar/top-bar.md)（5 个 style variant 全部在 top-bar 组件内）。
+> AppFrame 自身只负责"外层栅格 + main 圆角白卡 + 卡内 slot 划分"。
+>
+> **子组件已全部拆为独立真源**（AppFrame 仅是组合调用方）：
+> - SideMenu （容器，2 mode）→ [`components-html/side-menu/`](../side-menu/side-menu.md)
+> - SideMenu / Item（4 variant，类名 `.nav-item`）→ [`components-html/side-menu-item/`](../side-menu-item/side-menu-item.md)
+> - TopBar（5 个 style variant）→ [`components-html/top-bar/`](../top-bar/top-bar.md)
 
 ---
 
@@ -43,16 +47,10 @@
 | `.app-frame__main` / `.app-frame__card` | 右侧主区 + 圆角白卡 |
 | `.app-frame__topbar-slot` | TopBar 放置位（外部组件 top-bar 填充） |
 | `.app-frame__content` / `.app-frame__content-canvas` | 卡内 content slot 与自由绘制层 |
-| `.side-menu` | 左侧导航 308×1080，VERTICAL SPACE_BETWEEN（默认 expanded） |
-| `.side-menu--collapsed` | 收起态 156×1080；内部白卡 width=108 |
-| `.side-menu__nav-group` | 上半白卡（expanded 260 / collapsed 108） |
-| `.side-menu__nav-list` | nav-item 列表（gap=24） |
-| `.side-menu__footer` | 底部白卡 |
-| `.nav-item` | 导航项（默认 hasText=true，236×84，radius=30） |
-| `.nav-item--icon-only` | icon-only 形态（84×84，padding=0，gap=0），用于 collapsed |
-| `.nav-item.is-active` / `[aria-current="page"]` | 选中态（默认 blue/0 + text/link） |
 
-> TopBar 相关类（`.top-bar*` / `.top-bar__tab-*` / `.top-bar__avatar` / `.top-bar__select-*`）已全部迁到 `components-html/top-bar/top-bar.css`。AppFrame.css 不再含任何 TopBar 样式。
+> SideMenu / nav-item 相关类（`.side-menu*` / `.nav-item*`）已迁到 [`side-menu/`](../side-menu/side-menu.md) 与 [`side-menu-item/`](../side-menu-item/side-menu-item.md)。
+> TopBar 相关类（`.top-bar*`）已迁到 [`top-bar/`](../top-bar/top-bar.md)。
+> AppFrame.css 不再含任何 SideMenu / TopBar 样式声明。
 
 ---
 
@@ -64,13 +62,16 @@
 <link rel="stylesheet" href="../../design-system/tokens.css" />
 <link rel="stylesheet" href="../../design-system/shadows.css" />
 <link rel="stylesheet" href="../../design-system/text-styles.css" />
-<link rel="stylesheet" href="../button/button.css" />     <!-- TopBar 多 variant 复用 .btn -->
-<link rel="stylesheet" href="../top-bar/top-bar.css" />   <!-- TopBar 5 个 variant 真源 -->
+<link rel="stylesheet" href="../button/button.css" />            <!-- TopBar 多 variant 复用 .btn -->
+<link rel="stylesheet" href="../top-bar/top-bar.css" />          <!-- TopBar 5 个 variant 真源 -->
+<link rel="stylesheet" href="../side-menu-item/side-menu-item.css" /> <!-- .nav-item 真源 -->
+<link rel="stylesheet" href="../side-menu/side-menu.css" />      <!-- .side-menu 容器真源 -->
 <link rel="stylesheet" href="./app-frame.css" />
 <script src="../icon/icon-sprite-inline.js"></script>
 ```
 
-> **依赖关系**：AppFrame 仅依赖 `top-bar.css` 的视觉定义；`top-bar` 组件本身又依赖 `button.css`。引入顺序按"基础 token → button → top-bar → app-frame"即可。
+> **依赖关系**：AppFrame 是组合调用方，依赖 side-menu / side-menu-item / top-bar 三个子组件的 CSS。
+> 引入顺序：`tokens → button → top-bar → side-menu-item → side-menu → app-frame`。
 
 ### 最小骨架（expanded + TopBar/title）
 
@@ -133,26 +134,28 @@
 
 Figma 描述明确："SideMenu 选中态颜色 = 当前产品主题色（brand main），不要硬编码"。
 
-`.app-frame` 提供两个可被业务覆盖的变量（默认 = Figma 示例的 blue）：
+`.nav-item` 暴露两个可覆盖变量（默认 = Figma 示例 blue），覆盖位置可以是 `.app-frame` / `.side-menu` / `.side-menu__nav-group` 任意祖先：
 
 ```css
-.app-frame {
-  --app-frame-nav-active-bg: var(--palette-blue-0);   /* 选中底色 */
-  --app-frame-nav-active-fg: var(--color-text-link);  /* 选中文字/icon */
+.nav-item {
+  --nav-item-active-bg: var(--palette-blue-0);   /* 选中底色 */
+  --nav-item-active-fg: var(--color-text-link);  /* 选中文字/icon */
 }
 ```
 
-业务方覆盖：
+业务方覆盖（例：把整个 AppFrame 内的选中色切到 orange）：
 
 ```html
 <div class="app-frame"
-     style="--app-frame-nav-active-bg: var(--palette-orange-transparent);
-            --app-frame-nav-active-fg: var(--palette-orange-5);">
+     style="--nav-item-active-bg: var(--palette-orange-transparent);
+            --nav-item-active-fg: var(--palette-orange-5);">
   ...
 </div>
 ```
 
-> 选中 nav-item 的 icon 形态约定：选中用 `--fill`，未选中用 `--line`。这是 Figma 真值（selected=true 走面形 / selected=false 走线形）。
+> 兼容性：旧 API `--app-frame-nav-active-bg / -fg` 仍保留，AppFrame.css 在 `.app-frame` 上把它桥接到 `--nav-item-active-*`，已有业务无需改动。新代码请直接用 `--nav-item-*`。
+>
+> 选中 nav-item 的 icon 形态约定：选中用 `--fill`，未选中用 `--line`（Figma 真值）。
 
 ---
 

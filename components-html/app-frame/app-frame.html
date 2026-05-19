@@ -1,21 +1,20 @@
 <!-- AppFrame · 应用框架（纯模板，不含预览页脚手架）
      Figma: 🤖座舱组件库-AI版 / AppFrame (436:1772)
 
-     已实现：
-       SideMenu · expanded(436:1725) · collapsed(436:1750)
+     AppFrame 是组合调用方，依赖 3 个独立子组件：
+       SideMenu        — components-html/side-menu/        （容器，2 mode）
+       SideMenu/Item   — components-html/side-menu-item/   （类名 .nav-item，4 variant）
+       TopBar          — components-html/top-bar/          （5 个 style variant）
 
-     依赖（外部组件）：
-       TopBar — 见 components-html/top-bar/（已抽成独立组件）
-                  · style=title / back / title-actions / button-avatar / select-actions
-                  · 在 .app-frame__topbar-slot 内放置 <header class="top-bar top-bar--*">
-
-     使用前请：
-       1) 引入 design-system/tokens.css、shadows.css、text-styles.css
-       2) 引入 components-html/button/button.css （TopBar 多 variant 复用 .btn）
-       3) 引入 components-html/top-bar/top-bar.css （TopBar 5 个 variant 真源）
-       4) 引入 components-html/app-frame/app-frame.css
-       5) 注入图标 sprite：<script src="../icon/icon-sprite-inline.js"></script>
-       6) 业务页内容写在 .app-frame__content-canvas 里
+     使用前请按顺序引入：
+       1) design-system/tokens.css、shadows.css、text-styles.css
+       2) components-html/button/button.css        （TopBar 多 variant 复用 .btn）
+       3) components-html/top-bar/top-bar.css      （TopBar 5 个 variant 真源）
+       4) components-html/side-menu-item/side-menu-item.css  （.nav-item 真源）
+       5) components-html/side-menu/side-menu.css  （.side-menu 容器真源）
+       6) components-html/app-frame/app-frame.css
+       7) <script src="../icon/icon-sprite-inline.js"></script>
+       8) 业务页内容写在 .app-frame__content-canvas 里
 -->
 
 <!-- ============================================================

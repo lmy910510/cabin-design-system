@@ -1,52 +1,31 @@
 /* =============================================================
  * Component: AppFrame · 全局应用框架
- * Figma source: 🤖座舱组件库-AI版 / AppFrame
- *   - AppFrame   COMPONENT 436:1772 (1920×1080)
- *   - SideMenu   COMPONENT_SET 436:1770
- *       · mode=expanded  COMPONENT 436:1725 (308×1080) ✓
- *       · mode=collapsed COMPONENT 436:1750 (156×1080) ✓
+ * Figma source: 🤖座舱组件库-AI版 / AppFrame (436:1772, 1920×1080)
  *
- * AppFrame 自身负责的是「外层栅格 + SideMenu + main 圆角白卡 + 卡内 slot 划分」。
- * TopBar 已**拆分为独立组件**：components-html/top-bar/top-bar.css
- *   - 5 个 style variant 全部在 top-bar 组件内实现
- *   - AppFrame 的 .app-frame__topbar-slot 仅作为放置 TopBar 的卡内位置
- *   - 业务页 / 预览页需要同时 link top-bar.css（与 button.css 同级依赖）
+ * 本文件仅包含 **AppFrame 自身** 的视觉真源：
+ *   外层栅格 + main 圆角白卡 + 卡内 slot 划分
  *
- * 1:1 严格映射自 Figma 真实测量值（通过 figma_get_component_for_development_deep）：
+ * 其他子组件已拆为独立真源，本组件只是组合调用方：
+ *   ┌─ SideMenu (容器, 436:1770)        → components-html/side-menu/side-menu.css
+ *   ├─ SideMenu / Item (436:1770→459:2790, 类名 .nav-item)
+ *   │                                    → components-html/side-menu-item/side-menu-item.css
+ *   └─ TopBar (5 个 style variant)      → components-html/top-bar/top-bar.css
  *
- * AppFrame (1920×1080, HORIZONTAL)
- *   bg = bg/page_secondary (#F7F8FA)
- *   左：SideMenu/expanded 308×1080 (FIXED)
- *   右：main FILL×1080，padding-right=24, padding-top=24, padding-bottom=24, padding-left=0
- *       - main-card FILL×FILL = 1588×1032，bg=bg/card_primary，radius=42 (2xl)
- *           · TopBar slot 1588×156（FILL×FIXED）— 由 top-bar 组件填充
- *           · content SLOT FILL×FILL = 1588×876，padding-left=42, padding-right=42
- *               内部 1504×876 自由绘制层，bg=bg/item_quaternary
+ * 引入顺序（业务/预览页）：tokens → button → top-bar → side-menu-item → side-menu → app-frame
  *
- * SideMenu / mode=expanded
- *   308×1080，VERTICAL，SPACE_BETWEEN，padding=24，counter-axis=CENTER
- *   ┌ nav-group 260×432：bg=bg/card_primary，radius=42，padding=12，gap=24（item 间距）
- *   │   nav-list SLOT 列向 itemSpacing=24
- *   │     nav-item-1 selected=true (示例选中态)
- *   │     nav-item-2..4 selected=false
- *   └ footer 254×108：bg=bg/card_primary，radius=42，padding=12
- *         footer-btn 230×84 (hasText=true)
- *
- * nav-item (236×84，hasText=true，HORIZONTAL)
- *   radius=30 (lg)，padding-left=24 (md)，padding-right=30 (lg)，padding-top=0，padding-bottom=0
- *   gap=12 (xs)，counter-axis=CENTER
- *   icon 42×42（48 viewBox 缩放） + label 32px Medium
- *   selected=true ：bg=palette-blue/0 (#EFF6FF)，icon&label 颜色=text/link (#367BF6)，icon 形态=面形
- *   selected=false：bg=透明，icon&label 颜色=text/tertiary (#B4BAC5)，icon 形态=线形
- *
- * footer-btn 与 nav-item-hasText 同形态（visual 上等价）
+ * AppFrame 真值（来自 figma_get_component_for_development_deep 测量）：
+ *   1920×1080 HORIZONTAL，bg=bg/page_secondary (#F7F8FA)
+ *   ├ SideMenu/expanded 308×1080 (FIXED)
+ *   └ main FILL×1080，padding 24 24 24 0
+ *       └ main-card FILL×FILL = 1588×1032，bg=bg/card_primary，radius=42
+ *           ├ TopBar slot 1588×156 (FILL×FIXED) — 外部 top-bar 组件填充
+ *           └ content SLOT FILL×FILL = 1588×876，padding 0 42
+ *               └ content-canvas 1504×876，bg=bg/item_quaternary
  *
  * 注意点：
- *   1) AppFrame description 里写 "SideMenu 固定 280"，但实测 308（padding 24×2 + 内部 260）。以测量值为准。
- *   2) main 容器 padding-left=0 是关键：让 main-card 紧贴 SideMenu 右边，没有空隙。
- *   3) nav-item selected 用 palette/blue-0 作为示例选中态色（Figma 内置示例）；description 里
- *      要求"选中态色 = 当前产品主题色 brand main"，所以本组件提供 --app-frame-nav-active-bg / -fg
- *      两个变量，便于业务方覆盖到自己产品的 brand。默认值就是 Figma 示例的 blue 体系。
+ *   1) AppFrame description 写"SideMenu 280"，实测 308。以测量值为准。
+ *   2) main padding-left=0：让 main-card 紧贴 SideMenu 右边，无空隙。
+ *   3) nav-item 选中色由 .app-frame 桥接到 .nav-item 的 token，便于业务覆盖。
  * ============================================================= */
 
 /* -------------------------------------------------------------
@@ -62,9 +41,11 @@
   color: var(--color-text-primary);
   overflow: hidden;
 
-  /* 业务可覆盖的"选中态主题色"（默认 Figma 示例 blue） */
-  --app-frame-nav-active-bg: var(--palette-blue-0);
-  --app-frame-nav-active-fg: var(--color-text-link);
+  /* 业务可覆盖的"选中态主题色"（默认 = Figma 示例 blue）。
+     桥接到 side-menu-item.css 暴露的 --nav-item-active-bg / -fg，
+     兼容 .app-frame 旧 API（--app-frame-nav-active-*），新代码请直接用 --nav-item-*。 */
+  --nav-item-active-bg: var(--app-frame-nav-active-bg, var(--palette-blue-0));
+  --nav-item-active-fg: var(--app-frame-nav-active-fg, var(--color-text-link));
 }
 
 .app-frame__main {
@@ -108,151 +89,19 @@
 }
 
 /* -------------------------------------------------------------
- * 1. SideMenu / mode=expanded
+ * 1. SideMenu / mode=expanded · mode=collapsed
+ *
+ *    ⚠️ 真源已迁移到独立组件，AppFrame.css 不再声明：
+ *      - .side-menu / .side-menu--collapsed / .side-menu__nav-group / __nav-list / __footer
+ *        → components-html/side-menu/side-menu.css
+ *      - .nav-item / .nav-item__icon / .nav-item__label / .is-active / .nav-item--icon-only
+ *        → components-html/side-menu-item/side-menu-item.css
+ *
+ *    业务/预览页请按以下顺序 link：
+ *      side-menu-item.css → side-menu.css → app-frame.css
+ *
+ *    AppFrame 仅通过桥接 --nav-item-active-bg / -fg 影响选中态颜色（见 .app-frame 块）。
  * ------------------------------------------------------------- */
-.side-menu {
-  flex: 0 0 auto;
-  width: 308px;
-  height: 100%;
-  padding: var(--space-md);                     /* 24 */
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;               /* SPACE_BETWEEN */
-  align-items: center;                          /* counter-axis CENTER */
-  gap: 10px;                                    /* itemSpacing 10（拉伸时 fallback） */
-}
-
-.side-menu__nav-group {
-  width: 260px;                                 /* HUG 真值 */
-  background: var(--color-bg-card-primary);
-  border-radius: var(--space-2xl);              /* 42 */
-  padding: var(--space-xs);                     /* 12 */
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: center;                          /* counter-axis CENTER */
-  gap: 10px;                                    /* nav-group 自身的 itemSpacing 10 */
-}
-
-.side-menu__nav-list {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-md);                         /* nav-list itemSpacing 24 */
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
-
-.side-menu__footer {
-  width: 254px;                                 /* HUG 真值 */
-  background: var(--color-bg-card-primary);
-  border-radius: var(--space-2xl);              /* 42 */
-  padding: var(--space-xs);                     /* 12 */
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;                         /* footer 内部 counter=MIN（拉伸） */
-  gap: 10px;
-}
-
-/* -------------------------------------------------------------
- * 2. nav-item / footer-btn （expanded · hasText=true）
- *    两者视觉等价，复用同一套样式
- * ------------------------------------------------------------- */
-.nav-item {
-  appearance: none;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-
-  height: 84px;                                 /* counter-axis FIXED 84 */
-  width: 100%;                                  /* 在 nav-list/footer 中拉满 236 / 230 */
-  box-sizing: border-box;
-  border-radius: var(--space-lg);               /* 30 */
-
-  display: flex;
-  align-items: center;                          /* counter=CENTER */
-  justify-content: flex-start;                  /* primary=MIN */
-  gap: var(--space-xs);                         /* 12 */
-  padding: 0 var(--space-lg) 0 var(--space-md); /* 上 0 右 30 下 0 左 24 */
-
-  color: var(--color-text-tertiary);            /* 默认未选中：text/tertiary */
-  text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease;
-}
-
-.nav-item__icon {
-  flex: none;
-  width: 42px;
-  height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: inherit;
-}
-.nav-item__icon svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  fill: currentColor;
-}
-
-.nav-item__label {
-  font-size: 32px;
-  line-height: 38px;        /* Figma autoresize 高 38；fontSize 32 + lineHeight AUTO ≈ 38 */
-  font-weight: 500;         /* Medium */
-  letter-spacing: 0;
-  color: inherit;
-  white-space: nowrap;
-}
-
-/* 选中态：bg = 业务主题色（默认 blue/0），icon/label = text/link */
-.nav-item.is-active,
-.nav-item[aria-current="page"] {
-  background: var(--app-frame-nav-active-bg);
-  color: var(--app-frame-nav-active-fg);
-}
-
-/* hover/focus：仅在未选中时给微弱反馈，避免覆盖选中色 */
-.nav-item:not(.is-active):not([aria-current="page"]):hover {
-  background: var(--color-bg-item-tertiary);
-  color: var(--color-text-primary);
-}
-.nav-item:focus-visible {
-  outline: 3px solid var(--color-border-active);
-  outline-offset: 3px;
-}
-
-/* footer-btn：复用 .nav-item 全部样式；本组件不再单独写 .footer-btn 类，
-   语义上视作"位于 footer 区域的 nav-item"，HTML 里直接用 .nav-item 即可。 */
-
-/* nav-item / icon-only 形态（hasText=false）—— 用于 SideMenu collapsed 与
-   纯图标场景。Figma: 84×84，padding=0，gap=0，圆角=30，icon 居中。 */
-.nav-item--icon-only {
-  width: 84px;
-  height: 84px;
-  padding: 0;
-  gap: 0;
-  justify-content: center;
-}
-
-/* -------------------------------------------------------------
- * 1b. SideMenu / mode=collapsed
- *     156×1080，VERTICAL SPACE_BETWEEN，padding=24
- *     ┌ nav-group 108×432：白卡 radius=42 padding=12，nav-list itemSpacing=24
- *     │   nav-item icon-only 84×84
- *     └ footer 108×108：白卡 radius=42 padding=12，单个 footer-btn 84×84
- * ------------------------------------------------------------- */
-.side-menu--collapsed {
-  width: 156px;
-}
-.side-menu--collapsed .side-menu__nav-group,
-.side-menu--collapsed .side-menu__footer {
-  width: 108px;
-}
 
 /* =============================================================
  * 4. TopBar

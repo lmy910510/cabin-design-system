@@ -1,38 +1,44 @@
 <!--
   SideMenu / Item · 最小可复制片段
-  Figma 节点：459:2790（COMPONENT_SET）
+  Figma 节点：459:2790（COMPONENT_SET，4 variant）
     - selected: true | false
     - hasText:  true | false
 
-  ⚠️ Figma 暂无 description，下列样式按 design-system token 推导。
+  类名 `.nav-item`（与 AppFrame 内嵌使用的命名一致；侧栏 item 与 AppFrame nav-item 共用同一真源）。
+  视觉真值与 AppFrame 1:1：236×84（hasText=true） / 84×84（hasText=false）。
+
+  使用前请引入：
+    1) design-system/tokens.css、shadows.css
+    2) icon sprite（icon-sprite-inline.js 或 icon.svg）
+    3) components-html/side-menu-item/side-menu-item.css
 -->
 
 <!-- selected=true, hasText=true（默认） -->
-<button type="button" class="side-menu-item is-selected" aria-current="page">
-  <span class="side-menu-item__icon" aria-hidden="true">
-    <svg><use href="../icon/icon.svg#icon/star--fill"/></svg>
+<a class="nav-item is-active" href="#" aria-current="page">
+  <span class="nav-item__icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/list--fill"/></svg>
   </span>
-  <span class="side-menu-item__label">收藏</span>
-</button>
+  <span class="nav-item__label">列表</span>
+</a>
 
 <!-- selected=false, hasText=true -->
-<button type="button" class="side-menu-item">
-  <span class="side-menu-item__icon" aria-hidden="true">
-    <svg><use href="../icon/icon.svg#icon/wifi--line"/></svg>
+<a class="nav-item" href="#">
+  <span class="nav-item__icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg>
   </span>
-  <span class="side-menu-item__label">网络</span>
-</button>
+  <span class="nav-item__label">收藏</span>
+</a>
 
-<!-- selected=true, hasText=false（折叠态） -->
-<button type="button" class="side-menu-item is-selected is-collapsed" aria-current="page" aria-label="收藏">
-  <span class="side-menu-item__icon" aria-hidden="true">
-    <svg><use href="../icon/icon.svg#icon/star--fill"/></svg>
+<!-- selected=true, hasText=false（icon-only，用于 SideMenu collapsed） -->
+<a class="nav-item nav-item--icon-only is-active" href="#" aria-current="page" aria-label="列表">
+  <span class="nav-item__icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/list--fill"/></svg>
   </span>
-</button>
+</a>
 
 <!-- selected=false, hasText=false -->
-<button type="button" class="side-menu-item is-collapsed" aria-label="网络">
-  <span class="side-menu-item__icon" aria-hidden="true">
-    <svg><use href="../icon/icon.svg#icon/wifi--line"/></svg>
+<a class="nav-item nav-item--icon-only" href="#" aria-label="收藏">
+  <span class="nav-item__icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg>
   </span>
-</button>
+</a>

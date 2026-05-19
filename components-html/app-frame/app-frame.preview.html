@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="../../design-system/text-styles.css" />
   <link rel="stylesheet" href="../button/button.css" />
   <link rel="stylesheet" href="../top-bar/top-bar.css" />
+  <link rel="stylesheet" href="../side-menu-item/side-menu-item.css" />
+  <link rel="stylesheet" href="../side-menu/side-menu.css" />
   <link rel="stylesheet" href="./app-frame.css" />
 
   <!-- 注入统一图标 sprite（同文档锚点，绕开 file:// 跨文件 use 限制）-->
@@ -284,7 +286,7 @@
        3. nav-item 选中态主题色覆盖
        ============================================================ -->
   <h2>3. nav-item 选中态主题色覆盖
-    <span class="h2-note">通过 <code>--app-frame-nav-active-bg</code> / <code>--app-frame-nav-active-fg</code> 覆盖到产品 brand</span>
+    <span class="h2-note">通过 <code>--nav-item-active-bg</code> / <code>--nav-item-active-fg</code>（真源在 side-menu-item.css）覆盖到产品 brand</span>
   </h2>
 
   <div style="display: flex; gap: 36px; align-items: flex-start; padding: 24px; background: var(--color-bg-page-secondary); border-radius: 24px;">
@@ -295,14 +297,14 @@
       </ul>
     </div>
 
-    <div class="side-menu__nav-group" style="--app-frame-nav-active-bg: var(--palette-orange-transparent); --app-frame-nav-active-fg: var(--palette-orange-5);">
+    <div class="side-menu__nav-group" style="--nav-item-active-bg: var(--palette-orange-transparent); --nav-item-active-fg: var(--palette-orange-5);">
       <ul class="side-menu__nav-list">
         <li><a class="nav-item is-active" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--fill"/></svg></span><span class="nav-item__label">orange brand</span></a></li>
         <li><a class="nav-item" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg></span><span class="nav-item__label">未选中</span></a></li>
       </ul>
     </div>
 
-    <div class="side-menu__nav-group" style="--app-frame-nav-active-bg: var(--palette-green-transparent); --app-frame-nav-active-fg: var(--palette-green-6);">
+    <div class="side-menu__nav-group" style="--nav-item-active-bg: var(--palette-green-transparent); --nav-item-active-fg: var(--palette-green-6);">
       <ul class="side-menu__nav-list">
         <li><a class="nav-item is-active" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--fill"/></svg></span><span class="nav-item__label">green brand</span></a></li>
         <li><a class="nav-item" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg></span><span class="nav-item__label">未选中</span></a></li>

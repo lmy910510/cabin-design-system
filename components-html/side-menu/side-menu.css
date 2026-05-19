@@ -1,50 +1,79 @@
 /* =============================================================
- * SideMenu · 侧栏导航容器
+ * SideMenu · 侧栏导航容器（视觉真源）
  * Figma：节点 436:1770（COMPONENT_SET，2 variant）
  *   mode: expanded | collapsed
- * 含 SLOT 属性 nav-list；结构包含 nav-group / footer 两个 frame。
  *
- * ⚠️ Figma description 为 null。下列 padding / 宽度 / 间距 按 design-system
- * token + 与 TopBar 视觉节奏推导，待 Figma 补充后回写。
+ * 真值来自 AppFrame (436:1772) 内嵌实例的精确测量（与设计稿 1:1）：
  *
- * 真值（暂定）：
- *   expanded：宽度 360，padding 24/24，gap 12
- *   collapsed：宽度 108（icon 60 + 左右 padding 24），padding 24/24，gap 12
- *   背景 --color-bg-page-secondary
+ *   mode=expanded  308×1080，VERTICAL SPACE_BETWEEN，padding 24，counter=CENTER
+ *     ┌ nav-group 260×432    白卡 radius=42 padding=12
+ *     │   nav-list SLOT       列向 itemSpacing=24
+ *     └ footer    254×108     白卡 radius=42 padding=12
+ *
+ *   mode=collapsed 156×1080，VERTICAL SPACE_BETWEEN，padding 24
+ *     ┌ nav-group 108×432    白卡 radius=42 padding=12
+ *     │   nav-list SLOT       列向 itemSpacing=24，nav-item 切 --icon-only
+ *     └ footer    108×108     白卡 radius=42 padding=12
+ *
+ * 调用方：
+ *   - components-html/app-frame/app-frame.css （组合调用）
+ *   - 任何业务/预览页直接引入本文件即可拿到 SideMenu 全部视觉
+ *
+ * 依赖：components-html/side-menu-item/side-menu-item.css （`.nav-item` 真源）
  * ============================================================= */
 
 .side-menu {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: space-between;
-  gap: 12px;
-  width: 360px;
-  padding: 24px;
-  background: var(--color-bg-page-secondary, #f5f6f8);
+  flex: 0 0 auto;
+  width: 308px;                                 /* expanded 真值 */
+  height: 100%;
+  padding: var(--space-md);                     /* 24 */
   box-sizing: border-box;
-  min-height: 480px;     /* 演示用最小高度，业务侧通常拉满 viewport */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;               /* SPACE_BETWEEN */
+  align-items: center;                          /* counter-axis CENTER */
+  gap: 10px;                                    /* itemSpacing 10 fallback */
 }
 
-/* mode = collapsed —— 宽度收缩，子项折叠（业务侧需要把所有 .side-menu-item 切到 .is-collapsed） */
-.side-menu.is-collapsed,
-.side-menu[data-mode="collapsed"] {
-  width: 108px;
-}
-
-/* nav-group：上半部分导航列表 */
 .side-menu__nav-group {
+  width: 260px;                                 /* HUG 真值 (expanded) */
+  background: var(--color-bg-card-primary);
+  border-radius: var(--space-2xl);              /* 42 */
+  padding: var(--space-xs);                     /* 12 */
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: 1 1 auto;
-  min-height: 0;
+  align-items: center;                          /* counter=CENTER */
+  gap: 10px;
 }
 
-/* footer：底部固定区（如 设置 / 退出） */
-.side-menu__footer {
+.side-menu__nav-list {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  flex: none;
+  gap: var(--space-md);                         /* 24，Figma SLOT itemSpacing */
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.side-menu__footer {
+  width: 254px;                                 /* HUG 真值 (expanded) */
+  background: var(--color-bg-card-primary);
+  border-radius: var(--space-2xl);              /* 42 */
+  padding: var(--space-xs);                     /* 12 */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;                         /* footer counter=MIN（拉伸） */
+  gap: 10px;
+}
+
+/* mode=collapsed —— 156×1080，nav-group / footer 收为 108 宽 */
+.side-menu--collapsed {
+  width: 156px;
+}
+.side-menu--collapsed .side-menu__nav-group,
+.side-menu--collapsed .side-menu__footer {
+  width: 108px;
 }

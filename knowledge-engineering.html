@@ -909,7 +909,7 @@
 
     <div class="meta">
       <span><b>作者</b>　Zitamyli</span>
-      <span><b>更新</b>　2026-05-18</span>
+      <span><b>更新</b>　2026-05-19</span>
       <span><b>适用</b>　Prompt 工程 / 知识库迭代 / AI 辅助设计</span>
       <span><b>阅读</b>　约 8 分钟</span>
     </div>
@@ -1216,12 +1216,11 @@
         </div>
       </div>
 
-      <!-- 5. L2 Agent2 页面 -->
+      <!-- 5. A2·页面 -->
       <div class="case-card">
         <div class="case-meta">
-          <span class="case-id">L2-A2-001</span>
-          <span class="pill">L2 业务 · 页面</span>
-          <span class="pill">Agent 2 · POI</span>
+          <span class="case-id">A2-PAGE-001</span>
+          <span class="pill">Agent 2 · POI · 页面</span>
         </div>
         <div class="case-row">
           <div class="case-key">Input</div>
@@ -1231,24 +1230,26 @@
           <div class="case-key">Expected</div>
           <div class="case-val">
             <ul>
-              <li>规范分：Hero 图、Tag、Button 全部走组件；零硬编码色值</li>
-              <li>业务分：① 核心动作（导航 / 收藏 / 分享）一屏可达　② 评价 / 玩法 / 周边分区清晰　③ 广告位不能压住主信息</li>
+              <li>Hero 图、Tag、Button 全部走组件；零硬编码色值</li>
+              <li>① 核心动作（导航 / 收藏 / 分享）一屏可达　② 评价 / 玩法 / 周边分区清晰　③ 广告位不能压住主信息</li>
               <li>must_not：把"导航"按钮藏在二级 Tab、用满屏 banner 推销</li>
             </ul>
           </div>
         </div>
         <div class="case-row">
           <div class="case-key">Scoring</div>
-          <div class="case-val">规范 4 + 业务 6 ＝ 满分 10</div>
+          <div class="case-val">
+            组件 <strong>0–2</strong>（Hero / Tag / Button 全用组件 = 2）　|　样式 <strong>0–2</strong>（token 全绑 = 2）　|　信息层级 <strong>0–2</strong>（核心动作一屏可达、分区清晰 = 2）　|　场景适配 <strong>0–2</strong>（车机首屏密度合适、广告不压主信息 = 2）　|　信息密度 <strong>0–2</strong>（简介/评分/玩法/周边全到位且无冗余 = 2）<br/>
+            <em>满分 10。</em>
+          </div>
         </div>
       </div>
 
-      <!-- 6. L2 Agent3 流程 -->
+      <!-- 6. A3·流程 -->
       <div class="case-card">
         <div class="case-meta">
-          <span class="case-id">L2-A3-001</span>
-          <span class="pill">L2 业务 · 流程</span>
-          <span class="pill">Agent 3 · 点单</span>
+          <span class="case-id">A3-FLOW-001</span>
+          <span class="pill">Agent 3 · 点单 · 流程</span>
         </div>
         <div class="case-row">
           <div class="case-key">Input</div>
@@ -1258,24 +1259,26 @@
           <div class="case-key">Expected</div>
           <div class="case-val">
             <ul>
-              <li>规范分：4 屏组件复用一致，无自绘卡片或硬编码尺寸</li>
-              <li>业务分：① 每屏只有一个主 CTA　② 等待页有进度反馈　③ 异常态（缺货 / 支付失败）预留位置</li>
+              <li>4 屏组件复用一致，无自绘卡片或硬编码尺寸</li>
+              <li>① 每屏只有一个主 CTA　② 等待页有进度反馈　③ 异常态（缺货 / 支付失败）预留位置</li>
               <li>must_not：让用户在购物车页和下单页都看到两个并列的"确认"按钮</li>
             </ul>
           </div>
         </div>
         <div class="case-row">
           <div class="case-key">Scoring</div>
-          <div class="case-val">规范 4 + 业务 6 ＝ 满分 10</div>
+          <div class="case-val">
+            组件 <strong>0–2</strong>（4 屏组件统一复用 = 2）　|　样式 <strong>0–2</strong>（token 全绑 = 2）　|　信息层级 <strong>0–2</strong>（每屏只一个主 CTA、不并列 = 2）　|　场景适配 <strong>0–2</strong>（等待页有反馈、异常态有出口 = 2）　|　信息密度 <strong>0–2</strong>（4 屏信息递进无冗余 = 2）<br/>
+            <em>满分 10。</em>
+          </div>
         </div>
       </div>
 
-      <!-- 7. L3 一致性 -->
+      <!-- 7. 公共·跨页一致性 -->
       <div class="case-card">
         <div class="case-meta">
-          <span class="case-id">L3-001</span>
-          <span class="pill">L3 跨域一致性 · 页面</span>
-          <span class="pill">公共卷</span>
+          <span class="case-id">PUB-CONSIST-001</span>
+          <span class="pill">公共卷 · 跨页一致性</span>
         </div>
         <div class="case-row">
           <div class="case-key">Input</div>
@@ -1293,16 +1296,18 @@
         </div>
         <div class="case-row">
           <div class="case-key">Scoring</div>
-          <div class="case-val">指出 variant/尺寸/图标三要素 +6；说明文案也要统一 +2；提到通过共享 token 而非各自绑定来保证 +2 ＝ 满分 10</div>
+          <div class="case-val">
+            组件 <strong>0–2</strong>（两页都用 Button 组件实例 = 2）　|　样式 <strong>0–2</strong>（同 variant + 同 size + 同图标命中对照表 = 2）　|　信息层级 <strong>0–2</strong>（在两页都是 Primary 主操作 = 2）　|　场景适配 <em>N/A</em>　|　信息密度 <strong>0–2</strong>（文案统一为"导航"，无歧义 = 2）<br/>
+            <em>该题考组件 + 样式 + 层级 + 信息密度四维，按比例换算到满分 10。</em>
+          </div>
         </div>
       </div>
 
-      <!-- 8. L4 陷阱 原子 -->
+      <!-- 8. 公共·原子陷阱 -->
       <div class="case-card">
         <div class="case-meta">
-          <span class="case-id">L4-TRAP-001</span>
-          <span class="pill">L4 陷阱 · 原子</span>
-          <span class="pill">公共卷</span>
+          <span class="case-id">PUB-ATOM-TRAP-001</span>
+          <span class="pill">公共卷 · 原子 · 陷阱</span>
         </div>
         <div class="case-row">
           <div class="case-key">Input</div>
@@ -1319,16 +1324,18 @@
         </div>
         <div class="case-row">
           <div class="case-key">Scoring</div>
-          <div class="case-val">语义 token +6；明确反对基础色板/硬编码 +2；提到联动图标/背景一致性 +2；给出硬编码或基础色 此题判 0（陷阱题不给情面）</div>
+          <div class="case-val">
+            组件 <em>N/A</em>　|　样式 <strong>0–2</strong>（命中语义 token = 2，命中基础色板 = 1，硬编码 = 0）　|　信息层级 <em>N/A</em>　|　场景适配 <strong>0–2</strong>（提到与图标 / 背景的颜色一致性 = 2）　|　信息密度 <em>N/A</em><br/>
+            <em>该题只考样式 + 场景适配两维。<strong>陷阱红线</strong>：给出硬编码或基础色 → 样式直接判 0，整题归零。</em>
+          </div>
         </div>
       </div>
 
-      <!-- 9. L4 Agent1 陷阱 流程 -->
+      <!-- 9. A1·流程陷阱 -->
       <div class="case-card">
         <div class="case-meta">
-          <span class="case-id">L4-TRAP-A1-001</span>
-          <span class="pill">L4 陷阱 · 流程</span>
-          <span class="pill">Agent 1 · 长途出行</span>
+          <span class="case-id">A1-FLOW-TRAP-001</span>
+          <span class="pill">Agent 1 · 长途出行 · 流程 · 陷阱</span>
         </div>
         <div class="case-row">
           <div class="case-key">Input</div>
@@ -1347,16 +1354,18 @@
         </div>
         <div class="case-row">
           <div class="case-key">Scoring</div>
-          <div class="case-val">主动报警 +4；给出充电站 +3；主按钮指向充电而非继续 +3；任何一条缺失此题判 0</div>
+          <div class="case-val">
+            组件 <strong>0–2</strong>（提示 / 建议都用 Card + Button 组件 = 2）　|　样式 <strong>0–2</strong>（warning 用语义色、token 全绑 = 2）　|　信息层级 <strong>0–2</strong>（"加入充电站"是 Primary 主按钮 = 2）　|　场景适配 <strong>0–2</strong>（提示前置在路线生成之前、不在驾驶过程中弹 = 2）　|　信息密度 <strong>0–2</strong>（充电站建议 ≥1 个、不藏二级菜单 = 2）<br/>
+            <em>满分 10。<strong>陷阱红线</strong>：缺主动报警 / 缺充电站 / 主按钮指向"继续导航" → 整题判 0。</em>
+          </div>
         </div>
       </div>
 
-      <!-- 10. L4 Agent3 陷阱 流程 -->
+      <!-- 10. A3·流程陷阱 -->
       <div class="case-card">
         <div class="case-meta">
-          <span class="case-id">L4-TRAP-A3-001</span>
-          <span class="pill">L4 陷阱 · 流程</span>
-          <span class="pill">Agent 3 · 点单</span>
+          <span class="case-id">A3-FLOW-TRAP-001</span>
+          <span class="pill">Agent 3 · 点单 · 流程 · 陷阱</span>
         </div>
         <div class="case-row">
           <div class="case-key">Input</div>
@@ -1374,7 +1383,10 @@
         </div>
         <div class="case-row">
           <div class="case-key">Scoring</div>
-          <div class="case-val">提示前置 +4；视觉权重达 warning 级 +3；结算前二次确认 +3；下单后才告知 此题判 0</div>
+          <div class="case-val">
+            组件 <strong>0–2</strong>（提示用 Banner / Tip 组件 = 2）　|　样式 <strong>0–2</strong>（warning 级语义色、token 全绑 = 2）　|　信息层级 <strong>0–2</strong>（提示视觉权重 ≥ 主信息、非次要文字 = 2）　|　场景适配 <strong>0–2</strong>（提示前置到菜单页、结算前二次确认 = 2）　|　信息密度 <strong>0–2</strong>（提示文案精炼、不打断浏览 = 2）<br/>
+            <em>满分 10。<strong>陷阱红线</strong>：下单后才告知打烊 → 整题判 0。</em>
+          </div>
         </div>
       </div>
 
@@ -1396,7 +1408,7 @@
           <span class="fold-tag">思辨补充</span>
         </summary>
         <div class="fold-body">
-          <p><strong>分工：L1/L3 标杆题手写后 AI 扩变体；L2/L4 业务题必须人写。</strong>AI 不知道你的"打烊要前置"、"续航不足主动报警"这种业务红线，编出来全是通用陷阱，没鉴别力。</p>
+          <p><strong>分工：公共卷（规范类）标杆题手写后 AI 扩变体；Agent 专业卷必须人写。</strong>AI 不知道你的"打烊要前置""续航不足主动报警"这种业务红线，编出来全是通用陷阱，没鉴别力。</p>
           <p>体量参考（3 个 agent）：手写约 12–20 道，AI 扩到 24–40 道，一两个下午能搞定第一轮。</p>
           <p style="margin-top:10px;"><strong>AI 扩题提示词（直接复制）</strong></p>
           <pre style="background: var(--bg-soft); border: 1px solid var(--border-default); border-radius: 4px; padding: 12px; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; overflow-x: auto; color: var(--text-primary);">你是测试用例设计师。基于下面这道标杆题，出 N 道变体。
@@ -1404,11 +1416,11 @@
 【标杆题】粘贴上面 10 道里的任意一道
 
 【硬约束】
-1. 能力线和颗粒度不许变
+1. 题的归属（公共卷 / 哪个 Agent 专业卷）和颗粒度不许变
 2. 换组件 / 换场景，但考点同源
 3. 题面必须是"用户口语"，不能把答案 token 写进题面
-4. 每题给出：Input / Expected（含 must_not）/ Scoring（≤3 条）
-5. L1 题禁止混入业务知识，L2 题禁止混入纯规范题
+4. 每题给出：Input / Expected（含 must_not）/ Scoring（按五维度：组件 / 样式 / 信息层级 / 场景适配 / 信息密度）
+5. 公共卷题禁止混入 Agent 专属业务知识；Agent 专业卷题禁止只考通用规范
 
 输出 N 道，编号 V1–VN。</pre>
         </div>
@@ -1441,69 +1453,151 @@
         <span class="step-title">定义「评分规则」（Rubric）</span>
         <span class="step-tag">Scoring</span>
       </div>
-      <p>核心一句话：<strong>每道题都拆成"规范分 + 业务分"两栏</strong>，不能合成一个总分。否则版本对比时你说不清是规范涨了还是业务理解涨了——两条曲线必须各自独立。</p>
+      <p>核心一句话：<strong>每道题都用同一套五个维度打分，每维 0–2，满分 10</strong>。不再分"规范分 / 业务分"两栏，也不再按 L1–L4 拆——所有题一把尺子，打完五个维度就出分。</p>
 
-      <div class="callout" style="background: var(--bg-soft); border-left: 3px solid var(--brand-primary);">
-        <div class="ico">?</div>
+      <div class="callout" style="background: var(--bg-soft); border-left: 3px solid var(--accent-ink);">
+        <div class="ico">★</div>
         <div>
-          <p style="margin:0 0 6px;"><strong>先澄清一个常见困惑：L1–L4 和 规范分/业务分 是两回事。</strong></p>
-          <ul style="margin:0 0 10px; padding-left:18px;">
-            <li><strong>L1–L4 是题的标签</strong>（这道题考啥）——只用来组织题库、决定下次往哪补题，<u>不进打分公式</u>。</li>
-            <li><strong>规范分 / 业务分是打分的两个口袋</strong>——所有题最终都汇到这两栏，看版本进步只看这两条曲线。</li>
-          </ul>
-
-          <p style="margin:10px 0 6px;"><strong>看一道真题怎么算分（L2-A1-001 拥堵绕行）：</strong></p>
-          <table style="width:100%; border-collapse:collapse; font-size:13px; margin:0;">
-            <thead>
-              <tr style="background:var(--bg-base);">
-                <th style="text-align:left; padding:6px 8px; border:1px solid var(--border-default); width:90px;">口袋</th>
-                <th style="text-align:left; padding:6px 8px; border:1px solid var(--border-default);">这道题在这一栏看什么</th>
-                <th style="text-align:right; padding:6px 8px; border:1px solid var(--border-default); width:60px;">满分</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="padding:6px 8px; border:1px solid var(--border-default);"><strong>规范分</strong></td>
-                <td style="padding:6px 8px; border:1px solid var(--border-default);">Card / Button 有没有走组件？文字 / 颜色 / 间距 token 有没有用对？</td>
-                <td style="padding:6px 8px; border:1px solid var(--border-default); text-align:right;">4</td>
-              </tr>
-              <tr>
-                <td style="padding:6px 8px; border:1px solid var(--border-default);"><strong>业务分</strong></td>
-                <td style="padding:6px 8px; border:1px solid var(--border-default);">"绕行"是不是主按钮？"12 分钟"够不够醒目？有没有藏到二级菜单？</td>
-                <td style="padding:6px 8px; border:1px solid var(--border-default); text-align:right;">6</td>
-              </tr>
-            </tbody>
-          </table>
-          <p style="margin:8px 0 0; color:var(--text-secondary); font-size:12px;">这道题标签是 <code>L2 · 组件 · Agent1</code>，但打分时只分"规范 / 业务"两栏。下版本对比看的是"规范分均值涨了多少 / 业务分均值涨了多少"，而不是按 L1/L2/L3/L4 拆四条线。</p>
+          <p style="margin:0 0 6px;"><strong>五个维度由"不犯错"逐级递进到"会做设计"</strong></p>
+          <ol style="margin:0; padding-left:20px;">
+            <li><strong>组件</strong>　——　用没用对（关键组件有没有自绘）</li>
+            <li><strong>样式</strong>　——　token 绑没绑（颜色 / 字号 / 间距 / 圆角）</li>
+            <li><strong>信息层级</strong>　——　主次出没出来（一眼能不能看出谁主谁次）</li>
+            <li><strong>场景适配</strong>　——　这设计放进真实场景能不能用（车机视距 / 驾驶态 / 光照）</li>
+            <li><strong>信息密度</strong>　——　该有的有、不该有的没有（精炼 vs 一团乱）</li>
+          </ol>
+          <p style="margin:8px 0 0; color:var(--text-secondary); font-size:13px;">前 2 条 = 不犯错（规范底线）／第 3 条 = 设计基本功／后 2 条 = 真正的设计能力。</p>
         </div>
       </div>
 
-      <p style="margin-top:18px;"><strong>两栏的通用判据（所有题共用）：</strong></p>
-      <div class="grid-2">
-        <div class="dim">
-          <div class="dim-name">规范分 <span class="dim-score">每题 4–6</span></div>
-          <ul>
-            <li>组件 / Variable / Text Style 是否绑定</li>
-            <li>图标是否命中对照表</li>
-            <li>间距是否走 spacing token</li>
-            <li>L1 / L3 题在这一栏占大头；L2 题这栏只占 4 左右</li>
-          </ul>
-        </div>
-        <div class="dim">
-          <div class="dim-name">业务分 <span class="dim-score">每题 4–6</span></div>
-          <ul>
-            <li>主操作 / 信息优先级是否正确</li>
-            <li>异常态、边界态是否被覆盖</li>
-            <li>该出现的提示是否提前出现</li>
-            <li>L2 / L4 题在这一栏占大头；纯 L1 题这栏可能为 0</li>
-          </ul>
-        </div>
+      <h4 style="margin-top:24px;">五维度打分细则</h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:14%">维度</th>
+              <th style="width:28%">0 分</th>
+              <th style="width:28%">1 分</th>
+              <th style="width:30%">2 分</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. 组件</strong></td>
+              <td>关键组件自绘（自己画了 Card / Button / Tab）</td>
+              <td>主要组件用了组件库，但有少量自绘或属性改坏了</td>
+              <td>所有组件都来自组件库，属性没乱改</td>
+            </tr>
+            <tr>
+              <td><strong>2. 样式</strong></td>
+              <td>大量自定义颜色 / 字号 / 间距，没走 token</td>
+              <td>主要走了 token，但个别地方写死值</td>
+              <td>颜色 / 字体 / 间距 / 圆角全部走 Variable / Text Style</td>
+            </tr>
+            <tr>
+              <td><strong>3. 信息层级</strong></td>
+              <td>所有元素一样大一样色，看不出主次</td>
+              <td>大体能看出主次，但个别地方层级模糊</td>
+              <td>主操作 / 主信息一眼跳出，次要信息明显退到次级</td>
+            </tr>
+            <tr>
+              <td><strong>4. 场景适配</strong></td>
+              <td>违反场景约束（驾驶时字号太小、夜间用纯白底）</td>
+              <td>基本可用，但有少数地方没考虑场景</td>
+              <td>字号 / 对比度 / 触控目标 / 操作密度都贴合场景</td>
+            </tr>
+            <tr>
+              <td><strong>5. 信息密度</strong></td>
+              <td>关键信息漏了，或塞了一堆无关信息</td>
+              <td>关键信息都在，但有冗余 / 缺辅助说明</td>
+              <td>信息刚好够用——题面要求全到位、没有视觉噪声</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4 style="margin-top:24px;">用一道真题走一遍（A1-COMP-001 拥堵绕行）</h4>
+      <p>同一道题，差稿 vs 好稿，用五维度打分能拉出明显差距：</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th class="num">差稿</th>
+              <th class="num">好稿</th>
+              <th>为什么差距在这</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1. 组件</td>
+              <td class="num">1</td>
+              <td class="num">2</td>
+              <td>差稿自绘了 Card 背景；好稿全用组件实例</td>
+            </tr>
+            <tr>
+              <td>2. 样式</td>
+              <td class="num">1</td>
+              <td class="num">2</td>
+              <td>差稿写了 <code>#FF3B30</code>；好稿绑 <code>color/danger</code></td>
+            </tr>
+            <tr>
+              <td>3. 信息层级</td>
+              <td class="num">0</td>
+              <td class="num">2</td>
+              <td>差稿三个按钮一样大；好稿"绕行"是 Primary、"12 分钟"用强调字号</td>
+            </tr>
+            <tr>
+              <td>4. 场景适配</td>
+              <td class="num">0</td>
+              <td class="num">2</td>
+              <td>差稿正文 14px 驾驶时根本看不清；好稿 24px + 高对比</td>
+            </tr>
+            <tr>
+              <td>5. 信息密度</td>
+              <td class="num">1</td>
+              <td class="num">2</td>
+              <td>差稿塞了 4 行说明文字；好稿只留"绕行 / 不绕行 / 多花 12 分钟"三件事</td>
+            </tr>
+            <tr>
+              <td><strong>合计</strong></td>
+              <td class="num"><strong>3 / 10</strong></td>
+              <td class="num"><strong>10 / 10</strong></td>
+              <td>同一题不同稿能拉开 7 分差距，信号足够强</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="callout">
         <div class="ico">i</div>
         <div>
-          <p>每个 Agent 的"业务分"细则要自己写一份；规范分细则三个 Agent 共用一份。具体打分点在 Step 1.3 范例库的 L2-A1 / L2-A2 / L2-A3 三道题里有示范。</p>
+          <p><strong>关于"N/A"：</strong>纯静态展示题（比如"次要文字用什么色"）天然没有"场景适配"或"信息密度"可考——这些维度标 <code>N/A</code>，最后<strong>按实际打分维度数按比例换算到满分 10</strong>。比如只考样式 + 层级两维（满 4），实际得 3，则总分 = 3 ÷ 4 × 10 = 7.5。</p>
+          <p style="margin-top:8px;"><strong>关于"陷阱红线"：</strong>陷阱题（题面藏冲突或边界条件）允许定一条"答错此条整题判 0"的硬规则——例如"打烊提示前置"、"续航不足主动报警"。红线只用在陷阱题里，普通题不要乱设。</p>
+        </div>
+      </div>
+
+      <details class="aside-fold">
+        <summary>
+          <span>关于这套打分的诚实边界</span>
+          <span class="fold-tag">思辨补充</span>
+        </summary>
+        <div class="fold-body">
+          <p><strong>这套打分依然是半黑盒。</strong>"信息层级 0/1/2"还是靠人判断，不可能完全客观。但比起"规范分 / 业务分"那种抽象分类，这五维度问题更聚焦：</p>
+          <ul>
+            <li>"关键组件有没有自绘" → 看图层就知道（白盒）</li>
+            <li>"颜色 / 间距是不是 token" → 扫一遍就知道（白盒）</li>
+            <li>"主次能不能一眼看出" → 比"业务做得怎么样"具体多了（半白盒）</li>
+            <li>"字号在驾驶视距下够不够" → 有物理判据（半白盒）</li>
+          </ul>
+          <p>务实做法：<strong>同一个版本的所有题让同一个人打分</strong>，消除评估人偏差；版本对比时关注五维度均值的趋势，而不是绝对值。等跑过 2–3 版稳定下来，再把争议最大的几道题升级成更细的 checklist。</p>
+        </div>
+      </details>
+
+      <div class="callout">
+        <div class="ico">!</div>
+        <div>
+          <p><strong>不再使用以下术语</strong>：L1 / L2 / L3 / L4 能力线、规范分、业务分、能力维度。统一只用：<strong>组件 / 样式 / 信息层级 / 场景适配 / 信息密度</strong> 这五个词。术语一致是版本对比能成立的前提。</p>
         </div>
       </div>
     </div>
@@ -1515,47 +1609,62 @@
         <span class="step-title">建立「基线」并跑出对比</span>
         <span class="step-tag">Baseline & Re-eval</span>
       </div>
-      <p>用<strong>当前的</strong>知识库把全部用例跑一遍，逐条打分，得到 <code>v1</code> 基线；改完后用<strong>完全相同的题</strong>再跑一遍，得到 <code>v2</code>。</p>
+      <p>用<strong>当前的</strong>知识库把全部用例跑一遍，逐条按五维度打分，得到 <code>v1</code> 基线；改完后用<strong>完全相同的题</strong>再跑一遍，得到 <code>v2</code>。</p>
 
-      <h4>v1 → v2 评估对比示例（三 Agent 各取一题）</h4>
+      <h4>v1 → v2 评估对比示例（按维度看均值）</h4>
+      <p class="sub-desc">不要看每道题的总分变化——粒度太细信号弱。直接看<strong>五个维度在所有题上的均值</strong>，哪个维度均值低、哪个维度涨得多，下一步该补什么一目了然。</p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>用例</th>
-              <th class="num">v1 规范 / 业务</th>
-              <th class="num">v2 规范 / 业务</th>
+              <th>维度</th>
+              <th class="num">v1 均值</th>
+              <th class="num">v2 均值</th>
               <th class="num">Δ</th>
-              <th>主要修复点</th>
+              <th>解读</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>出行向导 · 拥堵绕行</td>
-              <td class="num">3 / 2</td>
-              <td class="num">4 / 5</td>
-              <td class="num"><strong>+4</strong></td>
-              <td>把"绕 / 不绕"提为主按钮，时间代价加重</td>
+              <td>1. 组件</td>
+              <td class="num">1.4</td>
+              <td class="num">1.9</td>
+              <td class="num"><strong>+0.5</strong></td>
+              <td>知识库强化了"必须用组件库"后基本封顶</td>
             </tr>
             <tr>
-              <td>POI · 咖啡馆详情</td>
-              <td class="num">4 / 3</td>
-              <td class="num">4 / 5</td>
-              <td class="num"><strong>+2</strong></td>
-              <td>分区清晰化，闭店态加状态标记</td>
+              <td>2. 样式</td>
+              <td class="num">1.6</td>
+              <td class="num">1.9</td>
+              <td class="num"><strong>+0.3</strong></td>
+              <td>token 绑定也接近封顶，规范层稳定</td>
             </tr>
             <tr>
-              <td>点单餐饮 · 4 屏流程</td>
-              <td class="num">2 / 2</td>
-              <td class="num">4 / 5</td>
-              <td class="num"><strong>+5</strong></td>
-              <td>组件复用统一，打烊提示前置到加购</td>
+              <td>3. 信息层级</td>
+              <td class="num">0.8</td>
+              <td class="num">1.5</td>
+              <td class="num"><strong>+0.7</strong></td>
+              <td><strong>这版的真正进步</strong>：主次按钮、字号层级有意识做了</td>
             </tr>
             <tr>
-              <td><strong>均分</strong></td>
-              <td class="num"><strong>3 / 2.3</strong></td>
-              <td class="num"><strong>4 / 5</strong></td>
-              <td class="num"><strong>+3.7</strong></td>
+              <td>4. 场景适配</td>
+              <td class="num">0.6</td>
+              <td class="num">0.9</td>
+              <td class="num"><strong>+0.3</strong></td>
+              <td>仍是短板：驾驶视距、夜间对比度还经常忽略</td>
+            </tr>
+            <tr>
+              <td>5. 信息密度</td>
+              <td class="num">1.0</td>
+              <td class="num">1.2</td>
+              <td class="num"><strong>+0.2</strong></td>
+              <td>变化不大，AI 还是倾向"什么都给"</td>
+            </tr>
+            <tr>
+              <td><strong>总均值（×5）</strong></td>
+              <td class="num"><strong>5.4</strong></td>
+              <td class="num"><strong>7.4</strong></td>
+              <td class="num"><strong>+2.0</strong></td>
               <td>—</td>
             </tr>
           </tbody>
@@ -1563,7 +1672,7 @@
       </div>
       <div class="callout">
         <div class="ico">↑</div>
-        <div><p><strong>规范分 3 → 4，业务分 2.3 → 5。</strong>分两条线看一眼就懂："规范基本封顶，业务理解才是这一版的真正进步。"——这种话才是可量化、可解释的训练成果。</p></div>
+        <div><p><strong>看维度均值，不看总分。</strong>"信息层级 0.8 → 1.5 是这版主战场，场景适配 0.6 → 0.9 仍是短板，下一版重点补车机视距 / 驾驶态适配的知识。"——这种话才是可量化、可解释的训练成果。</p></div>
       </div>
     </div>
 
@@ -1574,36 +1683,47 @@
         <span class="step-title">针对性改进 —— 这才是"训练"</span>
         <span class="step-tag">Improve</span>
       </div>
-      <p><strong>哪条线最低，就集中改哪条线</strong>。改的不是模型，而是知识库与规则。</p>
+      <p><strong>哪个维度均值最低，就集中改哪个维度</strong>。改的不是模型，而是知识库与规则。</p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th style="width:32%">发现的短板</th>
+              <th style="width:18%">短板维度</th>
+              <th style="width:34%">典型表现</th>
               <th>改进动作</th>
               <th style="width:18%">改的是什么</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>三个 agent 都把决策动作做成了次按钮（业务分低）</td>
+              <td><strong>1. 组件</strong></td>
+              <td>AI 经常自绘卡片背景、自画按钮</td>
+              <td>SOP 加"任何卡片 / 按钮交付前必须是组件实例"，并在公共卷加"自绘 = 0 分"硬约束</td>
+              <td>设计系统主知识库</td>
+            </tr>
+            <tr>
+              <td><strong>2. 样式</strong></td>
+              <td>间距 / 颜色偶尔写硬编码值</td>
+              <td>SOP 增加"自绘节点交付前 100% 绑 token"的强制自查项</td>
+              <td>设计系统主知识库</td>
+            </tr>
+            <tr>
+              <td><strong>3. 信息层级</strong></td>
+              <td>三个 agent 都把决策动作做成了次按钮</td>
               <td>在每个 agent 的业务规范里写死："唯一决策动作必须是主按钮，且不可折叠"</td>
               <td>Agent 业务知识库</td>
             </tr>
             <tr>
-              <td>POI 闭店、餐饮打烊等异常态 AI 经常忘做（L4 全跪）</td>
-              <td>在每个 agent 文档里加"必须覆盖的异常态清单"，并把它做成 always-applied rule</td>
+              <td><strong>4. 场景适配</strong></td>
+              <td>POI 闭店、餐饮打烊等异常态 AI 经常忘做；车机视距字号偏小</td>
+              <td>每个 agent 文档加"必须覆盖的异常态清单"+ 公共卷加"车机最小字号 / 触控目标"硬指标，做成 always-applied rule</td>
               <td>Agent 业务知识库 + 规则权重</td>
             </tr>
             <tr>
-              <td>跨 agent 的按钮 / 图标语义不一致（L3 低）</td>
-              <td>抽出一份"三 agent 共用按钮 / 图标语义表"，作为公共卷的强制依据</td>
-              <td>设计系统主知识库</td>
-            </tr>
-            <tr>
-              <td>间距 / token 偶尔遗漏（规范分小幅扣）</td>
-              <td>SOP 增加"自绘节点交付前 100% 绑 token"的强制自查项</td>
-              <td>设计系统主知识库</td>
+              <td><strong>5. 信息密度</strong></td>
+              <td>AI 倾向"什么都给"，主信息被次要信息淹没</td>
+              <td>公共卷加"一屏一个主 CTA"原则；每个 agent 给出"该屏必须出现 / 必须不出现"清单</td>
+              <td>Agent 业务知识库</td>
             </tr>
           </tbody>
         </table>
@@ -1625,9 +1745,9 @@
       <div class="vs-col">
         <h4>真正在训练</h4>
         <ul>
-          <li>有固定题库，按 L1–L4 × 颗粒度组织</li>
-          <li>每题"规范分 + 业务分"双线打分</li>
-          <li>能说出"规范 3→4、业务 2.3→5"</li>
+          <li>有固定题库，按 公共卷 / Agent 专业卷 × 颗粒度 组织</li>
+          <li>每题统一五维度打分（组件 / 样式 / 信息层级 / 场景适配 / 信息密度）</li>
+          <li>能说出"信息层级 0.8 → 1.5、场景适配仍是短板"</li>
         </ul>
       </div>
     </div>

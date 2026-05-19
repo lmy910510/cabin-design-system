@@ -1451,23 +1451,59 @@
       </div>
       <p>核心一句话：<strong>每道题都拆成"规范分 + 业务分"两栏</strong>，不能合成一个总分。否则版本对比时你说不清是规范涨了还是业务理解涨了——两条曲线必须各自独立。</p>
 
+      <div class="callout" style="background: var(--bg-soft); border-left: 3px solid var(--brand-primary);">
+        <div class="ico">?</div>
+        <div>
+          <p style="margin:0 0 6px;"><strong>先澄清一个常见困惑：L1–L4 和 规范分/业务分 是两回事。</strong></p>
+          <ul style="margin:0 0 10px; padding-left:18px;">
+            <li><strong>L1–L4 是题的标签</strong>（这道题考啥）——只用来组织题库、决定下次往哪补题，<u>不进打分公式</u>。</li>
+            <li><strong>规范分 / 业务分是打分的两个口袋</strong>——所有题最终都汇到这两栏，看版本进步只看这两条曲线。</li>
+          </ul>
+
+          <p style="margin:10px 0 6px;"><strong>看一道真题怎么算分（L2-A1-001 拥堵绕行）：</strong></p>
+          <table style="width:100%; border-collapse:collapse; font-size:13px; margin:0;">
+            <thead>
+              <tr style="background:var(--bg-base);">
+                <th style="text-align:left; padding:6px 8px; border:1px solid var(--border-default); width:90px;">口袋</th>
+                <th style="text-align:left; padding:6px 8px; border:1px solid var(--border-default);">这道题在这一栏看什么</th>
+                <th style="text-align:right; padding:6px 8px; border:1px solid var(--border-default); width:60px;">满分</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding:6px 8px; border:1px solid var(--border-default);"><strong>规范分</strong></td>
+                <td style="padding:6px 8px; border:1px solid var(--border-default);">Card / Button 有没有走组件？文字 / 颜色 / 间距 token 有没有用对？</td>
+                <td style="padding:6px 8px; border:1px solid var(--border-default); text-align:right;">4</td>
+              </tr>
+              <tr>
+                <td style="padding:6px 8px; border:1px solid var(--border-default);"><strong>业务分</strong></td>
+                <td style="padding:6px 8px; border:1px solid var(--border-default);">"绕行"是不是主按钮？"12 分钟"够不够醒目？有没有藏到二级菜单？</td>
+                <td style="padding:6px 8px; border:1px solid var(--border-default); text-align:right;">6</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="margin:8px 0 0; color:var(--text-secondary); font-size:12px;">这道题标签是 <code>L2 · 组件 · Agent1</code>，但打分时只分"规范 / 业务"两栏。下版本对比看的是"规范分均值涨了多少 / 业务分均值涨了多少"，而不是按 L1/L2/L3/L4 拆四条线。</p>
+        </div>
+      </div>
+
+      <p style="margin-top:18px;"><strong>两栏的通用判据（所有题共用）：</strong></p>
       <div class="grid-2">
         <div class="dim">
-          <div class="dim-name">规范分 <span class="dim-score">满分 4–6</span></div>
+          <div class="dim-name">规范分 <span class="dim-score">每题 4–6</span></div>
           <ul>
             <li>组件 / Variable / Text Style 是否绑定</li>
             <li>图标是否命中对照表</li>
             <li>间距是否走 spacing token</li>
-            <li>L1 / L3 题的主战场</li>
+            <li>L1 / L3 题在这一栏占大头；L2 题这栏只占 4 左右</li>
           </ul>
         </div>
         <div class="dim">
-          <div class="dim-name">业务分 <span class="dim-score">满分 4–6</span></div>
+          <div class="dim-name">业务分 <span class="dim-score">每题 4–6</span></div>
           <ul>
             <li>主操作 / 信息优先级是否正确</li>
             <li>异常态、边界态是否被覆盖</li>
             <li>该出现的提示是否提前出现</li>
-            <li>L2 / L4 题的主战场</li>
+            <li>L2 / L4 题在这一栏占大头；纯 L1 题这栏可能为 0</li>
           </ul>
         </div>
       </div>

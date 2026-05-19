@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TopBar · 预览（Figma 1:1，5 个 style variant）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="./top-bar.css" />
+
+  <!-- 注入统一图标 sprite（同文档锚点，绕开 file:// 跨文件 use 限制）-->
+  <script src="../icon/icon-sprite-inline.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 24px 120px;
+      background: var(--color-bg-page-secondary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+      min-height: 100vh;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 48px;
+      line-height: 54px;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0 0 36px;
+      color: var(--color-text-secondary);
+      font-size: 22px;
+      line-height: 30px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+    .toolbar button {
+      padding: 0 24px;
+      height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+
+    h2 {
+      margin: 60px 0 8px;
+      font-size: 32px;
+      line-height: 38px;
+      font-weight: 700;
+    }
+    .figma-meta {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 0 0 18px;
+    }
+    .h2-note {
+      display: block;
+      margin-top: 4px;
+      font-size: 20px;
+      line-height: 26px;
+      font-weight: 400;
+      color: var(--color-text-secondary);
+    }
+
+    /* TopBar 单 variant 横条特写：内部 strip 恒定 1560 真宽，外层 wrapper 用 CSS var --preview-scale
+       做 transform:scale 等比缩放。视口窄于 1560 时由 JS 把 --preview-scale 设为 vw/1560，
+       让用户看到"1560 真值的间距/字号比例"，永远不会出现压扁或横向滚动。 */
+    .variant-stage {
+      /* 占位高度 = strip 真高 220 × scale，宽度 = vw（容器自然宽） */
+      --preview-scale: 1;
+      width: 100%;
+      height: calc(220px * var(--preview-scale));
+      overflow: hidden;
+    }
+    .variant-strip {
+      width: 1560px;
+      height: 220px;
+      padding: 32px;
+      box-sizing: border-box;
+      background: var(--color-bg-page-secondary);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+      display: flex;
+      align-items: center;
+      transform: scale(var(--preview-scale));
+      transform-origin: top left;
+    }
+    .variant-strip .top-bar {
+      width: 100%;
+      border-radius: var(--space-2xl);
+      box-shadow: var(--shadow-medium);
+    }
+  </style>
+</head>
+<body>
+  <h1>TopBar · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 436:1719（COMPONENT_SET）· 高度 156 · 5 个 style variant 全部已实现
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <!-- 1. style=title -->
+  <h2>1. style = title
+    <span class="h2-note">仅左侧标题；右侧空。常用于无操作的纯展示页。</span>
+  </h2>
+  <p class="figma-meta">Figma 436:1684 · title 42px Medium</p>
+  <div class="variant-stage">
+    <div class="variant-strip">
+      <header class="top-bar top-bar--title">
+        <div class="top-bar__left"><h1 class="top-bar__title">页面标题</h1></div>
+        <div class="top-bar__right"></div>
+      </header>
+    </div>
+  </div>
+
+  <!-- 2. style=back -->
+  <h2>2. style = back
+    <span class="h2-note">圆形 secondary icon-only Button + "返回" 36px Medium。常用于详情页。</span>
+  </h2>
+  <p class="figma-meta">Figma 436:1688 · 复用 .btn--secondary.btn--md.btn--icon-only（72×72）</p>
+  <div class="variant-stage">
+    <div class="variant-strip">
+      <header class="top-bar top-bar--back">
+        <div class="top-bar__left">
+          <button type="button" class="btn btn--secondary btn--md btn--icon-only" aria-label="返回">
+            <span class="btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><use href="#icon/back--line"/></svg>
+            </span>
+          </button>
+          <span class="top-bar__back-text">返回</span>
+        </div>
+        <div class="top-bar__right"></div>
+      </header>
+    </div>
+  </div>
+
+  <!-- 3. style=title-actions -->
+  <h2>3. style = title-actions
+    <span class="h2-note">标题 + 右侧 2 个 secondary md 按钮（gap=30）。常用于带操作的设置/编辑页。</span>
+  </h2>
+  <p class="figma-meta">Figma 436:1700</p>
+  <div class="variant-stage">
+    <div class="variant-strip">
+      <header class="top-bar top-bar--title-actions">
+        <div class="top-bar__left"><h1 class="top-bar__title">标题</h1></div>
+        <div class="top-bar__right">
+          <button type="button" class="btn btn--secondary btn--md"><span class="btn-label">取消</span></button>
+          <button type="button" class="btn btn--secondary btn--md"><span class="btn-label">确认</span></button>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <!-- 4. style=button-avatar -->
+  <h2>4. style = button-avatar
+    <span class="h2-note">Tab × 4（active 6px indicator） + secondary md 按钮 + 72 圆头像。常用于多 Tab 主页。</span>
+  </h2>
+  <p class="figma-meta">Figma 436:1694 · tab gap=72，indicator 48×6（3xl × xxs）</p>
+  <div class="variant-stage">
+    <div class="variant-strip">
+      <header class="top-bar top-bar--button-avatar">
+        <div class="top-bar__left">
+          <ul class="top-bar__tab-list" role="tablist">
+            <li><button type="button" class="top-bar__tab-item is-active" role="tab" aria-selected="true">
+              <span class="top-bar__tab-item-label">标签</span>
+              <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
+            </button></li>
+            <li><button type="button" class="top-bar__tab-item" role="tab" aria-selected="false">
+              <span class="top-bar__tab-item-label">标签</span>
+              <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
+            </button></li>
+            <li><button type="button" class="top-bar__tab-item" role="tab" aria-selected="false">
+              <span class="top-bar__tab-item-label">标签</span>
+              <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
+            </button></li>
+            <li><button type="button" class="top-bar__tab-item" role="tab" aria-selected="false">
+              <span class="top-bar__tab-item-label">标签</span>
+              <span class="top-bar__tab-item-indicator" aria-hidden="true"></span>
+            </button></li>
+          </ul>
+        </div>
+        <div class="top-bar__right">
+          <button type="button" class="btn btn--secondary btn--md"><span class="btn-label">设置</span></button>
+          <span class="top-bar__avatar"
+                role="img"
+                aria-label="用户头像"
+                style="background-image: linear-gradient(135deg, #FFD89B 0%, #19547B 100%);"></span>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <!-- 5. style=select-actions -->
+  <h2>5. style = select-actions
+    <span class="h2-note">圆形 Checkbox + 全选 + Danger md(disabled) + Secondary md。常用于批量编辑模式。</span>
+  </h2>
+  <p class="figma-meta">Figma 436:1709 · checkbox 圆形 48（border 36 hairline + border/primary）</p>
+  <div class="variant-stage">
+    <div class="variant-strip">
+      <header class="top-bar top-bar--select-actions">
+        <div class="top-bar__left">
+          <label class="top-bar__select">
+            <input type="checkbox" class="top-bar__select-checkbox" aria-label="全选" />
+            <span class="top-bar__select-label">全选</span>
+          </label>
+        </div>
+        <div class="top-bar__right">
+          <button type="button" class="btn btn--danger btn--md" disabled aria-disabled="true"><span class="btn-label">删除</span></button>
+          <button type="button" class="btn btn--secondary btn--md"><span class="btn-label">取消</span></button>
+        </div>
+      </header>
+    </div>
+  </div>
+
+  <script>
+    const html = document.documentElement;
+    const btnLight = document.getElementById('btn-light');
+    const btnDark = document.getElementById('btn-dark');
+    function setTheme(t) {
+      html.setAttribute('data-theme', t);
+      btnLight.setAttribute('aria-pressed', t === 'light');
+      btnDark.setAttribute('aria-pressed', t === 'dark');
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+
+    // 预览自适应缩放：让 1560 真值 strip 在窄于 1608 的视口（如 index.html iframe）下整体等比缩，
+    // 视觉上始终保持"1560 默认宽度的间距 / 字号比例"，而不是把 1560 压扁。
+    // 目标内容宽 = body padding(24*2) + strip(1560) = 1608
+    const TARGET_W = 1608;
+    function fitPreview() {
+      const vw = document.documentElement.clientWidth;
+      const avail = Math.max(vw - 48, 320);
+      const scale = Math.min(avail / 1560, 1);
+      document.querySelectorAll('.variant-stage').forEach(s => {
+        s.style.setProperty('--preview-scale', scale);
+      });
+    }
+    fitPreview();
+    window.addEventListener('resize', fitPreview);
+
+    // tab demo：点击切换 active
+    document.querySelectorAll('.top-bar__tab-list').forEach(list => {
+      list.addEventListener('click', (e) => {
+        const t = e.target.closest('.top-bar__tab-item');
+        if (!t) return;
+        list.querySelectorAll('.top-bar__tab-item').forEach(x => {
+          x.classList.toggle('is-active', x === t);
+          x.setAttribute('aria-selected', x === t ? 'true' : 'false');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

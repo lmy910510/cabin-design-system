@@ -630,6 +630,94 @@
     }
     .collect-link__cta::after { content: " →"; }
 
+    /* 题库分类矩阵 */
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 14px 0 6px;
+      font-size: 13.5px;
+    }
+    .matrix th, .matrix td {
+      border: 1px solid var(--border-default);
+      padding: 10px 12px;
+      vertical-align: top;
+      text-align: left;
+    }
+    .matrix thead th {
+      background: var(--bg-soft);
+      font-weight: 600;
+      color: var(--text-default);
+      font-size: 12.5px;
+      letter-spacing: 0.02em;
+    }
+    .matrix tbody th {
+      background: #fcfcfb;
+      font-weight: 600;
+      width: 21%;
+      color: var(--text-default);
+    }
+    .matrix tbody th small {
+      display: block;
+      font-weight: 400;
+      color: var(--text-tertiary);
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .matrix td.dim-cell {
+      color: var(--text-secondary);
+    }
+    .matrix td.dim-cell .num {
+      display: inline-block;
+      min-width: 22px;
+      padding: 0 6px;
+      margin-right: 6px;
+      border-radius: 3px;
+      background: var(--bg-block);
+      color: var(--text-default);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      text-align: center;
+    }
+    .matrix td.dim-empty { color: var(--text-tertiary); }
+
+    /* Agent 专业卷卡片 */
+    .agent-card {
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      padding: 16px 18px;
+      margin: 10px 0;
+      background: #fff;
+    }
+    .agent-card__head {
+      display: flex; align-items: baseline; gap: 10px;
+      margin-bottom: 8px;
+    }
+    .agent-card__name {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text-default);
+    }
+    .agent-card__tag {
+      font-size: 11.5px;
+      color: var(--text-tertiary);
+      background: var(--bg-block);
+      padding: 1px 8px;
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.02em;
+    }
+    .agent-card__sample {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    .agent-card__sample b {
+      color: var(--text-default);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 2px;
+    }
+
     /* 维度网格 */
     .grid-2 {
       display: grid;
@@ -786,9 +874,8 @@
         <li><a href="#why">为什么需要"训练"</a></li>
         <li><a href="#what">什么才算"训练"</a></li>
         <li><a href="#how">五步可落地方法论</a></li>
-        <li><a href="#loop">完整迭代闭环</a></li>
+        <li><a href="#scope">题库分类与颗粒度</a></li>
         <li><a href="#vs">"装模作样" vs. "真正训练"</a></li>
-        <li><a href="#first">现在就做的第一件事</a></li>
       </ol>
     </nav>
 
@@ -933,80 +1020,9 @@
         </div>
       </div>
 
-      <div class="sub-title">三道示范题（直接抄走改字段就能用）</div>
+      <div class="sub-title">一道示范题（陷阱题，最考验知识库）</div>
 
-      <!-- Case 1：基础题 -->
-      <div class="case-card">
-        <div class="case-meta">
-          <span class="case-id">EVAL-001</span>
-          <span class="pill">category: token / 文字色</span>
-          <span class="pill">difficulty: 基础</span>
-          <span class="pill">满分 10</span>
-        </div>
-        <div class="case-row">
-          <div class="case-key">Input</div>
-          <div class="case-val">"这个副标题灰灰的，看着有点弱，能不能改成跟主标题一样显眼？"</div>
-        </div>
-        <div class="case-row">
-          <div class="case-key">Expected</div>
-          <div class="case-val">
-            <ul>
-              <li>命中 token：<code>text-primary</code>（等价：<code>color/text/primary</code>、"主文字色"）</li>
-              <li>不接受：直接给十六进制色值（如 <code>#1F1F1C</code>）</li>
-              <li>需要说明改法：把 <code>text-secondary</code> 替换为 <code>text-primary</code></li>
-            </ul>
-          </div>
-        </div>
-        <div class="case-row">
-          <div class="case-key">Scoring</div>
-          <div class="case-val">
-            <ul>
-              <li>命中正确 token 名 +6</li>
-              <li>给出替换路径（旧 → 新）+2</li>
-              <li>说明这是"语义色而非具体色值" +2</li>
-              <li>给硬编码色值 −5</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Case 2：进阶题 -->
-      <div class="case-card">
-        <div class="case-meta">
-          <span class="case-id">EVAL-002</span>
-          <span class="pill">category: 图标语义</span>
-          <span class="pill">difficulty: 进阶</span>
-          <span class="pill">满分 10</span>
-        </div>
-        <div class="case-row">
-          <div class="case-key">Input</div>
-          <div class="case-val">"导航栏里要加一个'我的车'入口，用什么图标？给出图标名和形态。"</div>
-        </div>
-        <div class="case-row">
-          <div class="case-key">Expected</div>
-          <div class="case-val">
-            <ul>
-              <li>图标名：<code>icon/car</code>（等价：<code>vehicle</code>、"车辆"）</li>
-              <li>形态：<strong>面形（filled）</strong>，因为是导航栏一级入口</li>
-              <li>需引用规则："导航栏 / Tab 选中态用面形，未选中用线形"</li>
-            </ul>
-          </div>
-        </div>
-        <div class="case-row">
-          <div class="case-key">Scoring</div>
-          <div class="case-val">
-            <ul>
-              <li>命中正确图标名 +4</li>
-              <li>形态选对（面形）+3</li>
-              <li>说明形态选择的规则依据 +3</li>
-              <li>只给名字不给形态 满分上限 4</li>
-              <li>形态选反（给线形）此项直接 0</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Case 3：陷阱题 -->
+      <!-- Case：陷阱题（保留最有代表性的一道） -->
       <div class="case-card">
         <div class="case-meta">
           <span class="case-id">EVAL-003</span>
@@ -1025,7 +1041,6 @@
               <li>正确 token：<code>text-danger</code>（或 <code>color/semantic/danger</code>）</li>
               <li><strong>不能给</strong> <code>color/red/500</code>（这是基础色板，不是语义色）</li>
               <li><strong>不能给</strong> <code>#FF3B30</code>（硬编码）</li>
-              <li>加分项：提示同时把背景或图标统一切到 danger 系列，保持语义一致</li>
             </ul>
           </div>
         </div>
@@ -1042,57 +1057,17 @@
         </div>
       </div>
 
-      <div class="sub-title">存储格式：JSON（推荐，可被脚本批量跑）</div>
-      <p class="sub-desc">用 JSON 而不是 Markdown，是为了将来可以接一个评分脚本批量跑测。Markdown 表格做"人读版本"，JSON 做"机读版本"，两份同步。</p>
-<pre><code>[
-  {
-    "id": "EVAL-001",
-    "category": "token/文字色",
-    "difficulty": "基础",
-    "input": "这个副标题灰灰的，看着有点弱，能不能改成跟主标题一样显眼？",
-    "expected": {
-      "must_hit": ["text-primary"],
-      "equivalents": ["color/text/primary", "主文字色"],
-      "must_not": ["#1F1F1C", "硬编码色值"],
-      "explain": "应把 text-secondary 替换为 text-primary"
-    },
-    "scoring": {
-      "max": 10,
-      "rules": [
-        { "+6": "命中正确 token 名" },
-        { "+2": "给出替换路径（旧→新）" },
-        { "+2": "说明这是语义色而非具体色值" },
-        { "-5": "给硬编码色值" }
-      ]
-    }
-  }
-]</code></pre>
-
       <div class="callout">
         <div class="ico">i</div>
         <div>
-          <p><strong>用例数量建议：</strong>首版 <strong>15–20 题</strong>，按"基础 60% / 进阶 30% / 陷阱 10%"分布。</p>
-          <p style="margin-top:6px;">每次知识库迭代后，<strong>同一套题重新跑一遍</strong>，对比 v1 / v2 / v3 的均分与分类得分——这才是"训练"留下的痕迹。</p>
+          <p><strong>三条最容易翻车的经验</strong></p>
+          <ul style="margin:6px 0 0; padding-left:18px;">
+            <li><strong>陷阱题 ≤ 10%</strong>：超过会持续压低均分，团队失去训练动力。</li>
+            <li><strong>Expected 必须写 must_not</strong>：AI 经常"答对一半"还附带硬编码兜底，没有反向项就改不掉这个保险习惯。</li>
+            <li><strong>已发布的题只增不改</strong>：改题等于换考卷，v1 vs v2 对比就失效了。要废弃就标记 <code>deprecated: true</code> 再新增。</li>
+          </ul>
         </div>
       </div>
-
-      <!-- ===== 三条实战经验 ===== -->
-      <div class="sub-title">写评估用例最容易翻车的三个点</div>
-      <p class="sub-desc">下面这三条，是范例里没法直接写进字段、但每次做训练都会反复踩到的坑。</p>
-      <ol class="lesson-list">
-        <li>
-          <span class="lesson-title">陷阱题不能太多（≤ 10%）</span>
-          <span class="lesson-desc">陷阱题占比一旦超过 20%，均分会被持续压低，每次小迭代都看起来"没进步"，团队会失去训练动力。陷阱题的作用是<strong>定点暴露已知短板</strong>，不是用来打击士气。</span>
-        </li>
-        <li>
-          <span class="lesson-title">Expected 一定要写 must_not（不能给什么）</span>
-          <span class="lesson-desc">AI 经常"答对一半"——给了正确语义 token，又附了硬编码色值"兜底"。如果只给正向得分项，永远改不掉它的<strong>保险习惯</strong>。must_not 让评分能精确扣分，知识库优化才有抓手。</span>
-        </li>
-        <li>
-          <span class="lesson-title">同一题只增不改（已发布的题永远冻结）</span>
-          <span class="lesson-desc">一旦某道题进了用例集，<strong>只能新增不能改</strong>。改题等于换了考卷，v1 vs v2 的对比就失效了。如果题目本身有问题，把它标记为 <code>deprecated: true</code>，再新增一道替代——这样历史分数仍然可比对。</span>
-        </li>
-      </ol>
 
       <!-- ===== 下一步：自动化评分 ===== -->
       <div class="next-card">
@@ -1181,38 +1156,34 @@
     <div class="step">
       <div class="step-head">
         <span class="step-num">3</span>
-        <span class="step-title">建立「基线」</span>
-        <span class="step-tag">Baseline</span>
+        <span class="step-title">建立「基线」并跑出对比</span>
+        <span class="step-tag">Baseline & Re-eval</span>
       </div>
-      <p>这一步最关键，也是你现在最缺的一步：</p>
-      <blockquote>用<strong>当前的</strong>知识库和规则，把 10–20 个用例全部跑一遍，每个都打分，记录下来。</blockquote>
+      <p>用<strong>当前的</strong>知识库把全部用例跑一遍，逐条打分，得到 <code>v1</code> 基线；改完后用<strong>完全相同的题</strong>再跑一遍，得到 <code>v2</code>。</p>
 
-      <h4>基线评估 v1.0（2026-05-18）</h4>
+      <h4>v1 → v2 评估对比示例</h4>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
               <th>用例</th>
-              <th class="num">A 组件</th>
-              <th class="num">B Variable</th>
-              <th class="num">C TextStyle</th>
-              <th class="num">D 图标</th>
-              <th class="num">E 间距</th>
-              <th class="num">F 一次成功</th>
-              <th class="num">总分</th>
+              <th class="num">v1 得分</th>
+              <th class="num">v2 得分</th>
+              <th class="num">Δ</th>
+              <th>主要修复维度</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>T-001</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num">1</td><td class="num"><strong>8 / 12</strong></td></tr>
-            <tr><td>T-002</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num"><strong>11 / 12</strong></td></tr>
-            <tr><td>T-003</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num"><strong>3 / 12</strong></td></tr>
-            <tr><td><strong>均分</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num"><strong>7.3 / 12</strong></td></tr>
+            <tr><td>T-001</td><td class="num">8 / 12</td><td class="num">12 / 12</td><td class="num"><strong>+4</strong></td><td>E 间距 token 化</td></tr>
+            <tr><td>T-002</td><td class="num">11 / 12</td><td class="num">12 / 12</td><td class="num"><strong>+1</strong></td><td>E 间距细节</td></tr>
+            <tr><td>T-003</td><td class="num">3 / 12</td><td class="num">8 / 12</td><td class="num"><strong>+5</strong></td><td>新增空调面板组件文档</td></tr>
+            <tr><td><strong>均分</strong></td><td class="num"><strong>7.3</strong></td><td class="num"><strong>10.7</strong></td><td class="num"><strong>+3.4</strong></td><td>—</td></tr>
           </tbody>
         </table>
       </div>
       <div class="callout">
-        <div class="ico">→</div>
-        <div><p>有了这个数字，你才能说："我的工程目前水平是 <strong>7.3 / 12</strong>"。</p></div>
+        <div class="ico">↑</div>
+        <div><p><strong>v1 → v2：7.3 → 10.7，提升 3.4 分。</strong>这就是可量化的"训练成果"——也是你能向别人解释清楚的进展。</p></div>
       </div>
     </div>
 
@@ -1257,65 +1228,142 @@
           </tbody>
         </table>
       </div>
+      <p style="color:var(--text-secondary); margin-top:14px;">改完后回到第 3 步，用同一套题重新跑分——这就是闭环。</p>
     </div>
 
-    <!-- Step 5 -->
-    <div class="step">
-      <div class="step-head">
-        <span class="step-num">5</span>
-        <span class="step-title">用同一套题再跑一遍</span>
-        <span class="step-tag">Re-evaluate</span>
-      </div>
-      <p>改完后，<strong>用完全相同的测试集</strong>再跑一遍，对比基线。</p>
+    <!-- ===================== Scope ===================== -->
+    <h2 id="scope">题库分类与颗粒度</h2>
+    <p class="subtitle">出题之前先解决一个问题：用例不能只考一种东西，也不能只用一种粒度。</p>
 
-      <h4>评估 v2.0（改进间距规则后，2026-05-25）</h4>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>用例</th>
-              <th class="num">A 组件</th>
-              <th class="num">B Variable</th>
-              <th class="num">C TextStyle</th>
-              <th class="num">D 图标</th>
-              <th class="num">E 间距</th>
-              <th class="num">F 一次成功</th>
-              <th class="num">总分</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>T-001</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num"><strong>12 / 12</strong></td></tr>
-            <tr><td>T-002</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num"><strong>12 / 12</strong></td></tr>
-            <tr><td>T-003</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num"><strong>8 / 12</strong></td></tr>
-            <tr><td><strong>均分</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num"><strong>10.7 / 12</strong></td></tr>
-          </tbody>
-        </table>
-      </div>
+    <p>很多人卡壳是因为脑子里只用<strong>一个维度</strong>排所有题（基础 / 进阶），但真实题库需要<strong>两个独立维度</strong>交叉。</p>
 
-      <div class="callout">
-        <div class="ico">↑</div>
-        <div><p><strong>v1.0 → v2.0：7.3 → 10.7，提升 3.4 分。</strong>这就是可量化的"训练成果"。</p></div>
+    <div class="sub-title">维度 A：考什么能力</div>
+    <p class="sub-desc">基础规范题做满分 ≠ 业务理解过关。两条能力线必须各自打分，否则版本对比时你说不清是哪条进步了。</p>
+
+    <ul style="padding-left: 18px; margin: 6px 0 14px;">
+      <li><strong>L1 基础规范</strong>：token / 组件 / 排版 / 图标使用是否合规</li>
+      <li><strong>L2 业务理解</strong>：是否理解 agent 的目标用户、场景、信息优先级</li>
+      <li><strong>L3 跨规范泛化</strong>：多 agent 共用规范时能否保持一致</li>
+      <li><strong>L4 边界 / 容错</strong>：给残缺、冲突或陷阱输入时的表现</li>
+    </ul>
+
+    <div class="sub-title">维度 B：题目颗粒度</div>
+    <p class="sub-desc">从一句话需求到跨页面流程，颗粒度越大越接近真实业务，但越难给"标准答案"。题库要金字塔形——原子题最多（便宜可复用），流程题最少（贵但最像真实考试）。</p>
+
+    <ul style="padding-left: 18px; margin: 6px 0 14px;">
+      <li><strong>原子题</strong>：一句话需求（"一个开关项"）</li>
+      <li><strong>组件题</strong>：一个完整组件（"餐饮卡片"）</li>
+      <li><strong>页面题</strong>：一个完整页面（"POI 详情页"）</li>
+      <li><strong>流程题</strong>：跨页面或跨状态（"下单全流程 3 屏"）</li>
+    </ul>
+
+    <div class="sub-title">A × B 矩阵 = 题库骨架（推荐配比）</div>
+    <p class="sub-desc">不是每个格子都要填满。下面是一个共 ~24 题的打底配比，重点放在<strong>规范题密集、业务题够重、每层都种一个陷阱</strong>。</p>
+
+    <div class="table-wrap">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th></th>
+            <th>原子题</th>
+            <th>组件题</th>
+            <th>页面题</th>
+            <th>流程题</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>L1 基础规范<small>规范本身的考试</small></th>
+            <td class="dim-cell"><span class="num">6</span>token / 图标 / 排版</td>
+            <td class="dim-cell"><span class="num">3</span>TopBar / 卡片 / 列表</td>
+            <td class="dim-cell"><span class="num">1</span>设置页</td>
+            <td class="dim-cell dim-empty">—</td>
+          </tr>
+          <tr>
+            <th>L2 业务理解<small>每个 agent 必须有</small></th>
+            <td class="dim-cell dim-empty">—</td>
+            <td class="dim-cell"><span class="num">3</span>每 agent 1 道</td>
+            <td class="dim-cell"><span class="num">3</span>每 agent 1 道</td>
+            <td class="dim-cell"><span class="num">2</span>核心流程</td>
+          </tr>
+          <tr>
+            <th>L3 跨规范泛化<small>三个 agent 共用一致性卷</small></th>
+            <td class="dim-cell dim-empty">—</td>
+            <td class="dim-cell"><span class="num">2</span>共用按钮 / 图标语义</td>
+            <td class="dim-cell"><span class="num">1</span>一致性巡检</td>
+            <td class="dim-cell dim-empty">—</td>
+          </tr>
+          <tr>
+            <th>L4 边界 / 容错<small>每层种一个陷阱</small></th>
+            <td class="dim-cell"><span class="num">1</span></td>
+            <td class="dim-cell"><span class="num">1</span></td>
+            <td class="dim-cell"><span class="num">1</span></td>
+            <td class="dim-cell"><span class="num">1</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="ico">i</div>
+      <div>
+        <p><strong>公共卷 + 专业卷</strong>：L1 和 L3 是"<strong>设计系统本身</strong>"的考试，三个 agent 共用一份；L2 和 L4 是每个 agent 的"<strong>专业卷</strong>"，必须各出一份。以后再加第 4 个 agent，只需要补它的专业卷，公共卷不用重写。</p>
       </div>
     </div>
 
-    <!-- ===================== Loop ===================== -->
-    <h2 id="loop">完整迭代闭环</h2>
-    <div class="flow">
-      <div class="flow-row">
-        <div class="flow-node">考试题库<small>固定</small></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-node">跑测评估<small>RUN</small></div>
-        <div class="flow-arrow">→</div>
-        <div class="flow-node">量化打分<small>SCORE</small></div>
+    <div class="sub-title">三个 Agent 各自的业务示范题</div>
+    <p class="sub-desc">下面每个 agent 给一道"业务理解"的范题，作为出 L2 / L4 题的参照。<strong>关键不是输入需求，而是检查项 checklist</strong>——同时考"规范合规"与"业务正确"两条线。</p>
+
+    <div class="agent-card">
+      <div class="agent-card__head">
+        <span class="agent-card__name">Agent 1 · 长途出行向导</span>
+        <span class="agent-card__tag">L2 · 组件题</span>
       </div>
-      <div class="flow-row" style="margin-top:12px">
-        <div class="flow-node">再跑一轮 · 对比分数<small>RE-EVAL</small></div>
-        <div class="flow-arrow">←</div>
-        <div class="flow-node">改知识库 · 改规则<small>FIX WEAKEST</small></div>
-        <div class="flow-arrow">←</div>
-        <div class="flow-node">找最低分维度<small>DIAGNOSE</small></div>
+      <div class="agent-card__sample">
+        <b>Input</b>"前方拥堵，建议绕行，多花 12 分钟"
+        <ul style="margin:6px 0 0; padding-left:18px;">
+          <li>规范分（满 4）：复用 Card / Button 组件、文字/颜色/间距全部 token 化</li>
+          <li>业务分（满 6）：① 决策动作（绕 / 不绕）必须是主按钮 ② "12 分钟"作为代价要醒目 ③ 不能折叠到二级菜单</li>
+          <li>L4 陷阱：续航 80km、目的地 200km 时，必须主动报警 + 给充电站建议</li>
+        </ul>
       </div>
-      <div class="flow-loop">↻ 分数达标 → 发布新版本 ｜ 未达标 → 继续循环</div>
+    </div>
+
+    <div class="agent-card">
+      <div class="agent-card__head">
+        <span class="agent-card__name">Agent 2 · POI 玩法和路线推荐</span>
+        <span class="agent-card__tag">L2 · 页面题</span>
+      </div>
+      <div class="agent-card__sample">
+        <b>Input</b>"POI 详情页：咖啡馆，含简介 / 评分 / 玩法 / 周边"
+        <ul style="margin:6px 0 0; padding-left:18px;">
+          <li>规范分（满 4）：Hero 图、Tag、Button 全部走组件；不出现硬编码色值</li>
+          <li>业务分（满 6）：① 核心动作（导航 / 收藏 / 分享）触手可达 ② 评价 / 玩法 / 周边分区清晰 ③ 广告位不能压住主信息</li>
+          <li>L4 陷阱：推荐 POI 当天闭店 → 必须有醒目状态标记，不能让用户点进去才发现</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="agent-card">
+      <div class="agent-card__head">
+        <span class="agent-card__name">Agent 3 · 车上点单餐饮</span>
+        <span class="agent-card__tag">L2 · 流程题</span>
+      </div>
+      <div class="agent-card__sample">
+        <b>Input</b>"选菜 → 购物车 → 下单 → 等待"4 屏完整流程
+        <ul style="margin:6px 0 0; padding-left:18px;">
+          <li>规范分（满 4）：4 屏组件复用一致，没有自绘卡片或硬编码尺寸</li>
+          <li>业务分（满 6）：① 每屏只有一个主 CTA ② 等待页有进度反馈 ③ 异常态预留位置</li>
+          <li>L4 陷阱：门店 5 分钟后打烊 → 必须在加购或结算前提示，不能下单后才告知</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="ico">★</div>
+      <div>
+        <p><strong>给分要拆成"规范分 + 业务分"两栏</strong>，否则版本对比时你不知道是规范涨了还是业务理解涨了——这两条能力线必须各自有自己的曲线。</p>
+      </div>
     </div>
 
     <!-- ===================== VS ===================== -->
@@ -1324,67 +1372,30 @@
       <div class="vs-col">
         <h4>装模作样</h4>
         <ul>
-          <li>出了问题才改文档</li>
+          <li>没有固定测试集，凭感觉改</li>
           <li>改完不知道有没有变好</li>
-          <li>不知道哪里是短板</li>
-          <li>每次改动是"感觉应该这样"</li>
-          <li>无法向别人解释进展</li>
+          <li>说不清当前水平、说不清下一步</li>
         </ul>
       </div>
       <div class="vs-col">
         <h4>真正在训练</h4>
         <ul>
-          <li>有固定的测试集，定期跑</li>
-          <li>改完用同一套题重新评分，分数有对比</li>
-          <li>按维度打分，清楚知道弱在哪</li>
-          <li>每次改动是"因为 X 维度得分最低"</li>
-          <li>能说"v1 均分 7.3，v3 均分 10.7"</li>
+          <li>有固定题库，按维度打分，能定位短板</li>
+          <li>每次迭代都跑同一套题，分数有版本对比</li>
+          <li>能说出"v1 均分 7.3，v3 均分 10.7"</li>
         </ul>
       </div>
     </div>
 
-    <!-- ===================== First ===================== -->
-    <h2 id="first">现在就做的第一件事</h2>
-    <p>不要从大重构开始。在项目里建两个文件即可启动：</p>
-
-    <div class="step">
-      <div class="step-head">
-        <span class="step-num">①</span>
-        <span class="step-title">评估用例集.md</span>
-        <span class="step-tag">Test Set</span>
-      </div>
-      <p>写下 10 个你最常遇到的设计需求，附上每个用例的检查项与满分。</p>
-
-      <a class="collect-link"
-         href="https://doc.weixin.qq.com/sheet/e3_AOIAxgYKACoCNsbI3oeTsSf2QJTC7?scode=AJEAIQdfAAopDxVAvUAOIAxgYKACo&tab=BB08J2"
-         target="_blank" rel="noopener noreferrer">
-        <span class="collect-link__icon" aria-hidden="true">📋</span>
-        <span class="collect-link__body">
-          <span class="collect-link__title">训练用例收集表（腾讯文档）</span>
-          <span class="collect-link__desc">本项目用例集统一在这里收集，遇到典型/失败的设计需求都欢迎补充进来。</span>
-        </span>
-        <span class="collect-link__cta">去填写</span>
-      </a>
-    </div>
-
-    <div class="step">
-      <div class="step-head">
-        <span class="step-num">②</span>
-        <span class="step-title">评估记录.md</span>
-        <span class="step-tag">Scorebook</span>
-      </div>
-      <p>用当前知识库跑一遍，记录基线分数。之后<strong>每次迭代都追加一行版本记录</strong>。</p>
-    </div>
-
+    <!-- ===================== Outro ===================== -->
     <div class="footer-card">
       <h3>结语</h3>
       <p>
-        有了这两个文件，你后续每一次"和 AI 对话来优化知识库"，
-        就不再是被动应对，而是<strong>有目标、有度量、有版本号的真正的训练迭代</strong>。
+        从今天起，把"和 AI 对话来优化知识库"变成<strong>有目标、有度量、有版本号的迭代</strong>——
+        题库 + 评分 + 版本对比，三件事就足够撑起这套循环。
       </p>
       <p style="color:var(--text-secondary); margin-bottom:0;">
-        模型本身是冻住的黑盒，你优化的是黑盒外面的一切——
-        这是一份纯粹的工程能力建设工作，价值并不比微调低。
+        模型本身是冻住的黑盒，你优化的是黑盒外面的一切——这是一份纯粹的工程能力建设工作，价值并不比微调低。
       </p>
     </div>
   </main>
@@ -1395,9 +1406,8 @@
       <li><a href="#why">为什么需要"训练"</a></li>
       <li><a href="#what">什么才算"训练"</a></li>
       <li><a href="#how">五步可落地方法论</a></li>
-      <li><a href="#loop">完整迭代闭环</a></li>
+      <li><a href="#scope">题库分类与颗粒度</a></li>
       <li><a href="#vs">"装模作样" vs. "真正训练"</a></li>
-      <li><a href="#first">现在就做的第一件事</a></li>
     </ol>
   </aside>
 

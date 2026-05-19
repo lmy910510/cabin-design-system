@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="../../design-system/tokens.css" />
   <link rel="stylesheet" href="../../design-system/shadows.css" />
   <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="../button/button.css" />
+  <link rel="stylesheet" href="../top-bar/top-bar.css" />
   <link rel="stylesheet" href="./app-frame.css" />
 
   <!-- 注入统一图标 sprite（同文档锚点，绕开 file:// 跨文件 use 限制）-->
@@ -28,10 +30,30 @@
       font-weight: 700;
     }
     .subtitle {
-      margin: 0 0 36px;
+      margin: 0 0 12px;
       color: var(--color-text-secondary);
       font-size: 22px;
       line-height: 30px;
+    }
+    .external-note {
+      margin: 0 0 36px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: var(--color-bg-item-quaternary);
+      color: var(--color-text-secondary);
+      font-size: 18px;
+      line-height: 26px;
+      max-width: 1100px;
+    }
+    .external-note a {
+      color: var(--color-text-link);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .external-note a:hover { text-decoration: underline; }
+    .external-note code {
+      font: 400 16px/22px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-primary);
     }
 
     .toolbar {
@@ -76,7 +98,6 @@
       height: 1080px;
       box-shadow: 0 24px 64px rgba(0,0,0,0.18);
       overflow: hidden;
-      /* AppFrame 自带 1920×1080 + 圆角，不需要再加额外样式 */
     }
 
     /* content canvas 内的示意占位（仅用于看清 slot 边界，不属于组件本身） */
@@ -97,12 +118,25 @@
       font: 400 18px/22px ui-monospace, "SF Mono", Menlo, monospace;
       color: var(--color-text-secondary);
     }
+
+    .figma-meta {
+      font: 400 16px/20px ui-monospace, "SF Mono", Menlo, monospace;
+      color: var(--color-text-tertiary);
+      margin: 6px 0 18px;
+    }
   </style>
 </head>
 <body>
   <h1>AppFrame · Figma 1:1 预览</h1>
   <p class="subtitle">
-    Figma 节点 436:1772 · 1920×1080 · SideMenu(expanded) + TopBar(title) + content slot
+    Figma 节点 436:1772 · 1920×1080 · SideMenu 2 modes（expanded / collapsed）
+  </p>
+  <p class="external-note">
+    TopBar 已拆为独立组件，<strong>不在本预览页内详细罗列</strong>。
+    本页仅在 TopBar slot 中以 <code>top-bar--title</code> 作为示意；
+    要查看 TopBar 全部 5 个 style variant，请打开
+    <a href="../top-bar/top-bar.preview.html">top-bar/top-bar.preview.html</a>
+    （或在总览页左侧选择「整页框架 → top-bar」）。
   </p>
 
   <div class="toolbar" role="tablist" aria-label="主题切换">
@@ -110,80 +144,64 @@
     <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
   </div>
 
-  <h2>1. 默认组合 · SideMenu(expanded) + TopBar(title)
+  <!-- ============================================================
+       1. 默认组合：expanded + title
+       ============================================================ -->
+  <h2>1. 默认组合 · SideMenu(expanded) + TopBar(title) [外部依赖]
     <span class="h2-note">第 1 个 nav-item 为示例选中态（is-active）；content slot 用虚线占位提示边界</span>
   </h2>
+  <p class="figma-meta">Figma: SideMenu 436:1725 · TopBar 436:1684（top-bar 组件渲染）</p>
 
   <div class="viewport">
     <div class="app-frame">
-
-      <!-- ============ SideMenu / mode=expanded ============ -->
       <aside class="side-menu" aria-label="主导航">
         <div class="side-menu__nav-group">
           <ul class="side-menu__nav-list">
-
             <li>
               <a class="nav-item is-active" href="#" aria-current="page">
-                <span class="nav-item__icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48"><use href="#icon/list--fill"/></svg>
-                </span>
+                <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/list--fill"/></svg></span>
                 <span class="nav-item__label">我的列表</span>
               </a>
             </li>
-
             <li>
               <a class="nav-item" href="#">
-                <span class="nav-item__icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg>
-                </span>
+                <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg></span>
                 <span class="nav-item__label">收藏</span>
               </a>
             </li>
-
             <li>
               <a class="nav-item" href="#">
-                <span class="nav-item__icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48"><use href="#icon/refresh--line"/></svg>
-                </span>
+                <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/refresh--line"/></svg></span>
                 <span class="nav-item__label">刷新</span>
               </a>
             </li>
-
             <li>
               <a class="nav-item" href="#">
-                <span class="nav-item__icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48"><use href="#icon/wifi--line"/></svg>
-                </span>
+                <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/wifi--line"/></svg></span>
                 <span class="nav-item__label">网络</span>
               </a>
             </li>
-
           </ul>
         </div>
-
         <div class="side-menu__footer">
           <a class="nav-item" href="#">
-            <span class="nav-item__icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48"><use href="#icon/setting--line"/></svg>
-            </span>
+            <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/setting--line"/></svg></span>
             <span class="nav-item__label">设置</span>
           </a>
         </div>
       </aside>
 
-      <!-- ============ main · 圆角白卡 ============ -->
       <div class="app-frame__main">
         <div class="app-frame__card">
-
           <div class="app-frame__topbar-slot">
-            <header class="top-bar">
+            <!-- TopBar 实例（来自 top-bar 组件） -->
+            <header class="top-bar top-bar--title">
               <div class="top-bar__left">
-                <h1 class="top-bar__title" style="font-size:42px;line-height:42px;margin:0;">页面标题</h1>
+                <h1 class="top-bar__title">页面标题</h1>
               </div>
               <div class="top-bar__right"></div>
             </header>
           </div>
-
           <div class="app-frame__content">
             <div class="app-frame__content-canvas" data-slot="content"
                  style="outline: 2px dashed rgba(54,123,246,0.35); outline-offset: -2px;">
@@ -193,54 +211,104 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
 
-  <h2>2. 选中态主题色覆盖
+  <!-- ============================================================
+       2. SideMenu / mode=collapsed + TopBar(title)
+       ============================================================ -->
+  <h2>2. SideMenu(collapsed) + TopBar(title)
+    <span class="h2-note">SideMenu 收起为 156 宽，nav-item 切换为 icon-only 84×84</span>
+  </h2>
+  <p class="figma-meta">Figma: SideMenu 436:1750 · 156×1080</p>
+
+  <div class="viewport">
+    <div class="app-frame">
+      <aside class="side-menu side-menu--collapsed" aria-label="主导航">
+        <div class="side-menu__nav-group">
+          <ul class="side-menu__nav-list">
+            <li>
+              <a class="nav-item nav-item--icon-only is-active" href="#" aria-current="page" aria-label="我的列表">
+                <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/list--fill"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a class="nav-item nav-item--icon-only" href="#" aria-label="收藏">
+                <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a class="nav-item nav-item--icon-only" href="#" aria-label="刷新">
+                <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/refresh--line"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a class="nav-item nav-item--icon-only" href="#" aria-label="网络">
+                <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/wifi--line"/></svg></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="side-menu__footer">
+          <a class="nav-item nav-item--icon-only" href="#" aria-label="设置">
+            <span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/setting--line"/></svg></span>
+          </a>
+        </div>
+      </aside>
+
+      <div class="app-frame__main">
+        <div class="app-frame__card">
+          <div class="app-frame__topbar-slot">
+            <header class="top-bar top-bar--title">
+              <div class="top-bar__left"><h1 class="top-bar__title">页面标题</h1></div>
+              <div class="top-bar__right"></div>
+            </header>
+          </div>
+          <div class="app-frame__content">
+            <div class="app-frame__content-canvas" data-slot="content"
+                 style="outline: 2px dashed rgba(54,123,246,0.35); outline-offset: -2px;">
+              <div class="demo-content">
+                <div>content slot</div>
+                <code>1736 × 876 · 自由绘制（SideMenu 收起后宽度增加）</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       3. nav-item 选中态主题色覆盖
+       ============================================================ -->
+  <h2>3. nav-item 选中态主题色覆盖
     <span class="h2-note">通过 <code>--app-frame-nav-active-bg</code> / <code>--app-frame-nav-active-fg</code> 覆盖到产品 brand</span>
   </h2>
 
-  <div class="viewport" style="height: 320px; box-shadow: none; padding: 24px; background: var(--color-bg-page-secondary); display: flex; gap: 36px; align-items: center;">
-    <!-- 默认 blue -->
-    <div class="side-menu__nav-group" style="height: fit-content;">
+  <div style="display: flex; gap: 36px; align-items: flex-start; padding: 24px; background: var(--color-bg-page-secondary); border-radius: 24px;">
+    <div class="side-menu__nav-group">
       <ul class="side-menu__nav-list">
         <li><a class="nav-item is-active" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--fill"/></svg></span><span class="nav-item__label">默认 blue</span></a></li>
         <li><a class="nav-item" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg></span><span class="nav-item__label">未选中</span></a></li>
       </ul>
     </div>
 
-    <!-- 覆盖成 orange -->
-    <div class="side-menu__nav-group" style="height: fit-content; --app-frame-nav-active-bg: var(--palette-orange-transparent); --app-frame-nav-active-fg: var(--palette-orange-5);">
+    <div class="side-menu__nav-group" style="--app-frame-nav-active-bg: var(--palette-orange-transparent); --app-frame-nav-active-fg: var(--palette-orange-5);">
       <ul class="side-menu__nav-list">
         <li><a class="nav-item is-active" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--fill"/></svg></span><span class="nav-item__label">orange brand</span></a></li>
         <li><a class="nav-item" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg></span><span class="nav-item__label">未选中</span></a></li>
       </ul>
     </div>
 
-    <!-- 覆盖成 green -->
-    <div class="side-menu__nav-group" style="height: fit-content; --app-frame-nav-active-bg: var(--palette-green-transparent); --app-frame-nav-active-fg: var(--palette-green-6);">
+    <div class="side-menu__nav-group" style="--app-frame-nav-active-bg: var(--palette-green-transparent); --app-frame-nav-active-fg: var(--palette-green-6);">
       <ul class="side-menu__nav-list">
         <li><a class="nav-item is-active" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--fill"/></svg></span><span class="nav-item__label">green brand</span></a></li>
         <li><a class="nav-item" href="#"><span class="nav-item__icon" aria-hidden="true"><svg viewBox="0 0 48 48"><use href="#icon/star--line"/></svg></span><span class="nav-item__label">未选中</span></a></li>
       </ul>
     </div>
   </div>
-
-  <h2>3. 其他 variant 进度
-    <span class="h2-note">本组件目前仅交付默认组合；下表标注 Figma 内已有但本仓库待补的 variant</span>
-  </h2>
-
-  <ul style="font-size: 22px; line-height: 32px; color: var(--color-text-secondary); padding-left: 24px;">
-    <li>SideMenu / mode=collapsed（156×1080 · icon-only nav）— <strong>TODO</strong></li>
-    <li>TopBar / style=back（返回按钮 + 文字）— <strong>TODO</strong></li>
-    <li>TopBar / style=title-actions（标题 + 右侧 2 个 secondary 按钮）— <strong>TODO</strong></li>
-    <li>TopBar / style=button-avatar（4 个 tab + secondary 按钮 + 圆形 avatar）— <strong>TODO</strong></li>
-    <li>TopBar / style=select-actions（圆形 checkbox + 全选 + danger/secondary 按钮）— <strong>TODO</strong></li>
-  </ul>
 
   <script>
     const html = document.documentElement;

@@ -1,0 +1,251 @@
+/* =============================================================
+ * Component: TopBar · 顶部栏
+ * Figma source: 🤖座舱组件库-AI版 / TopBar
+ *   COMPONENT_SET 436:1719 — 5 个 style variant（高度 156，左右 padding 42）
+ *     · style=title          COMPONENT 436:1684 — 仅左侧标题 42px
+ *     · style=back           COMPONENT 436:1688 — 圆形 secondary icon-only Button + "返回" 36px
+ *     · style=title-actions  COMPONENT 436:1700 — 标题 42px + 右侧 2× secondary md（gap=30）
+ *     · style=button-avatar  COMPONENT 436:1694 — Tab × 4(active 6px indicator) + secondary md + 72 圆 avatar
+ *     · style=select-actions COMPONENT 436:1709 — 圆形 Checkbox 48 + 全选 36px + Danger md(disabled) + Secondary md
+ *
+ * 全 variant 已交付。
+ *
+ * 1:1 严格映射自 Figma 真实测量值（通过 figma_get_component_for_development_deep）：
+ *
+ * 共享骨架：
+ *   width=FILL（业务容器决定，AppFrame 内即 1588），height=156（FIXED）
+ *   bg = bg/container_primary
+ *   padding 0 42 (--space-2xl)
+ *   HORIZONTAL SPACE_BETWEEN，counter=CENTER，itemSpacing=24（left/right 自身）
+ *
+ * 通过 BEM 修饰类切换 variant：
+ *   .top-bar.top-bar--title
+ *   .top-bar.top-bar--back
+ *   .top-bar.top-bar--title-actions
+ *   .top-bar.top-bar--button-avatar
+ *   .top-bar.top-bar--select-actions
+ *
+ * 依赖：
+ *   - design-system/tokens.css（颜色、间距、圆角）
+ *   - components-html/button/button.css（back / title-actions / button-avatar /
+ *     select-actions 都复用 .btn--secondary / .btn--danger / .btn--md / .btn--icon-only）
+ *
+ * 注意：
+ *   - `.top-bar__title` 字色：Figma 文本未绑 token（写死 #1F2229），CSS 用
+ *     var(--color-text-primary)，dark 模式自动反色。
+ *   - `select-actions` 内的 Checkbox 是「圆形」，与现仓库 components-html/checkbox（方形）
+ *     形态不同。本组件提供 `.top-bar__select-checkbox` 私有实现，**不污染** checkbox 组件。
+ *     如果未来希望"圆形 checkbox"成为 checkbox 的一个 shape variant，再回头统一规划。
+ * ============================================================= */
+
+/* -------------------------------------------------------------
+ * 0. 共享骨架
+ * ------------------------------------------------------------- */
+.top-bar {
+  width: 100%;
+  height: 156px;
+  flex: 0 0 156px;
+  box-sizing: border-box;
+  background: var(--color-bg-container-primary);
+  padding: 0 var(--space-2xl);                  /* 左右 42 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);                         /* 24 */
+  font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  color: var(--color-text-primary);
+}
+
+.top-bar__left,
+.top-bar__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);                         /* 24，variant 局部覆盖 */
+  min-height: 42px;
+}
+
+/* -------------------------------------------------------------
+ * 1. style=title · 仅左侧标题 42px Medium
+ * ------------------------------------------------------------- */
+.top-bar__title {
+  font-size: 42px;
+  line-height: 42px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* -------------------------------------------------------------
+ * 2. style=back · 圆形 secondary icon-only Button + "返回" 36px
+ * ------------------------------------------------------------- */
+.top-bar__back-text {
+  font-size: 36px;
+  line-height: 36px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------
+ * 3. style=title-actions · 标题 + 右侧 2× secondary md（gap=30）
+ * ------------------------------------------------------------- */
+.top-bar--title-actions .top-bar__right {
+  gap: var(--space-lg);                         /* 30 */
+}
+
+/* -------------------------------------------------------------
+ * 4. style=button-avatar · Tab 组(4) + secondary 按钮 + 72 圆形 avatar
+ *
+ *   Figma 真值（466:9806 tab frame）：
+ *     left.tab 容器：padding-top=18，width=768，height=72
+ *     里面是 Tab 实例：HUG，gap=72（7xl）
+ *       Tab-item 高度=54（4xl），垂直布局，gap=12
+ *         label 36px Medium
+ *         active 项底部多一根 indicator 48×6（3xl × xxs），居中
+ *
+ *   right itemSpacing=30 (lg)，包含：
+ *     - secondary md Button（"按钮"）
+ *     - avatar 72×72 圆形（Avatar Size=SM）
+ * ------------------------------------------------------------- */
+.top-bar--button-avatar .top-bar__left {
+  padding-top: var(--space-sm);                 /* 18 */
+  align-items: flex-start;                      /* tab 顶对齐，indicator 才能贴底 */
+}
+.top-bar--button-avatar .top-bar__right {
+  gap: var(--space-lg);                         /* 30 */
+}
+
+.top-bar__tab-list {
+  display: flex;
+  align-items: center;
+  gap: 72px;                                    /* itemSpacing 7xl */
+  height: 54px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.top-bar__tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-xs);                         /* 12 */
+  height: 54px;
+  cursor: pointer;
+  font-size: 36px;
+  line-height: 36px;
+  font-weight: 500;
+  color: var(--color-text-secondary);           /* default */
+  letter-spacing: 0;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+}
+.top-bar__tab-item-label {
+  display: block;
+}
+.top-bar__tab-item-indicator {
+  width: 48px;                                  /* 3xl */
+  height: 6px;                                  /* xxs */
+  border-radius: 3px;
+  background: var(--color-text-primary);
+  display: none;
+}
+.top-bar__tab-item.is-active {
+  color: var(--color-text-primary);
+}
+.top-bar__tab-item.is-active .top-bar__tab-item-indicator {
+  display: block;
+}
+
+.top-bar__avatar {
+  width: 72px;                                  /* 7xl */
+  height: 72px;
+  border-radius: 50%;
+  background: var(--color-bg-item-tertiary) center/cover no-repeat;
+  flex: none;
+}
+
+/* -------------------------------------------------------------
+ * 5. style=select-actions · 圆形 Checkbox + 全选 + Danger + Secondary
+ *
+ *   Figma 真值（436:1711 select frame）：
+ *     HUG，gap=18 (sm)，counter=CENTER
+ *     - Checkbox（圆形）48×48：border 36 圆，stroke=hairline + border/primary
+ *     - "全选" 文本 36px Medium，color=text/primary
+ *
+ *   right itemSpacing=30，包含：
+ *     - Danger md Button（state=Disabled）
+ *     - Secondary md Button
+ * ------------------------------------------------------------- */
+.top-bar--select-actions .top-bar__left {
+  gap: var(--space-md);                         /* 24 */
+}
+.top-bar--select-actions .top-bar__right {
+  gap: var(--space-lg);                         /* 30 */
+}
+
+.top-bar__select {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);                         /* 18 */
+}
+.top-bar__select-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 48px;                                  /* 3xl */
+  height: 48px;
+  margin: 0;
+  border-radius: 50%;                           /* 圆形 */
+  background: transparent;
+  border: 0;                                    /* 真正的边框画在 ::before 上 */
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 内圈 36×36 圆环，stroke 3px (hairline) + border/primary，居中 */
+.top-bar__select-checkbox::before {
+  content: "";
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid var(--color-border-primary);
+  box-sizing: border-box;
+  background: transparent;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+.top-bar__select-checkbox:checked::before {
+  background: var(--color-bg-item-primary);
+  border-color: var(--color-bg-item-primary);
+}
+.top-bar__select-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 8px;
+  border-left: 3px solid var(--color-bg-card-primary);
+  border-bottom: 3px solid var(--color-bg-card-primary);
+  transform: translateY(-2px) rotate(-45deg);
+}
+.top-bar__select-checkbox:focus-visible {
+  outline: 3px solid var(--color-border-active);
+  outline-offset: 4px;
+}
+.top-bar__select-label {
+  font-size: 36px;
+  line-height: 36px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  letter-spacing: 0;
+  white-space: nowrap;
+  user-select: none;
+}

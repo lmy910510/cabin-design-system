@@ -3,16 +3,14 @@
  * Figma source: 🤖座舱组件库-AI版 / AppFrame
  *   - AppFrame   COMPONENT 436:1772 (1920×1080)
  *   - SideMenu   COMPONENT_SET 436:1770
- *       · mode=expanded  COMPONENT 436:1725 (308×1080)
- *       · mode=collapsed COMPONENT 436:1750 (156×1080) — 本文件未实现
- *   - TopBar     COMPONENT_SET 436:1719
- *       · style=title          COMPONENT 436:1684 — 本文件已实现
- *       · style=back           COMPONENT 436:1688 — 本文件未实现
- *       · style=button-avatar  COMPONENT 436:1694 — 本文件未实现
- *       · style=title-actions  COMPONENT 436:1700 — 本文件未实现
- *       · style=select-actions COMPONENT 436:1709 — 本文件未实现
+ *       · mode=expanded  COMPONENT 436:1725 (308×1080) ✓
+ *       · mode=collapsed COMPONENT 436:1750 (156×1080) ✓
  *
- * 本次交付组合：AppFrame · SideMenu(expanded) · TopBar(title)
+ * AppFrame 自身负责的是「外层栅格 + SideMenu + main 圆角白卡 + 卡内 slot 划分」。
+ * TopBar 已**拆分为独立组件**：components-html/top-bar/top-bar.css
+ *   - 5 个 style variant 全部在 top-bar 组件内实现
+ *   - AppFrame 的 .app-frame__topbar-slot 仅作为放置 TopBar 的卡内位置
+ *   - 业务页 / 预览页需要同时 link top-bar.css（与 button.css 同级依赖）
  *
  * 1:1 严格映射自 Figma 真实测量值（通过 figma_get_component_for_development_deep）：
  *
@@ -21,7 +19,7 @@
  *   左：SideMenu/expanded 308×1080 (FIXED)
  *   右：main FILL×1080，padding-right=24, padding-top=24, padding-bottom=24, padding-left=0
  *       - main-card FILL×FILL = 1588×1032，bg=bg/card_primary，radius=42 (2xl)
- *           · TopBar 1588×156（FILL×FIXED）
+ *           · TopBar slot 1588×156（FILL×FIXED）— 由 top-bar 组件填充
  *           · content SLOT FILL×FILL = 1588×876，padding-left=42, padding-right=42
  *               内部 1504×876 自由绘制层，bg=bg/item_quaternary
  *
@@ -43,19 +41,12 @@
  *
  * footer-btn 与 nav-item-hasText 同形态（visual 上等价）
  *
- * TopBar / style=title (1588×156，HORIZONTAL，SPACE_BETWEEN)
- *   bg=bg/container_primary，padding-left=42 (2xl)，padding-right=42 (2xl)
- *   left/right 都是 HORIZONTAL HUG，gap=24 (md)
- *   left.text 标题 42px Medium，line-height=42px，color=#1F2229 (text/primary 字面值，Figma 文本未绑 token)
- *
  * 注意点：
  *   1) AppFrame description 里写 "SideMenu 固定 280"，但实测 308（padding 24×2 + 内部 260）。以测量值为准。
  *   2) main 容器 padding-left=0 是关键：让 main-card 紧贴 SideMenu 右边，没有空隙。
  *   3) nav-item selected 用 palette/blue-0 作为示例选中态色（Figma 内置示例）；description 里
  *      要求"选中态色 = 当前产品主题色 brand main"，所以本组件提供 --app-frame-nav-active-bg / -fg
  *      两个变量，便于业务方覆盖到自己产品的 brand。默认值就是 Figma 示例的 blue 体系。
- *   4) TopBar.title 文字色 #1F2229 在 Figma 没绑 token，但等价于 text/primary，
- *      这里直接用 var(--color-text-primary) 让它在 dark mode 自动反色。
  * ============================================================= */
 
 /* -------------------------------------------------------------
@@ -238,39 +229,42 @@
 /* footer-btn：复用 .nav-item 全部样式；本组件不再单独写 .footer-btn 类，
    语义上视作"位于 footer 区域的 nav-item"，HTML 里直接用 .nav-item 即可。 */
 
+/* nav-item / icon-only 形态（hasText=false）—— 用于 SideMenu collapsed 与
+   纯图标场景。Figma: 84×84，padding=0，gap=0，圆角=30，icon 居中。 */
+.nav-item--icon-only {
+  width: 84px;
+  height: 84px;
+  padding: 0;
+  gap: 0;
+  justify-content: center;
+}
+
 /* -------------------------------------------------------------
- * 3. TopBar / style=title
+ * 1b. SideMenu / mode=collapsed
+ *     156×1080，VERTICAL SPACE_BETWEEN，padding=24
+ *     ┌ nav-group 108×432：白卡 radius=42 padding=12，nav-list itemSpacing=24
+ *     │   nav-item icon-only 84×84
+ *     └ footer 108×108：白卡 radius=42 padding=12，单个 footer-btn 84×84
  * ------------------------------------------------------------- */
-.top-bar {
-  width: 100%;
-  height: 156px;
-  flex: 0 0 156px;
-  box-sizing: border-box;
-  background: var(--color-bg-container-primary);
-  padding: 0 var(--space-2xl);                  /* 左右 42 */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);                         /* 24 */
+.side-menu--collapsed {
+  width: 156px;
+}
+.side-menu--collapsed .side-menu__nav-group,
+.side-menu--collapsed .side-menu__footer {
+  width: 108px;
 }
 
-.top-bar__left,
-.top-bar__right {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);                         /* 24 */
-  min-height: 42px;
-}
-
-/* style=title 专属：标题 42px Medium */
-.top-bar__title {
-  font-size: 42px;
-  line-height: 42px;
-  font-weight: 500;
-  color: var(--color-text-primary);
-  margin: 0;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+/* =============================================================
+ * 4. TopBar
+ *
+ *   TopBar 已拆为独立组件：
+ *     源样式：components-html/top-bar/top-bar.css
+ *     源模板：components-html/top-bar/top-bar.html
+ *     文档：  components-html/top-bar/top-bar.md
+ *
+ *   AppFrame 不再自带任何 .top-bar* / .tab-* / .avatar / .top-bar__select-*
+ *   样式。卡内 .app-frame__topbar-slot 仅作为放置 TopBar 的位置，
+ *   业务/预览页请同时引入 top-bar.css，并按 Figma 5 个 style variant
+ *   选择对应的修饰类（top-bar--title / --back / --title-actions /
+ *   --button-avatar / --select-actions）。
+ * ============================================================= */

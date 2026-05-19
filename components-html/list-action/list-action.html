@@ -1,0 +1,56 @@
+<!--
+  list-action · 静态 HTML 片段示例
+  使用方式：在页面 <head> 引入 design-system 三件套 + button.css + switch.css + list-action.css，
+  Arrow 类型：sprite icon 通过 ../icon/icon.svg 直接用 <use href> 引用，无需 head 引入 icon.css
+              （list-action__arrow 已自带 42×42 容器规则）
+  Button leading icon：若用 sprite，需引入 ../icon/icon.css 来获得 .icon 容器尺寸 modifier
+-->
+
+<!-- ============== 1. Type = Arrow（副标题 + 右箭头） ============== -->
+<span class="list-action list-action--arrow">
+  <span class="list-action__subtitle">副标题</span>
+  <span class="list-action__arrow" aria-hidden="true">
+    <!-- 右箭头：sprite icon/enter--line（= Figma icon/chevron_right），容器尺寸由 .list-action__arrow 控制为 42×42 -->
+    <svg fill="currentColor"><use href="#icon/enter--line"/></svg>
+  </span>
+</span>
+
+<!-- 仅副标题（无箭头，少见但 Figma 容器允许） -->
+<span class="list-action list-action--arrow">
+  <span class="list-action__subtitle">已开启</span>
+</span>
+
+
+<!-- ============== 2. Type = Button（默认 Secondary Compact-60） ============== -->
+<span class="list-action list-action--button">
+  <button class="btn btn--secondary btn--xs">按钮</button>
+</span>
+
+<!-- 也支持任意 Button variant，例如 Primary Small Leading（leading icon 走 sprite） -->
+<span class="list-action list-action--button">
+  <button class="btn btn--primary btn--sm btn--leading">
+    <span class="btn-icon" aria-hidden="true">
+      <svg viewBox="0 0 48 48" fill="currentColor"><use href="#icon/star--fill"/></svg>
+    </span>
+    <span class="btn-label">收藏</span>
+  </button>
+</span>
+
+
+<!-- ============== 3. Type = Switch（默认 Off / 启用） ============== -->
+<span class="list-action list-action--switch">
+  <label class="switch">
+    <input type="checkbox" />
+    <span class="switch-track"></span>
+    <span class="switch-thumb"></span>
+  </label>
+</span>
+
+<!-- 默认开启 -->
+<span class="list-action list-action--switch">
+  <label class="switch">
+    <input type="checkbox" checked />
+    <span class="switch-track"></span>
+    <span class="switch-thumb"></span>
+  </label>
+</span>

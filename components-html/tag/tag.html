@@ -1,0 +1,59 @@
+<!--
+  tag · 静态 HTML 片段示例
+  使用方式：在页面 <head> 引入 design-system 三件套 + tag.css，
+  即可直接复制下面任一片段进 body。
+-->
+
+
+<!-- ============== 1. Size = Large（高 36，常规场景） ============== -->
+
+<!-- 1a. Filled（强调） -->
+<span class="tag tag--large tag--filled">标签文案</span>
+
+<!-- 1b. Outlined（次要） -->
+<span class="tag tag--large tag--outlined">标签文案</span>
+
+<!-- 1c. Tinted（默认，柔和） -->
+<span class="tag tag--large tag--tinted">标签文案</span>
+
+<!-- 1d. Tinted 简写（不写 size/type 修饰类时即为 Large + Tinted） -->
+<span class="tag">标签文案</span>
+
+
+<!-- ============== 2. Size = Medium（高 30，紧凑场景） ============== -->
+
+<!-- 2a. Filled -->
+<span class="tag tag--medium tag--filled">标签文案</span>
+
+<!-- 2b. Outlined -->
+<span class="tag tag--medium tag--outlined">标签文案</span>
+
+<!-- 2c. Tinted -->
+<span class="tag tag--medium tag--tinted">标签文案</span>
+
+
+<!-- ============== 3. Show icon = true（带 24×24 前置图标） ============== -->
+
+<!-- 3a. Large + Filled + 星形 icon -->
+<span class="tag tag--large tag--filled">
+  <svg class="tag__icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+    <use href="#icon/star--fill" />
+  </svg>
+  <span class="tag__label">推荐</span>
+</span>
+
+<!-- 3b. Large + Tinted + 星形 icon -->
+<span class="tag tag--large tag--tinted">
+  <svg class="tag__icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+    <use href="#icon/star--fill" />
+  </svg>
+  <span class="tag__label">收藏</span>
+</span>
+
+<!-- 3c. Medium + Outlined + 星形 icon -->
+<span class="tag tag--medium tag--outlined">
+  <svg class="tag__icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+    <use href="#icon/star--fill" />
+  </svg>
+  <span class="tag__label">筛选</span>
+</span>

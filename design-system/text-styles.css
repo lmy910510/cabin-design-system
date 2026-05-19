@@ -1,0 +1,145 @@
+/* =============================================================
+ * Text Styles - 字体预设
+ * 1:1 映射自 Figma「🤖座舱组件库-AI版」Text Styles（共 62 个）
+ *
+ * 命名约定：.t-{family}-{size}-{weight}[-wrap]
+ *   family: cn  → Noto Sans SC（中文）
+ *           num → DIN（数字 / 英文）
+ *   weight: bold(700) / medium(500) / regular(400)
+ *   -wrap : 行高加大版（用于多行段落，对应 Figma 的 _折行）
+ *
+ * 用法：
+ *   <div class="t-cn-32-medium">设置</div>
+ *   <span class="t-num-24-bold">128</span>
+ * ============================================================= */
+
+/* ----- 字体族 ----- */
+:root {
+  --font-family-cn:  "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --font-family-num: "DIN", "DIN Alternate", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* 公共行重置：让 class 既能用于 div 也能用于 span */
+[class^="t-cn-"],
+[class*=" t-cn-"] {
+  font-family: var(--font-family-cn);
+  font-style: normal;
+  letter-spacing: 0;
+}
+[class^="t-num-"],
+[class*=" t-num-"] {
+  font-family: var(--font-family-num);
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+/* ============================================================
+ * Noto Sans SC (中文)
+ * ============================================================ */
+
+/* size 72 */
+.t-cn-72-bold     { font-size: 72px; line-height: 78px; font-weight: 700; }
+
+/* size 60 */
+.t-cn-60-bold     { font-size: 60px; line-height: 66px; font-weight: 700; }
+
+/* size 48 */
+.t-cn-48-bold     { font-size: 48px; line-height: 54px; font-weight: 700; }
+
+/* size 42 */
+.t-cn-42-bold       { font-size: 42px; line-height: 48px; font-weight: 700; }
+.t-cn-42-bold-wrap  { font-size: 42px; line-height: 54px; font-weight: 700; }
+
+/* size 36 */
+.t-cn-36-bold     { font-size: 36px; line-height: 42px; font-weight: 700; }
+.t-cn-36-medium   { font-size: 36px; line-height: 42px; font-weight: 500; }
+
+/* size 32 */
+.t-cn-32-bold        { font-size: 32px; line-height: 36px; font-weight: 700; }
+.t-cn-32-medium      { font-size: 32px; line-height: 36px; font-weight: 500; }
+.t-cn-32-regular     { font-size: 32px; line-height: 36px; font-weight: 400; }
+.t-cn-32-medium-wrap { font-size: 32px; line-height: 48px; font-weight: 500; }
+
+/* size 28 */
+.t-cn-28-bold         { font-size: 28px; line-height: 32px; font-weight: 700; }
+.t-cn-28-medium       { font-size: 28px; line-height: 32px; font-weight: 500; }
+.t-cn-28-regular      { font-size: 28px; line-height: 32px; font-weight: 400; }
+.t-cn-28-regular-wrap { font-size: 28px; line-height: 36px; font-weight: 400; }
+
+/* size 24 */
+.t-cn-24-bold         { font-size: 24px; line-height: 28px; font-weight: 700; }
+.t-cn-24-medium       { font-size: 24px; line-height: 28px; font-weight: 500; }
+.t-cn-24-regular      { font-size: 24px; line-height: 28px; font-weight: 400; }
+.t-cn-24-regular-wrap { font-size: 24px; line-height: 32px; font-weight: 400; }
+
+/* size 20 */
+.t-cn-20-bold     { font-size: 20px; line-height: 24px; font-weight: 700; }
+.t-cn-20-medium   { font-size: 20px; line-height: 24px; font-weight: 500; }
+.t-cn-20-regular  { font-size: 20px; line-height: 24px; font-weight: 400; }
+
+/* size 18 */
+.t-cn-18-medium   { font-size: 18px; line-height: 22px; font-weight: 500; }
+.t-cn-18-regular  { font-size: 18px; line-height: 22px; font-weight: 400; }
+
+/* size 16 */
+.t-cn-16-medium   { font-size: 16px; line-height: 20px; font-weight: 500; }
+.t-cn-16-regular  { font-size: 16px; line-height: 20px; font-weight: 400; }
+
+/* size 14 */
+.t-cn-14-medium   { font-size: 14px; line-height: 18px; font-weight: 500; }
+.t-cn-14-regular  { font-size: 14px; line-height: 18px; font-weight: 400; }
+
+/* size 12 */
+.t-cn-12-medium   { font-size: 12px; line-height: 16px; font-weight: 500; }
+.t-cn-12-regular  { font-size: 12px; line-height: 16px; font-weight: 400; }
+
+/* size 10 */
+.t-cn-10-medium   { font-size: 10px; line-height: 14px; font-weight: 500; }
+.t-cn-10-regular  { font-size: 10px; line-height: 14px; font-weight: 400; }
+
+/* ============================================================
+ * DIN (数字 / 英文)
+ * 行高与中文档保持一致，便于和中文混排时基线对齐
+ * ============================================================ */
+
+.t-num-72-bold    { font-size: 72px; line-height: 78px; font-weight: 700; }
+
+.t-num-60-bold    { font-size: 60px; line-height: 66px; font-weight: 700; }
+
+.t-num-48-bold    { font-size: 48px; line-height: 54px; font-weight: 700; }
+
+.t-num-42-bold    { font-size: 42px; line-height: 48px; font-weight: 700; }
+
+.t-num-36-bold    { font-size: 36px; line-height: 42px; font-weight: 700; }
+.t-num-36-medium  { font-size: 36px; line-height: 42px; font-weight: 500; }
+
+.t-num-32-bold    { font-size: 32px; line-height: 36px; font-weight: 700; }
+.t-num-32-medium  { font-size: 32px; line-height: 36px; font-weight: 500; }
+.t-num-32-regular { font-size: 32px; line-height: 36px; font-weight: 400; }
+
+.t-num-28-bold    { font-size: 28px; line-height: 32px; font-weight: 700; }
+.t-num-28-medium  { font-size: 28px; line-height: 32px; font-weight: 500; }
+.t-num-28-regular { font-size: 28px; line-height: 32px; font-weight: 400; }
+
+.t-num-24-bold    { font-size: 24px; line-height: 28px; font-weight: 700; }
+.t-num-24-medium  { font-size: 24px; line-height: 28px; font-weight: 500; }
+.t-num-24-regular { font-size: 24px; line-height: 28px; font-weight: 400; }
+
+.t-num-20-bold    { font-size: 20px; line-height: 24px; font-weight: 700; }
+.t-num-20-medium  { font-size: 20px; line-height: 24px; font-weight: 500; }
+.t-num-20-regular { font-size: 20px; line-height: 24px; font-weight: 400; }
+
+.t-num-18-medium  { font-size: 18px; line-height: 22px; font-weight: 500; }
+.t-num-18-regular { font-size: 18px; line-height: 22px; font-weight: 400; }
+
+.t-num-16-medium  { font-size: 16px; line-height: 20px; font-weight: 500; }
+.t-num-16-regular { font-size: 16px; line-height: 20px; font-weight: 400; }
+
+.t-num-14-medium  { font-size: 14px; line-height: 18px; font-weight: 500; }
+.t-num-14-regular { font-size: 14px; line-height: 18px; font-weight: 400; }
+
+.t-num-12-medium  { font-size: 12px; line-height: 16px; font-weight: 500; }
+.t-num-12-regular { font-size: 12px; line-height: 16px; font-weight: 400; }
+
+.t-num-10-medium  { font-size: 10px; line-height: 14px; font-weight: 500; }
+.t-num-10-regular { font-size: 10px; line-height: 14px; font-weight: 400; }

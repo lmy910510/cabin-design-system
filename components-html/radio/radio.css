@@ -1,0 +1,129 @@
+/* =============================================================
+ * Component: Radio  (单选)
+ *
+ * 独立可复用控件。视觉规格与 checkbox 节奏对称：
+ *   外圆 36×36 / 圆角 50% / 描边 2 / 选中实心 + 反色圆点 / 圆点 18×18
+ *
+ * 单选互斥语义由原生 <input type="radio"> 的 name 属性提供，零 JS。
+ *
+ * 状态（由内部 input 决定）：
+ *   未选中 (默认)        → 描边 + 透明底
+ *   选中 (:checked)      → 实心 (text-primary) + 圆点反色
+ *   禁用 (:disabled)     → 描边 disabled + 底 item-disabled + 圆点 text-disabled
+ *   禁用+选中            → 同禁用，圆点仍显示 text-disabled
+ *
+ * 结构：
+ *   <label class="radio">
+ *     <input type="radio" name="theme" />
+ *     <span class="radio__box" aria-hidden="true">
+ *       <span class="radio__dot"></span>
+ *     </span>
+ *   </label>
+ *
+ *   独立使用时可在 label 后面加文字：
+ *   <label class="radio">
+ *     <input type="radio" name="theme" checked />
+ *     <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+ *     <span class="radio__label">深色主题</span>
+ *   </label>
+ *
+ * 与 checkbox 的差异仅有：
+ *   - 圆角 50%（vs 8）
+ *   - 选中标识为实心圆点（vs 对勾 svg）
+ * 其余间距 / 文字尺寸 / 状态色完全对齐 checkbox。
+ * ============================================================= */
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;                     /* 与 checkbox 一致 */
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--color-text-primary);
+}
+
+/* 隐藏原生 input，仅作语义/状态来源 */
+.radio > input[type="radio"] {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 视觉外圆 */
+.radio__box {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border-primary);
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;            /* 未选中 → 圆点隐藏 */
+  flex: none;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+/* 内部圆点 */
+.radio__dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: currentColor;      /* 跟随 .radio__box 的 color，未选中时透明 */
+  display: block;
+  transition: background-color 120ms ease;
+}
+
+/* 文字标签（独立使用时可选） */
+.radio__label {
+  font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+}
+
+/* ---------- 选中态 ---------- */
+.radio > input[type="radio"]:checked ~ .radio__box {
+  background: var(--color-text-primary);
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary-inverse);   /* 圆点反色 */
+}
+
+/* ---------- 禁用态（未选） ---------- */
+.radio > input[type="radio"]:disabled ~ .radio__box {
+  border-color: var(--color-border-disabled);
+  background: var(--color-bg-item-disabled);
+  color: transparent;
+}
+
+/* 禁用态文字也变灰 */
+.radio:has(> input[type="radio"]:disabled) {
+  cursor: not-allowed;
+}
+.radio:has(> input[type="radio"]:disabled) .radio__label {
+  color: var(--color-text-disabled);
+}
+
+/* ---------- 禁用 + 选中：圆点仍显示，但用 disabled 文字色 ---------- */
+.radio > input[type="radio"]:disabled:checked ~ .radio__box {
+  border-color: var(--color-border-disabled);
+  background: var(--color-bg-item-disabled);
+  color: var(--color-text-disabled);
+}
+
+/* ---------- 键盘可访问性 ---------- */
+.radio > input[type="radio"]:focus-visible ~ .radio__box {
+  outline: 3px solid var(--color-border-active);
+  outline-offset: 3px;
+}

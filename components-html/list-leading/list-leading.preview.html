@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>list-leading · Preview</title>
+
+<!-- design-system -->
+<link rel="stylesheet" href="../../design-system/tokens.css" />
+<link rel="stylesheet" href="../../design-system/shadows.css" />
+<link rel="stylesheet" href="../../design-system/text-styles.css" />
+
+<!-- 本组件 + 内嵌的 icon / checkbox / radio -->
+<link rel="stylesheet" href="./list-leading.css" />
+
+<!-- 注入统一图标 sprite（同文档锚点，绕开 file:// 跨文件 use 限制）-->
+<script src="../icon/icon-sprite-inline.js"></script>
+<link rel="stylesheet" href="../icon/icon.css" />
+<link rel="stylesheet" href="../checkbox/checkbox.css" />
+<link rel="stylesheet" href="../radio/radio.css" />
+
+<style>
+  body {
+    margin: 0;
+    background: var(--color-bg-page-primary);
+    color: var(--color-text-primary);
+    font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+    padding: 48px;
+  }
+  .theme-toggle {
+    position: fixed;
+    top: 24px; right: 24px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 2px solid var(--color-border-disabled);
+    background: var(--color-bg-item-tertiary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+  }
+  h2 {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--color-text-primary);
+  }
+  .group-desc {
+    font-size: 22px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+  section { margin-bottom: 64px; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px 32px;
+    align-items: center;
+  }
+  .case-grid > .label {
+    color: var(--color-text-secondary);
+    font-size: 22px;
+  }
+  .case-grid > .demo {
+    background: var(--color-bg-item-tertiary);
+    border-radius: 24px;
+    padding: 20px 30px;
+    display: flex; align-items: center; gap: 36px;
+  }
+
+  .row-mock {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    background: var(--color-bg-item-tertiary);
+    padding: 30px 36px;
+    border-radius: 24px;
+  }
+  .row-mock__title {
+    flex: 1;
+    font-size: 32px; line-height: 32px; font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  .row-mock__action {
+    color: var(--color-text-secondary);
+    font-size: 28px; line-height: 28px;
+    flex: none;
+  }
+  .stack { display: flex; flex-direction: column; gap: 16px; }
+</style>
+</head>
+<body data-theme="light">
+
+<button class="theme-toggle" id="themeToggle">Toggle Light / Dark</button>
+
+<h1 style="font-size:48px;font-weight:600;margin:0 0 8px;">list-leading</h1>
+<p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
+  4 个 Type · 独立左槽 · checkbox / radio 类型均改为内嵌真组件（消除分叉）
+</p>
+
+
+<!-- ============ 1. Type = icon ============ -->
+<section>
+  <h2>1. Type = icon（60×60 容器，36×36 sprite icon）</h2>
+  <p class="group-desc">视觉真源 = 独立 <code>icon</code> 组件 sprite；通过 <code>&lt;use href="#icon/&lt;name&gt;--&lt;form&gt;" /&gt;</code> 引用。颜色用 currentColor 跟随主题。</p>
+
+  <div class="case-grid">
+    <div class="label">WLAN（fill 推荐）</div>
+    <div class="demo">
+      <span class="list-leading list-leading--icon">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon/wifi--fill"/>
+        </svg>
+      </span>
+    </div>
+
+    <div class="label">通用 / 设置（line 示例）</div>
+    <div class="demo">
+      <span class="list-leading list-leading--icon">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon/setting--line"/>
+        </svg>
+      </span>
+    </div>
+
+    <div class="label">收藏（star fill）</div>
+    <div class="demo">
+      <span class="list-leading list-leading--icon">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon/star--fill"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 2. Type = checkbox（内嵌 .checkbox） ============ -->
+<section>
+  <h2>2. Type = checkbox（内嵌独立 .checkbox 组件）</h2>
+  <p class="group-desc">
+    list-leading 仅提供 60×60 占位；视觉与状态由 .checkbox 提供。
+    要修改方框 / 勾的样式，只改 checkbox.css，本处自动同步。
+  </p>
+
+  <div class="case-grid">
+    <div class="label">未选中</div>
+    <div class="demo">
+      <span class="list-leading list-leading--checkbox">
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span class="checkbox__box" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+      </span>
+    </div>
+
+    <div class="label">选中</div>
+    <div class="demo">
+      <span class="list-leading list-leading--checkbox">
+        <label class="checkbox">
+          <input type="checkbox" checked />
+          <span class="checkbox__box" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+      </span>
+    </div>
+
+    <div class="label">禁用 · 未选</div>
+    <div class="demo">
+      <span class="list-leading list-leading--checkbox">
+        <label class="checkbox">
+          <input type="checkbox" disabled />
+          <span class="checkbox__box" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+      </span>
+    </div>
+
+    <div class="label">禁用 · 选中</div>
+    <div class="demo">
+      <span class="list-leading list-leading--checkbox">
+        <label class="checkbox">
+          <input type="checkbox" checked disabled />
+          <span class="checkbox__box" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 3. Type = radio（内嵌 .radio） ============ -->
+<section>
+  <h2>3. Type = radio（内嵌独立 .radio 组件）</h2>
+  <p class="group-desc">
+    list-leading 仅提供 60×60 占位；视觉与状态由 .radio 提供。
+    单选互斥由原生 <code>name</code> 实现。
+  </p>
+
+  <div class="case-grid">
+    <div class="label">未选中</div>
+    <div class="demo">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="ll-radio-1" />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+    </div>
+
+    <div class="label">选中</div>
+    <div class="demo">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="ll-radio-2" checked />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+    </div>
+
+    <div class="label">禁用 · 未选</div>
+    <div class="demo">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="ll-radio-3" disabled />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+    </div>
+
+    <div class="label">禁用 · 选中</div>
+    <div class="demo">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="ll-radio-4" checked disabled />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 4. Type = none ============ -->
+<section>
+  <h2>4. Type = none（不渲染左槽）</h2>
+  <p class="group-desc">纯文字行直接省略 .list-leading 节点；只在需要 DOM 占位时使用 .list-leading--none。</p>
+
+  <div class="stack" style="max-width:920px;">
+    <div class="row-mock">
+      <div class="row-mock__title">恢复出厂设置</div>
+      <span class="row-mock__action">立即执行</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 5. 真实场景：嵌入 list-row ============ -->
+<section>
+  <h2>5. 真实场景：嵌入 list-row 左槽</h2>
+  <p class="group-desc">四种 type 在同一个 list 上下文里的对齐表现。</p>
+
+  <div class="stack" style="max-width:920px;">
+    <div class="row-mock">
+      <span class="list-leading list-leading--icon">
+        <svg class="icon" aria-hidden="true">
+          <use href="#icon/wifi--fill"/>
+        </svg>
+      </span>
+      <div class="row-mock__title">WLAN</div>
+      <span class="row-mock__action">已连接</span>
+    </div>
+
+    <div class="row-mock">
+      <span class="list-leading list-leading--checkbox">
+        <label class="checkbox">
+          <input type="checkbox" checked />
+          <span class="checkbox__box" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+      </span>
+      <div class="row-mock__title">同意《用户协议》</div>
+    </div>
+
+    <div class="row-mock">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="ll-row-theme" checked />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+      <div class="row-mock__title">深色主题</div>
+    </div>
+
+    <div class="row-mock">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="ll-row-theme" />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+      <div class="row-mock__title">浅色主题</div>
+    </div>
+
+    <div class="row-mock">
+      <div class="row-mock__title">恢复出厂设置</div>
+      <span class="row-mock__action">立即执行</span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+  document.documentElement.setAttribute('data-theme', 'light');
+</script>
+</body>
+</html>

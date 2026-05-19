@@ -1,0 +1,85 @@
+/* =============================================================
+ * Component: list-action  (列表行右侧操作区)
+ * Figma source: 🤖座舱组件库-AI版 / list-action  (Component Set 388:17408)
+ *
+ * 1:1 映射自 Figma 真实测量（通过 figma_execute 直读）：
+ *   外容器：水平布局，hug 内容；gap = 12（itemSpacing token VariableID 20:491 = spacing-12）
+ *           无背景、无圆角、无内边距
+ *   高度跟随子组件：
+ *     - Type=Arrow   → 42（subtitle 28 + icon 42 居中对齐取大值）
+ *     - Type=Button  → 60（内嵌 Button 默认 Compact-60 / Secondary / None / Default）
+ *     - Type=Switch  → 60（内嵌 Switch 默认 On=False / Disabled=False）
+ *
+ * 三种 variants（Figma variantProperties: Type）：
+ *   Type=Arrow   → 副标题 + 右箭头（线形 42×42），副标题与箭头同色：text/secondary
+ *   Type=Button  → 单个 Button instance（默认 Secondary Compact-60；调用方可换任意 Button variant）
+ *   Type=Switch  → 单个 Switch instance（默认 Off；调用方控制 checked/disabled）
+ *
+ * 用法：
+ *   <!-- Arrow -->
+ *   <span class="list-action list-action--arrow">
+ *     <span class="list-action__subtitle">副标题</span>
+ *     <span class="list-action__arrow" aria-hidden="true"><svg .../></span>
+ *   </span>
+ *
+ *   <!-- Button：直接塞一个 .btn 进来即可 -->
+ *   <span class="list-action list-action--button">
+ *     <button class="btn btn--secondary btn--xs">按钮</button>
+ *   </span>
+ *
+ *   <!-- Switch：直接塞一个 .switch 进来即可 -->
+ *   <span class="list-action list-action--switch">
+ *     <label class="switch">
+ *       <input type="checkbox" />
+ *       <span class="switch-track"></span>
+ *       <span class="switch-thumb"></span>
+ *     </label>
+ *   </span>
+ * ============================================================= */
+
+.list-action {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;                     /* Figma itemSpacing = 12 */
+  padding: 0;
+  background: transparent;
+  /* 高度由内部 hug，不强制 */
+}
+
+/* ---------- Type = Arrow ---------- */
+
+.list-action__subtitle {
+  /* Figma: 28/28 Regular，色 text/secondary (#828997) */
+  font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 28px;
+  line-height: 28px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.list-action__arrow {
+  /* 严格 1:1：42 × 42（list 内常用的 medium icon 尺寸） */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  color: var(--color-text-secondary);   /* SVG 通过 currentColor 跟随 */
+}
+
+.list-action__arrow > svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------- Type = Button ---------- */
+/* list-action__button 没有自己的样式：直接复用 .btn。
+   只控制容器对齐：嵌入的 .btn 已自带尺寸。 */
+
+/* ---------- Type = Switch ---------- */
+/* 同上，直接复用 .switch；无需额外样式。 */

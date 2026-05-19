@@ -1,0 +1,74 @@
+<!--
+  Button · 静态 HTML 片段示例
+  使用方式：
+    1. 在页面 <head> 引入 design-system 三件套（tokens.css / shadows.css / text-styles.css）
+       与 button.css。
+    2. 在 <body> 顶部加载图标 sprite：
+       <script src="../icon/icon-sprite-inline.js"></script>
+    3. 直接复制下面任一片段进 body 即可。
+-->
+
+<!-- ============== 1. 基础：5 个 Variant × Medium-72 + None ============== -->
+<button class="btn btn--primary btn--md">主要按钮</button>
+<button class="btn btn--secondary btn--md">次要按钮</button>
+<button class="btn btn--ghost btn--md">幽灵按钮</button>
+<button class="btn btn--danger btn--md">危险操作</button>
+<button class="btn btn--text btn--md">文字按钮</button>
+
+<!-- ============== 2. 4 个尺寸（Primary + None） ============== -->
+<button class="btn btn--primary btn--xs">Compact</button>
+<button class="btn btn--primary btn--sm">Small</button>
+<button class="btn btn--primary btn--md">Medium</button>
+<button class="btn btn--primary btn--lg">Large</button>
+
+<!-- ============== 3. Icon-Position：Leading / Trailing ============== -->
+<!-- 图标统一从 sprite 取，引用方式：<use href="#icon/<name>--<line|fill>"/> -->
+<button class="btn btn--primary btn--md btn--leading">
+  <span class="btn-icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/star--fill"/></svg>
+  </span>
+  <span class="btn-label">收藏</span>
+</button>
+
+<button class="btn btn--secondary btn--md btn--trailing">
+  <span class="btn-label">下一步</span>
+  <span class="btn-icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/enter--line"/></svg>
+  </span>
+</button>
+
+<!-- ============== 4. Icon-Only ============== -->
+<!-- Primary Icon-Only Default = 白底+阴影（Figma 真实形态） -->
+<button class="btn btn--primary btn--md btn--icon-only" aria-label="收藏">
+  <span class="btn-icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/star--fill"/></svg>
+  </span>
+</button>
+<button class="btn btn--secondary btn--md btn--icon-only" aria-label="设置">
+  <span class="btn-icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/setting--fill"/></svg>
+  </span>
+</button>
+<button class="btn btn--ghost btn--md btn--icon-only" aria-label="返回">
+  <span class="btn-icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/back--fill"/></svg>
+  </span>
+</button>
+<!-- TODO icon/delete 未在 MVP sprite 中收录，删除按钮暂用临时手画 -->
+<button class="btn btn--danger btn--md btn--icon-only" aria-label="删除">
+  <span class="btn-icon" aria-hidden="true">
+    <svg viewBox="0 0 36 36"><path d="M10 12h16v18a2 2 0 0 1-2 2H12a2 2 0 0 1-2-2V12zM14 12V8a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v4M8 12h20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </span>
+</button>
+
+<!-- ============== 5. Disabled 状态 ============== -->
+<button class="btn btn--primary btn--md" disabled>主要禁用</button>
+<button class="btn btn--secondary btn--md" disabled>次要禁用</button>
+<button class="btn btn--ghost btn--md" disabled>幽灵禁用</button>
+<button class="btn btn--danger btn--md" disabled>危险禁用</button>
+<button class="btn btn--text btn--md" disabled>文字禁用</button>
+<button class="btn btn--primary btn--md btn--icon-only" disabled aria-label="收藏（不可用）">
+  <span class="btn-icon" aria-hidden="true">
+    <svg viewBox="0 0 48 48"><use href="#icon/star--fill"/></svg>
+  </span>
+</button>

@@ -1,0 +1,179 @@
+<!--
+  list · 静态 HTML 片段示例
+  使用方式：在页面 <head> 引入：
+    1. design-system 三件套（tokens.css / shadows.css / text-styles.css）
+    2. 三个独立槽：list-leading.css / list-content.css / list-action.css
+    3. 整行：list.css（最后引入，仅行级布局）
+    4. 槽位内嵌的真组件按需：checkbox.css / radio.css / button.css / switch.css / tag.css
+
+  list 本身只负责行级布局 + 分隔线，所有视觉来自三个槽。
+-->
+
+
+<!-- ============== 1. 完整一行：左 icon + 中 Title + 右 arrow ============== -->
+<div class="list">
+  <span class="list-leading list-leading--icon">
+    <svg viewBox="0 0 48 48" fill="currentColor">
+      <use href="#icon/wifi--fill" />
+    </svg>
+  </span>
+  <div class="list-content list-content--title">
+    <div class="list-content__title-row">
+      <div class="list-content__title-group">
+        <span class="list-content__title">WLAN</span>
+      </div>
+      <span class="tag tag--large tag--tinted">5G</span>
+    </div>
+  </div>
+  <span class="list-action list-action--arrow">
+    <span class="list-action__subtitle">已连接</span>
+    <span class="list-action__arrow" aria-hidden="true">
+      <svg fill="currentColor"><use href="#icon/enter--line" /></svg>
+    </span>
+  </span>
+</div>
+
+
+<!-- ============== 2. 列表组：多行用 ul 语义化包裹 ============== -->
+<ul class="list-group">
+
+  <!-- 行 1：icon + Subtitle + arrow（带描述） -->
+  <li class="list">
+    <span class="list-leading list-leading--icon">
+      <svg viewBox="0 0 48 48" fill="currentColor">
+        <use href="#icon/setting--fill" />
+      </svg>
+    </span>
+    <div class="list-content list-content--subtitle">
+      <div class="list-content__title-row">
+        <div class="list-content__title-group">
+          <span class="list-content__title">通用</span>
+        </div>
+      </div>
+      <p class="list-content__description">系统语言、版本、关于本机</p>
+    </div>
+    <span class="list-action list-action--arrow">
+      <span class="list-action__arrow" aria-hidden="true">
+        <svg fill="currentColor"><use href="#icon/enter--line" /></svg>
+      </span>
+    </span>
+  </li>
+
+  <!-- 行 2：icon + Title + switch -->
+  <li class="list">
+    <span class="list-leading list-leading--icon">
+      <svg viewBox="0 0 48 48" fill="currentColor">
+        <use href="#icon/list--fill" />
+      </svg>
+    </span>
+    <div class="list-content list-content--title">
+      <div class="list-content__title-row">
+        <div class="list-content__title-group">
+          <span class="list-content__title">蓝牙</span>
+        </div>
+      </div>
+    </div>
+    <span class="list-action list-action--switch">
+      <label class="switch">
+        <input type="checkbox" checked />
+        <span class="switch-track"></span>
+        <span class="switch-thumb"></span>
+      </label>
+    </span>
+  </li>
+
+  <!-- 行 3：icon + Subtitle + button（CTA），带 Badge -->
+  <li class="list">
+    <span class="list-leading list-leading--icon">
+      <svg viewBox="0 0 48 48" fill="currentColor">
+        <use href="#icon/star--fill" />
+      </svg>
+    </span>
+    <div class="list-content list-content--subtitle">
+      <div class="list-content__title-row">
+        <div class="list-content__title-group">
+          <span class="list-content__title">系统更新</span>
+          <span class="list-content__badge" aria-hidden="true"></span>
+        </div>
+        <span class="tag tag--large tag--tinted">新版本</span>
+      </div>
+      <p class="list-content__description">Build 2026.05.18，建议在连接电源时更新。</p>
+    </div>
+    <span class="list-action list-action--button">
+      <button class="btn btn--primary btn--xs">立即更新</button>
+    </span>
+  </li>
+
+  <!-- 行 4：checkbox + Title + 无右槽（list-leading 内嵌独立 .checkbox） -->
+  <li class="list">
+    <span class="list-leading list-leading--checkbox">
+      <label class="checkbox">
+        <input type="checkbox" checked />
+        <span class="checkbox__box" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </label>
+    </span>
+    <div class="list-content list-content--title">
+      <div class="list-content__title-row">
+        <div class="list-content__title-group">
+          <span class="list-content__title">同意《用户协议》</span>
+        </div>
+      </div>
+    </div>
+  </li>
+
+  <!-- 行 5：radio + Title + 无右槽（list-leading 内嵌独立 .radio，单选互斥） -->
+  <li class="list">
+    <span class="list-leading list-leading--radio">
+      <label class="radio">
+        <input type="radio" name="theme" />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+      </label>
+    </span>
+    <div class="list-content list-content--title">
+      <div class="list-content__title-row">
+        <div class="list-content__title-group">
+          <span class="list-content__title">浅色主题</span>
+        </div>
+      </div>
+    </div>
+  </li>
+
+  <!-- 行 6：radio + Title + 无右槽（默认选中项） -->
+  <li class="list">
+    <span class="list-leading list-leading--radio">
+      <label class="radio">
+        <input type="radio" name="theme" checked />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+      </label>
+    </span>
+    <div class="list-content list-content--title">
+      <div class="list-content__title-row">
+        <div class="list-content__title-group">
+          <span class="list-content__title">深色主题</span>
+        </div>
+      </div>
+    </div>
+  </li>
+
+  <!-- 行 7：none（无左槽）+ Title + arrow -->
+  <li class="list">
+    <div class="list-content list-content--title">
+      <div class="list-content__title-row">
+        <div class="list-content__title-group">
+          <span class="list-content__title">恢复出厂设置</span>
+        </div>
+      </div>
+    </div>
+    <span class="list-action list-action--arrow">
+      <span class="list-action__arrow" aria-hidden="true">
+        <svg fill="currentColor"><use href="#icon/enter--line" /></svg>
+      </span>
+    </span>
+  </li>
+
+</ul>

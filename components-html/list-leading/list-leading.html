@@ -1,0 +1,118 @@
+<!--
+  list-leading · 静态 HTML 片段示例
+  使用方式：在页面 <head> 引入 design-system 三件套 + list-leading.css，
+  - icon 类型：还需引入 ../icon/icon.css（sprite 通过 <use href> 直接相对路径引用，无需在 head link）
+  - checkbox 类型：还需引入 ../checkbox/checkbox.css
+  - radio 类型：还需引入 ../radio/radio.css
+  即可直接复制下面任一片段进 body。
+-->
+
+<!-- ============== 1. Type = icon（60×60 容器 + 36×36 sprite icon） ============== -->
+
+<!-- WLAN（默认推荐 fill：list 主图标层） -->
+<span class="list-leading list-leading--icon">
+  <svg class="icon" aria-hidden="true">
+    <use href="#icon/wifi--fill"/>
+  </svg>
+</span>
+
+<!-- 通用（线形示例：分组标题、辅助操作） -->
+<span class="list-leading list-leading--icon">
+  <svg class="icon" aria-hidden="true">
+    <use href="#icon/setting--line"/>
+  </svg>
+</span>
+
+<!-- 收藏（star fill） -->
+<span class="list-leading list-leading--icon">
+  <svg class="icon" aria-hidden="true">
+    <use href="#icon/star--fill"/>
+  </svg>
+</span>
+
+<!-- 任意其它 sprite 内置 icon 同理：换 href 即可。完整清单见 ../icon/icon.md -->
+
+
+<!-- ============== 2. Type = checkbox（内嵌独立 .checkbox 组件） ============== -->
+
+<!-- 未选中 -->
+<span class="list-leading list-leading--checkbox">
+  <label class="checkbox">
+    <input type="checkbox" />
+    <span class="checkbox__box" aria-hidden="true">
+      <svg viewBox="0 0 36 36" fill="none">
+        <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </label>
+</span>
+
+<!-- 选中 -->
+<span class="list-leading list-leading--checkbox">
+  <label class="checkbox">
+    <input type="checkbox" checked />
+    <span class="checkbox__box" aria-hidden="true">
+      <svg viewBox="0 0 36 36" fill="none">
+        <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </label>
+</span>
+
+<!-- 禁用 -->
+<span class="list-leading list-leading--checkbox">
+  <label class="checkbox">
+    <input type="checkbox" disabled />
+    <span class="checkbox__box" aria-hidden="true">
+      <svg viewBox="0 0 36 36" fill="none">
+        <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </label>
+</span>
+
+
+<!-- ============== 3. Type = radio（内嵌独立 .radio 组件） ============== -->
+
+<!-- 单选组：name 必须一致才能互斥 -->
+
+<!-- 未选中 -->
+<span class="list-leading list-leading--radio">
+  <label class="radio">
+    <input type="radio" name="row-radio" />
+    <span class="radio__box" aria-hidden="true">
+      <span class="radio__dot"></span>
+    </span>
+  </label>
+</span>
+
+<!-- 选中 -->
+<span class="list-leading list-leading--radio">
+  <label class="radio">
+    <input type="radio" name="row-radio" checked />
+    <span class="radio__box" aria-hidden="true">
+      <span class="radio__dot"></span>
+    </span>
+  </label>
+</span>
+
+<!-- 禁用 -->
+<span class="list-leading list-leading--radio">
+  <label class="radio">
+    <input type="radio" name="row-radio-disabled" disabled />
+    <span class="radio__box" aria-hidden="true">
+      <span class="radio__dot"></span>
+    </span>
+  </label>
+</span>
+
+
+<!-- ============== 4. Type = none（不渲染节点） ============== -->
+<!--
+  纯文字行：建议在父级 list 直接不渲染 .list-leading 节点，整行无左槽。
+  仅当需要保留布局占位时，使用：
+    <span class="list-leading list-leading--none" aria-hidden="true"></span>
+-->

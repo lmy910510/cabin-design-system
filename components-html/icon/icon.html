@@ -1,0 +1,65 @@
+<!--
+  icon · 静态 HTML 片段示例
+  使用方式：在页面 <head> 引入 design-system 三件套 + icon.css，
+  即可在 body 任意位置使用下面的写法。
+
+  视觉真源：components-html/icon/icon.svg（sprite，每个 symbol id = "icon/<name>--<form>"）
+  - 例如 icon/wifi--line / icon/wifi--fill / icon/star--line / icon/star--fill ...
+  - 完整清单见 icon.md
+-->
+
+
+<!-- ============== 1. 默认 36×36（list-leading 基准） ============== -->
+
+<!-- 线形：分组标题、辅助操作、信息层级弱 -->
+<svg class="icon" aria-hidden="true">
+  <use href="#icon/wifi--line"/>
+</svg>
+
+<!-- 面形：list row 主图标、CTA、需要远观识别的场景（默认推荐） -->
+<svg class="icon" aria-hidden="true">
+  <use href="#icon/star--fill"/>
+</svg>
+
+
+<!-- ============== 2. 尺寸 modifier ============== -->
+
+<!-- 24（tag 前置图标 / Rating-item） -->
+<svg class="icon icon--sm" aria-hidden="true">
+  <use href="#icon/star--fill"/>
+</svg>
+
+<!-- 42（input 内 / Tooltip 内 icon/info / icon/fail / icon/refresh） -->
+<svg class="icon icon--lg" aria-hidden="true">
+  <use href="#icon/refresh--line"/>
+</svg>
+
+
+<!-- ============== 3. 主题色继承示例 ============== -->
+
+<!--
+  外层任意元素的 color，会被 .icon 的 fill: currentColor 自动继承。
+  以下两个 icon 颜色不同，仅因为 color 不同。
+-->
+<span style="color: var(--color-text-primary);">
+  <svg class="icon" aria-hidden="true"><use href="#icon/setting--fill"/></svg>
+</span>
+<span style="color: var(--color-text-tertiary);">
+  <svg class="icon" aria-hidden="true"><use href="#icon/setting--fill"/></svg>
+</span>
+
+
+<!-- ============== 4. aria：装饰性 vs 信息性 ============== -->
+
+<!-- 装饰性（旁边已有同义文字标签）：aria-hidden -->
+<span>
+  <svg class="icon" aria-hidden="true"><use href="#icon/wifi--line"/></svg>
+  WLAN
+</span>
+
+<!-- 信息性（图标本身承载唯一信息，如纯 icon 按钮）：role + aria-label -->
+<button>
+  <svg class="icon" role="img" aria-label="设置">
+    <use href="#icon/setting--line"/>
+  </svg>
+</button>

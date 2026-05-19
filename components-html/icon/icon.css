@@ -1,0 +1,49 @@
+/* ==========================================================================
+   icon · 座舱图标基础样式
+   - 视觉真源：components-html/icon/icon.svg（sprite，22 个 symbol）
+   - 用法：<svg class="icon"><use href="#icon/<name>--<form>"/></svg>
+   - 颜色：通过 currentColor 继承，不在本文件硬编码颜色
+   - 尺寸：默认 36×36（list-leading 基准），通过 modifier 切换
+   ========================================================================== */
+
+.icon {
+  /* 默认 36×36：与 list-leading 内的 icon 本体尺寸一致 */
+  width: 36px;
+  height: 36px;
+  /* sprite 真值 viewBox 是 0 0 48 48；此处固定 width/height 即可正确缩放 */
+
+  display: inline-block;
+  flex: none;
+  vertical-align: middle;
+
+  /* 颜色策略：path 不带 fill 属性，由此处 fill: currentColor 继承外层文本色，
+     从而自动跟随 .list-leading / .button / .tag 等容器的主题色 */
+  fill: currentColor;
+  color: currentColor;
+}
+
+/* ==== 尺寸 modifier，覆盖 Figma 真值里几个固定档位 ==== */
+
+/* 24：tag 前置图标、Rating-item 等紧凑场景 */
+.icon--sm {
+  width: 24px;
+  height: 24px;
+}
+
+/* 30：button small 等更小场景（预留） */
+.icon--xs {
+  width: 16px;
+  height: 16px;
+}
+
+/* 42：input 内的清除/操作图标（icon/fail icon/refresh）、tooltip 内 icon */
+.icon--lg {
+  width: 42px;
+  height: 42px;
+}
+
+/* 48：原始 viewBox 尺寸，调试或大场景用 */
+.icon--xl {
+  width: 48px;
+  height: 48px;
+}

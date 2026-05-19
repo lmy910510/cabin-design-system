@@ -1,0 +1,374 @@
+/* =============================================================
+ * Design Tokens - CSS Variables
+ * 1:1 严格映射自 Figma「🤖座舱组件库-AI版」Variables
+ * 来源 collection: 🎨 Palette / 🌈 Semantic
+ *
+ * 三层架构：
+ *   1) Palette   基础色板（无语义，只代表颜色本身）
+ *   2) Semantic  语义色（指向 Palette，含 Light/Dark 双模式）
+ *   3) Spacing   间距尺度（px）
+ *
+ * 重要：所有数值均来自 Figma 真实变量，禁止人为四舍五入。
+ *      AI 写组件时，颜色一律用 --color-* 语义层；只有定义新语义时才允许引用 --palette-*。
+ * ============================================================= */
+
+/* -------------------------------------------------------------
+ * Layer 1: Palette  基础色板
+ * Figma 内 0 最浅、10 最深；white/black 的 0~9 是 alpha 阶梯，10 是不透明纯色
+ * ------------------------------------------------------------- */
+:root {
+  /* white：1~9 是不同 alpha 的白；10 是纯白 #fff；00 是 0 alpha */
+  --palette-white-00: rgba(255,255,255,0);
+  --palette-white-0:  rgba(255,255,255,0.06);
+  --palette-white-1:  rgba(255,255,255,0.08);
+  --palette-white-2:  rgba(255,255,255,0.20);
+  --palette-white-3:  rgba(255,255,255,0.35);
+  --palette-white-4:  rgba(255,255,255,0.42);
+  --palette-white-5:  rgba(255,255,255,0.54);
+  --palette-white-6:  rgba(255,255,255,0.60);
+  --palette-white-7:  rgba(255,255,255,0.70);
+  --palette-white-8:  rgba(255,255,255,0.80);
+  --palette-white-9:  rgba(255,255,255,0.90);
+  --palette-white-10: #ffffff;
+
+  /* black：0~9 是不同 alpha 的黑；10 是纯黑；00 是 0 alpha */
+  --palette-black-00: rgba(0,0,0,0);
+  --palette-black-0:  rgba(0,0,0,0.04);
+  --palette-black-1:  rgba(0,0,0,0.08);
+  --palette-black-2:  rgba(0,0,0,0.14);
+  --palette-black-3:  rgba(0,0,0,0.30);
+  --palette-black-4:  rgba(0,0,0,0.42);
+  --palette-black-5:  rgba(0,0,0,0.50);
+  --palette-black-6:  rgba(0,0,0,0.60);
+  --palette-black-7:  rgba(0,0,0,0.70);
+  --palette-black-8:  rgba(0,0,0,0.80);
+  --palette-black-9:  rgba(0,0,0,0.90);
+  --palette-black-10: #000000;
+
+  /* coldGray：中性灰冷调主轴 */
+  --palette-cold-gray-0:  #f7f8fa;
+  --palette-cold-gray-1:  #eaedf2;
+  --palette-cold-gray-2:  #dee2e8;
+  --palette-cold-gray-3:  #d0d5dc;
+  --palette-cold-gray-4:  #b4bac5;
+  --palette-cold-gray-5:  #969eab;
+  --palette-cold-gray-6:  #828997;
+  --palette-cold-gray-7:  #697181;
+  --palette-cold-gray-8:  #444c5c;
+  --palette-cold-gray-9:  #1f2229;
+  --palette-cold-gray-10: #16181d;
+
+  /* coldGray-alpha-light：浅色主题用半透明蒙层（基色 #dee0e8） */
+  --palette-cold-gray-alpha-light-00: rgba(222,224,232,0);
+  --palette-cold-gray-alpha-light-0:  rgba(222,224,232,0.04);
+  --palette-cold-gray-alpha-light-1:  rgba(222,224,232,0.08);
+  --palette-cold-gray-alpha-light-2:  rgba(222,224,232,0.14);
+  --palette-cold-gray-alpha-light-3:  rgba(222,224,232,0.30);
+  --palette-cold-gray-alpha-light-4:  rgba(222,224,232,0.42);
+  --palette-cold-gray-alpha-light-5:  rgba(222,224,232,0.50);
+  --palette-cold-gray-alpha-light-6:  rgba(222,224,232,0.60);
+  --palette-cold-gray-alpha-light-7:  rgba(222,224,232,0.70);
+  --palette-cold-gray-alpha-light-8:  rgba(222,224,232,0.80);
+  --palette-cold-gray-alpha-light-9:  rgba(222,224,232,0.90);
+  --palette-cold-gray-alpha-light-10: #dee0e8;
+
+  /* coldGray-alpha-dark：深色主题用半透明蒙层（基色 #4b526b） */
+  --palette-cold-gray-alpha-dark-00: rgba(75,82,107,0);
+  --palette-cold-gray-alpha-dark-0:  rgba(75,82,107,0.04);
+  --palette-cold-gray-alpha-dark-1:  rgba(75,82,107,0.08);
+  --palette-cold-gray-alpha-dark-2:  rgba(75,82,107,0.14);
+  --palette-cold-gray-alpha-dark-3:  rgba(75,82,107,0.30);
+  --palette-cold-gray-alpha-dark-4:  rgba(75,82,107,0.42);
+  --palette-cold-gray-alpha-dark-5:  rgba(75,82,107,0.50);
+  --palette-cold-gray-alpha-dark-6:  rgba(75,82,107,0.60);
+  --palette-cold-gray-alpha-dark-7:  rgba(75,82,107,0.70);
+  --palette-cold-gray-alpha-dark-8:  rgba(75,82,107,0.80);
+  --palette-cold-gray-alpha-dark-9:  rgba(75,82,107,0.90);
+  --palette-cold-gray-alpha-dark-10: #4b526b;
+
+  /* blue */
+  --palette-blue-0:  #eff6ff;
+  --palette-blue-1:  #dbe9fe;
+  --palette-blue-2:  #bfdafe;
+  --palette-blue-3:  #93c3fd;
+  --palette-blue-4:  #60a2fa;
+  --palette-blue-5:  #367bf6;
+  --palette-blue-6:  #255feb;
+  --palette-blue-7:  #1041dc;
+  --palette-blue-8:  #1e3daf;
+  --palette-blue-9:  #0b2b90;
+  --palette-blue-10: #071854;
+  --palette-blue-transparent: rgba(54,123,246,0.12);
+
+  /* teal */
+  --palette-teal-0:  #effefc;
+  --palette-teal-1:  #d7fefb;
+  --palette-teal-2:  #b7fdfc;
+  --palette-teal-3:  #8ffbfa;
+  --palette-teal-4:  #7af3f4;
+  --palette-teal-5:  #4fe7ec;
+  --palette-teal-6:  #0ed8f5;
+  --palette-teal-7:  #0db5d1;
+  --palette-teal-8:  #0887a0;
+  --palette-teal-9:  #0d6b81;
+  --palette-teal-10: #064558;
+  --palette-teal-transparent: rgba(79,231,236,0.12);
+
+  /* red */
+  --palette-red-0:  #fff0f1;
+  --palette-red-1:  #ffd1d5;
+  --palette-red-2:  #ffa8b0;
+  --palette-red-3:  #ff858f;
+  --palette-red-4:  #ff5765;
+  --palette-red-5:  #ff293b;
+  --palette-red-6:  #cc1827;
+  --palette-red-7:  #a1101c;
+  --palette-red-8:  #7a0711;
+  --palette-red-9:  #5c0209;
+  --palette-red-10: #3d0005;
+  --palette-red-transparent-0: rgba(255,41,59,0.12);
+  --palette-red-transparent-1: rgba(255,41,59,0.30);
+
+  /* green */
+  --palette-green-0:  #f0fff4;
+  --palette-green-1:  #c7f5d2;
+  --palette-green-2:  #8bf0a9;
+  --palette-green-3:  #5ae082;
+  --palette-green-4:  #28d553;
+  --palette-green-5:  #00b83d;
+  --palette-green-6:  #0da841;
+  --palette-green-7:  #0e8a39;
+  --palette-green-8:  #106627;
+  --palette-green-9:  #125225;
+  --palette-green-10: #134228;
+  --palette-green-transparent: rgba(0,184,61,0.12);
+
+  /* orange */
+  --palette-orange-0:  #ffefe5;
+  --palette-orange-1:  #ffdbc2;
+  --palette-orange-2:  #ffc194;
+  --palette-orange-3:  #ffa666;
+  --palette-orange-4:  #ff8e3d;
+  --palette-orange-5:  #fa6800;
+  --palette-orange-6:  #e54900;
+  --palette-orange-7:  #b83a00;
+  --palette-orange-8:  #993000;
+  --palette-orange-9:  #7a2700;
+  --palette-orange-10: #5c1d00;
+  --palette-orange-transparent: rgba(250,104,0,0.12);
+
+  /* yellow */
+  --palette-yellow-0:  #fff9e0;
+  --palette-yellow-1:  #fff1b2;
+  --palette-yellow-2:  #ffe791;
+  --palette-yellow-3:  #ffe16b;
+  --palette-yellow-4:  #ffd857;
+  --palette-yellow-5:  #ffd000;
+  --palette-yellow-6:  #d69900;
+  --palette-yellow-7:  #a87b00;
+  --palette-yellow-8:  #8a6000;
+  --palette-yellow-9:  #6b4800;
+  --palette-yellow-10: #4d2f00;
+  --palette-yellow-transparent: rgba(255,208,0,0.12);
+
+  /* indigo */
+  --palette-indigo-0:  #e5e5ff;
+  --palette-indigo-1:  #ccccff;
+  --palette-indigo-2:  #a3a3ff;
+  --palette-indigo-3:  #7878ff;
+  --palette-indigo-4:  #5454ff;
+  --palette-indigo-5:  #3636f5;
+  --palette-indigo-6:  #2222d8;
+  --palette-indigo-7:  #1515bc;
+  --palette-indigo-8:  #0d0d9f;
+  --palette-indigo-9:  #090983;
+  --palette-indigo-10: #05054d;
+  --palette-indigo-transparent: rgba(54,54,245,0.12);
+
+  /* purple */
+  --palette-purple-0:  #f0e9fd;
+  --palette-purple-1:  #dbcbfb;
+  --palette-purple-2:  #c9acfa;
+  --palette-purple-3:  #ae83f7;
+  --palette-purple-4:  #904fff;
+  --palette-purple-5:  #7729ff;
+  --palette-purple-6:  #5e16db;
+  --palette-purple-7:  #4600bf;
+  --palette-purple-8:  #360095;
+  --palette-purple-9:  #27006a;
+  --palette-purple-10: #170040;
+  --palette-purple-transparent: rgba(119,41,255,0.12);
+
+  /* magenta */
+  --palette-magenta-0:  #ffe8f8;
+  --palette-magenta-1:  #ffc9ed;
+  --palette-magenta-2:  #ff8fda;
+  --palette-magenta-3:  #f764c6;
+  --palette-magenta-4:  #ee41b4;
+  --palette-magenta-5:  #e525a5;
+  --palette-magenta-6:  #c5228f;
+  --palette-magenta-7:  #a52079;
+  --palette-magenta-8:  #851f63;
+  --palette-magenta-9:  #651c4d;
+  --palette-magenta-10: #451735;
+  --palette-magenta-transparent: rgba(229,37,165,0.12);
+
+  /* pink */
+  --palette-pink-0:  #ffe8f0;
+  --palette-pink-1:  #ffc7db;
+  --palette-pink-2:  #ff94b9;
+  --palette-pink-3:  #ff6398;
+  --palette-pink-4:  #fb4280;
+  --palette-pink-5:  #f5276c;
+  --palette-pink-6:  #d81858;
+  --palette-pink-7:  #bc0f48;
+  --palette-pink-8:  #9f0a3c;
+  --palette-pink-9:  #78062c;
+  --palette-pink-10: #5c0522;
+  --palette-pink-transparent: rgba(245,39,108,0.06);
+
+  /* lime */
+  --palette-lime-0:  #f8ffe8;
+  --palette-lime-1:  #f0fecd;
+  --palette-lime-2:  #e0fda4;
+  --palette-lime-3:  #ccf879;
+  --palette-lime-4:  #b3ee55;
+  --palette-lime-5:  #96d443;
+  --palette-lime-6:  #74a933;
+  --palette-lime-7:  #598127;
+  --palette-lime-8:  #476520;
+  --palette-lime-9:  #3c551d;
+  --palette-lime-10: #1e2f0a;
+  --palette-lime-transparent: rgba(150,212,67,0.12);
+}
+
+/* -------------------------------------------------------------
+ * Layer 2: Semantic  语义色 - Light（默认）
+ * 由 Figma Semantic Collection / Mode: Light 解析得到
+ * ------------------------------------------------------------- */
+:root,
+:root[data-theme="light"] {
+  /* text */
+  --color-text-primary:            var(--palette-cold-gray-9);   /* #1f2229 */
+  --color-text-secondary:          var(--palette-cold-gray-6);   /* #828997 */
+  --color-text-tertiary:           var(--palette-cold-gray-4);   /* #b4bac5 */
+  --color-text-primary-inverse:    var(--palette-white-9);
+  --color-text-secondary-inverse:  var(--palette-white-6);
+  --color-text-tertiary-inverse:   var(--palette-white-4);
+  --color-text-warning:            var(--palette-red-5);
+  --color-text-link:               var(--palette-blue-5);
+  --color-text-price:              var(--palette-orange-5);
+  --color-text-positive:           var(--palette-green-6);
+  --color-text-disabled:           var(--palette-cold-gray-3);
+  --color-text-disabled-inverse:   var(--palette-white-8);
+  --color-text-disabled-warning:   var(--palette-red-transparent-1);
+
+  /* bg */
+  --color-bg-page-primary:         var(--palette-white-10);      /* 关键修正：Light 主页面=白 */
+  --color-bg-page-secondary:       var(--palette-cold-gray-0);
+  --color-bg-container-primary:    var(--palette-white-10);
+  --color-bg-container-secondary:  var(--palette-cold-gray-0);
+  --color-bg-card-primary:         var(--palette-white-10);
+  --color-bg-card-secondary:       var(--palette-cold-gray-0);
+  --color-bg-item-primary:         var(--palette-cold-gray-9);   /* 关键修正：Light 是深色（用于强调按钮）*/
+  --color-bg-item-secondary:       var(--palette-cold-gray-2);
+  --color-bg-item-tertiary:        var(--palette-cold-gray-1);
+  --color-bg-item-quaternary:      var(--palette-cold-gray-0);
+  --color-bg-item-disabled:        var(--palette-cold-gray-2);
+  --color-bg-item-elevated:        var(--palette-white-10);
+  --color-bg-overlay:              var(--palette-black-7);       /* 黑 70% */
+  --color-bg-transparent:          var(--palette-white-5);
+  --color-bg-warning:              var(--palette-red-5);
+  --color-bg-warning-transparent:  var(--palette-red-transparent-0);
+  --color-bg-link:                 var(--palette-blue-transparent);
+  --color-bg-price:                var(--palette-orange-5);
+  --color-bg-price-transparent:    var(--palette-orange-transparent);
+  --color-bg-positive:             var(--palette-green-transparent);
+
+  /* border */
+  --color-border-primary:          var(--palette-cold-gray-3);
+  --color-border-secondary:        var(--palette-cold-gray-2);
+  --color-border-tertiary:         var(--palette-cold-gray-1);
+  --color-border-active:           var(--palette-cold-gray-9);
+  --color-border-disabled:         var(--palette-cold-gray-2);
+  --color-border-elevated:         var(--palette-white-10);
+  --color-border-warning:          var(--palette-red-5);
+  --color-border-link:             var(--palette-blue-5);
+  --color-border-price:            var(--palette-orange-5);
+  --color-border-positive:         var(--palette-green-6);
+}
+
+/* -------------------------------------------------------------
+ * Layer 2: Semantic  语义色 - Dark
+ * Figma Mode: Dark；未单独定义的项继承 Light 的引用（fallback 含义参 mapping.md）
+ * ------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  /* text */
+  --color-text-primary:            var(--palette-white-9);
+  --color-text-secondary:          var(--palette-white-6);
+  --color-text-tertiary:           var(--palette-white-4);
+  --color-text-primary-inverse:    var(--palette-cold-gray-9);
+  --color-text-secondary-inverse:  var(--palette-cold-gray-6);
+  --color-text-tertiary-inverse:   var(--palette-cold-gray-4);
+  --color-text-warning:            var(--palette-red-4);
+  --color-text-link:               var(--palette-blue-4);
+  --color-text-price:              var(--palette-orange-4);
+  --color-text-positive:           var(--palette-green-5);
+
+  /* bg */
+  --color-bg-page-primary:         var(--palette-cold-gray-10);
+  --color-bg-page-secondary:       var(--palette-cold-gray-9);
+  --color-bg-container-primary:    var(--palette-cold-gray-9);
+  --color-bg-card-primary:         var(--palette-cold-gray-9);
+  --color-bg-card-secondary:       var(--palette-cold-gray-8);
+  --color-bg-item-primary:         var(--palette-white-9);       /* 关键修正：Dark item 是亮色 */
+  --color-bg-warning:              var(--palette-red-5);
+  --color-bg-warning-transparent:  var(--palette-red-transparent-0);
+  --color-bg-link:                 var(--palette-blue-transparent);
+  --color-bg-price:                var(--palette-orange-4);
+  --color-bg-price-transparent:    var(--palette-orange-transparent);
+  --color-bg-positive:             var(--palette-green-transparent);
+  --color-bg-overlay:              var(--palette-black-7);
+
+  /* border */
+  --color-border-primary:          var(--palette-white-3);
+  --color-border-secondary:        var(--palette-white-2);
+  --color-border-tertiary:         var(--palette-white-1);
+  --color-border-active:           var(--palette-white-9);
+  --color-border-warning:          var(--palette-red-4);
+  --color-border-link:             var(--palette-blue-4);
+  --color-border-price:            var(--palette-orange-4);
+  --color-border-positive:         var(--palette-green-5);
+}
+
+/* -------------------------------------------------------------
+ * Layer 3: Spacing  间距尺度
+ * 来自 Figma Collection: 📐 Spacing
+ * 单位 px，6 的倍数为主（细线 3 与圆角 full 999 为特例）
+ * ------------------------------------------------------------- */
+:root {
+  --space-none:     0px;
+  --space-hairline: 3px;
+  --space-xxs:      6px;
+  --space-xs:       12px;
+  --space-sm:       18px;
+  --space-md:       24px;
+  --space-lg:       30px;
+  --space-xl:       36px;
+  --space-2xl:      42px;
+  --space-3xl:      48px;
+  --space-4xl:      54px;
+  --space-5xl:      60px;
+  --space-6xl:      66px;
+  --space-7xl:      72px;
+  --space-8xl:      78px;
+  --space-9xl:      84px;
+  --space-10xl:     90px;
+  --space-11xl:     96px;
+  --space-12xl:     114px;
+  --space-13xl:     126px;
+  --space-14xl:     162px;
+  --space-15xl:     192px;
+  --space-16xl:     240px;
+  --space-full:     999px; /* 用于胶囊圆角 */
+}

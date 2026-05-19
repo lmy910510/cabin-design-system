@@ -1,0 +1,84 @@
+<!--
+  list-content · 静态 HTML 片段示例
+  使用方式：在页面 <head> 引入 design-system 三件套 + list-content.css，
+  Show Tag = true 的形态还需要额外引入 ../tag/tag.css。
+  即可直接复制下面任一片段进 body。
+-->
+
+<!-- ============== 1. Type = Title（标题 + Tag + Badge） ============== -->
+
+<!-- 1a. 仅标题 -->
+<div class="list-content list-content--title">
+  <div class="list-content__title-row">
+    <div class="list-content__title-group">
+      <span class="list-content__title">标题文本</span>
+    </div>
+  </div>
+</div>
+
+<!-- 1b. 标题 + Tag（内嵌独立 .tag 组件，需引入 tag.css） -->
+<div class="list-content list-content--title">
+  <div class="list-content__title-row">
+    <div class="list-content__title-group">
+      <span class="list-content__title">标题文本</span>
+    </div>
+    <span class="tag tag--large tag--tinted">标签文案</span>
+  </div>
+</div>
+
+<!-- 1c. 标题 + Badge -->
+<div class="list-content list-content--title">
+  <div class="list-content__title-row">
+    <div class="list-content__title-group">
+      <span class="list-content__title">标题文本</span>
+      <span class="list-content__badge" aria-hidden="true"></span>
+    </div>
+  </div>
+</div>
+
+<!-- 1d. 标题 + Badge + Tag（满配） -->
+<div class="list-content list-content--title">
+  <div class="list-content__title-row">
+    <div class="list-content__title-group">
+      <span class="list-content__title">标题文本</span>
+      <span class="list-content__badge" aria-hidden="true"></span>
+    </div>
+    <span class="tag tag--large tag--tinted">标签文案</span>
+  </div>
+</div>
+
+
+<!-- ============== 2. Type = Subtitle（标题 + Tag + Badge + 解释信息） ============== -->
+
+<!-- 2a. 标题 + 解释信息 -->
+<div class="list-content list-content--subtitle">
+  <div class="list-content__title-row">
+    <div class="list-content__title-group">
+      <span class="list-content__title">标题文本</span>
+    </div>
+  </div>
+  <p class="list-content__description">这里是解释信息，描述当前条目的额外说明，可以多行换行展示。</p>
+</div>
+
+<!-- 2b. 标题 + Tag + 解释信息 -->
+<div class="list-content list-content--subtitle">
+  <div class="list-content__title-row">
+    <div class="list-content__title-group">
+      <span class="list-content__title">标题文本</span>
+    </div>
+    <span class="tag tag--large tag--tinted">标签文案</span>
+  </div>
+  <p class="list-content__description">这里是解释信息，描述当前条目的额外说明，可以多行换行展示。</p>
+</div>
+
+<!-- 2c. 标题 + Badge + Tag + 解释信息（满配） -->
+<div class="list-content list-content--subtitle">
+  <div class="list-content__title-row">
+    <div class="list-content__title-group">
+      <span class="list-content__title">标题文本</span>
+      <span class="list-content__badge" aria-hidden="true"></span>
+    </div>
+    <span class="tag tag--large tag--tinted">标签文案</span>
+  </div>
+  <p class="list-content__description">这里是解释信息，描述当前条目的额外说明，可以多行换行展示。</p>
+</div>

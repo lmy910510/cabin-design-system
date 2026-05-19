@@ -1,0 +1,107 @@
+/* =============================================================
+ * Component: Switch  (开关)
+ * Figma source: 🤖座舱组件库-AI版 / Switch  (Component Set 257:5522)
+ *
+ * 1:1 映射自 Figma 真实测量（通过 figma_execute 直读）：
+ *   外尺寸：108 × 60，圆角 30
+ *   thumb：48 × 48 圆形（Figma 是 VECTOR），距 track 上下/左右各 6px
+ *   动画：原 Figma 静态图无动画，CSS 端补 160ms ease 增强交互可读
+ *
+ * 4 个 variants（Figma variantProperties: On × Disabled）：
+ *   On=true,  Disabled=false  → track: bg/item_primary（深 #1f2229）   thumb: 白    位置: 右
+ *   On=true,  Disabled=true   → track: bg/item_tertiary  (#eaedf2)     thumb: bg/item_disabled (#dee2e8)  位置: 右
+ *   On=false, Disabled=false  → track: bg/item_tertiary  (#eaedf2)     thumb: 白 + shadow/light            位置: 左
+ *   On=false, Disabled=true   → track: bg/item_tertiary  (#eaedf2)     thumb: bg/item_disabled (#dee2e8)  位置: 左
+ *
+ * 用法：
+ *   <label class="switch">
+ *     <input type="checkbox" checked />
+ *     <span class="switch-track"></span>
+ *     <span class="switch-thumb"></span>
+ *   </label>
+ *
+ *   disabled：在 <input> 上加 disabled 即可，CSS 自动处理 4 种状态。
+ * ============================================================= */
+
+.switch {
+  /* 严格 1:1：108 × 60 */
+  position: relative;
+  display: inline-block;
+  width: 108px;
+  height: 60px;
+  flex: none;            /* 防止在 flex 容器中被拉伸/压缩；用 none 而非 0 0 108px，避免 column flex 下把 basis 当成 height */
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 隐藏原生 input，但保留可聚焦/可点击 */
+.switch > input[type="checkbox"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+}
+
+/* track：圆角 30 = 高度的一半，纯胶囊 */
+.switch .switch-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 30px;
+  background: var(--color-bg-item-tertiary);  /* 默认 Off 态 */
+  transition: background-color 160ms ease;
+  pointer-events: none;
+}
+
+/* thumb：48 × 48 圆，距 track 上下/左右 6px */
+.switch .switch-thumb {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--palette-white-10);
+  box-shadow: var(--shadow-light);  /* Off 态的白 thumb 带 light 阴影 */
+  transition: transform 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+  pointer-events: none;
+}
+
+/* On=true 状态 */
+.switch > input[type="checkbox"]:checked ~ .switch-track {
+  background: var(--color-bg-item-primary);   /* Light 下是 #1f2229；Dark 下是 white-9 */
+}
+.switch > input[type="checkbox"]:checked ~ .switch-thumb {
+  /* 横向位移：track 宽 108 - thumb 宽 48 - 左右各 6 边距 = 48px */
+  transform: translateX(48px);
+  /* On=true 时白 thumb 在深底上不需要阴影（与 Figma 一致） */
+  box-shadow: none;
+}
+
+/* Disabled 状态（On 任意值）——Figma 真值：track 一律是 item_tertiary，thumb 一律是 item_disabled，无阴影 */
+.switch > input[type="checkbox"]:disabled ~ .switch-track {
+  background: var(--color-bg-item-tertiary);
+}
+.switch > input[type="checkbox"]:disabled ~ .switch-thumb {
+  background: var(--color-bg-item-disabled);
+  box-shadow: none;
+}
+
+/* Disabled 优先级高于 On=true（Figma 在 disabled 时不显示主色 track） */
+.switch > input[type="checkbox"]:disabled:checked ~ .switch-track {
+  background: var(--color-bg-item-tertiary);
+}
+
+/* 鼠标 / 触摸 hover 时的轻量反馈（Figma 没定义，CSS 端按 HMI 习惯补） */
+.switch:hover > input[type="checkbox"]:not(:disabled) ~ .switch-track {
+  filter: brightness(0.97);
+}
+
+/* 键盘可访问性：input 聚焦时给 track 加 outline（不破坏 Figma 视觉） */
+.switch > input[type="checkbox"]:focus-visible ~ .switch-track {
+  outline: 3px solid var(--color-border-active);
+  outline-offset: 3px;
+}

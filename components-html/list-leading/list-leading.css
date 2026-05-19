@@ -1,0 +1,97 @@
+/* =============================================================
+ * Component: list-leading  (列表行左侧装饰槽)
+ *
+ * 这是 HTML 端对 list 行首槽的抽象化封装。Figma 当前 `list` 主组件
+ * 把左侧 icon 直接画在了 `list` 内部（60×60 线形 icon），尚未拆成
+ * 独立 component set；HTML 端把它独立出来，与 list-content / list-action
+ * 同等地位 —— "左/中/右"三个独立槽。后续 Figma 补充 component set 后，
+ * 我们这里的 type 维度直接对齐即可，无需重做结构。
+ *
+ * Type（当前支持）：
+ *   Type=none      → 0×0 占位（不渲染节点；纯文字行使用，整行不留位）
+ *   Type=icon      → 60×60 容器，承载 36×36 线形 icon（线宽 ~3）
+ *   Type=checkbox  → 60×60 占位容器，内嵌独立 .checkbox 组件
+ *                    (不再写勾/方框样式，视觉真源在 checkbox.css)
+ *   Type=radio     → 60×60 占位容器，内嵌独立 .radio 组件
+ *                    (不再写外圆/圆点样式，视觉真源在 radio.css)
+ *
+ * 后续可扩展：avatar / badge-dot 等，结构相同（外层 list-leading + 内嵌真组件）。
+ *
+ * 用法：
+ *   <!-- icon -->
+ *   <span class="list-leading list-leading--icon">
+ *     <svg viewBox="0 0 36 36" fill="none">...</svg>
+ *   </span>
+ *
+ *   <!-- checkbox（内嵌 .checkbox，需同时 link checkbox.css） -->
+ *   <span class="list-leading list-leading--checkbox">
+ *     <label class="checkbox">
+ *       <input type="checkbox" />
+ *       <span class="checkbox__box" aria-hidden="true">
+ *         <svg viewBox="0 0 36 36" fill="none">
+ *           <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+ *                 stroke-linecap="round" stroke-linejoin="round"/>
+ *         </svg>
+ *       </span>
+ *     </label>
+ *   </span>
+ *
+ *   <!-- none：直接不渲染节点。如果想保留位置占位，给一个 list-leading--none 即可（默认 0 宽） -->
+ * ============================================================= */
+
+
+/* ---------- 共享外容器 ---------- */
+
+.list-leading {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  /* 自身不带背景 / 圆角 / padding；具体尺寸由 type 决定 */
+  background: transparent;
+  padding: 0;
+  color: var(--color-text-primary);
+}
+
+
+/* ---------- Type = none（占位，0 宽） ---------- */
+
+.list-leading--none {
+  width: 0;
+  height: 0;
+  /* 默认建议直接不渲染 .list-leading 节点；保留 class 仅用于 DOM 占位场景 */
+}
+
+
+/* ---------- Type = icon（60×60 容器，36×36 线形 icon） ---------- */
+
+.list-leading--icon {
+  width: 60px;
+  height: 60px;
+}
+
+.list-leading--icon svg {
+  width: 36px;
+  height: 36px;
+  display: block;
+}
+
+
+/* ---------- Type = checkbox ---------- */
+
+/* 仅提供 60×60 占位 + 居中。视觉/状态全部由内嵌 .checkbox 承担。
+   要求页面同时 <link rel="stylesheet" href="../checkbox/checkbox.css" />。 */
+.list-leading--checkbox {
+  width: 60px;
+  height: 60px;
+}
+
+
+/* ---------- Type = radio ---------- */
+
+/* 仅提供 60×60 占位 + 居中。视觉/状态全部由内嵌 .radio 承担。
+   要求页面同时 <link rel="stylesheet" href="../radio/radio.css" />。 */
+.list-leading--radio {
+  width: 60px;
+  height: 60px;
+}

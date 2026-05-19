@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>tag · Preview</title>
+
+<!-- design-system -->
+<link rel="stylesheet" href="../../design-system/tokens.css" />
+<link rel="stylesheet" href="../../design-system/shadows.css" />
+<link rel="stylesheet" href="../../design-system/text-styles.css" />
+
+<!-- 本组件 -->
+<link rel="stylesheet" href="./tag.css" />
+
+<!-- 注入统一图标 sprite（同文档锚点，绕开 file:// 跨文件 use 限制）-->
+<script src="../icon/icon-sprite-inline.js"></script>
+
+<!-- 图标系统（sprite + currentColor） -->
+<link rel="stylesheet" href="../icon/icon.css" />
+
+<style>
+  body {
+    margin: 0;
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+    padding: 48px;
+  }
+  .theme-toggle {
+    position: fixed;
+    top: 24px; right: 24px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 2px solid var(--color-border-disabled);
+    background: var(--color-bg-item-tertiary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+  }
+  h2 {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--color-text-primary);
+  }
+  .group-desc {
+    font-size: 22px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+  section { margin-bottom: 64px; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 16px 32px;
+    align-items: start;
+  }
+  .case-grid > .label {
+    color: var(--color-text-secondary);
+    font-size: 22px;
+    padding-top: 12px;
+  }
+  .case-grid > .demo {
+    background: var(--color-bg-item-tertiary);
+    border-radius: 24px;
+    padding: 24px 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+  }
+
+  /* 真实场景：列表行 mock */
+  .row-mock {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    background: var(--color-bg-item-tertiary);
+    padding: 30px 36px;
+    border-radius: 24px;
+  }
+  .row-mock__title {
+    font-size: 32px;
+    line-height: 32px;
+    color: var(--color-text-primary);
+    flex: none;
+  }
+  .row-mock__spacer { flex: 1; }
+  .stack { display: flex; flex-direction: column; gap: 16px; max-width: 920px; }
+</style>
+</head>
+<body data-theme="light">
+
+<button class="theme-toggle" id="themeToggle">Toggle Light / Dark</button>
+
+<h1 style="font-size:48px;font-weight:600;margin:0 0 8px;">tag</h1>
+<p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
+  6 个 variant（2 size × 3 type）+ Show icon · 1:1 映射 Figma component set <code>277:116</code>
+</p>
+
+
+<!-- ============ 1. Size = Large ============ -->
+<section>
+  <h2>1. Size = Large（高 36）</h2>
+  <p class="group-desc">常规场景使用。</p>
+
+  <div class="case-grid">
+    <div class="label">Filled · 强调</div>
+    <div class="demo">
+      <span class="tag tag--large tag--filled">推荐</span>
+      <span class="tag tag--large tag--filled">热销</span>
+      <span class="tag tag--large tag--filled">限时</span>
+    </div>
+
+    <div class="label">Outlined · 次要</div>
+    <div class="demo">
+      <span class="tag tag--large tag--outlined">全部</span>
+      <span class="tag tag--large tag--outlined">已下架</span>
+      <span class="tag tag--large tag--outlined">最近七天</span>
+    </div>
+
+    <div class="label">Tinted · 柔和（默认）</div>
+    <div class="demo">
+      <span class="tag tag--large tag--tinted">5G</span>
+      <span class="tag tag--large tag--tinted">自动</span>
+      <span class="tag tag--large tag--tinted">已连接</span>
+    </div>
+
+    <div class="label">省略修饰类（= Large + Tinted）</div>
+    <div class="demo">
+      <span class="tag">标签文案</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 2. Size = Medium ============ -->
+<section>
+  <h2>2. Size = Medium（高 30）</h2>
+  <p class="group-desc">紧凑场景使用，例如多 tag 密集排布。</p>
+
+  <div class="case-grid">
+    <div class="label">Filled</div>
+    <div class="demo">
+      <span class="tag tag--medium tag--filled">推荐</span>
+      <span class="tag tag--medium tag--filled">热销</span>
+    </div>
+
+    <div class="label">Outlined</div>
+    <div class="demo">
+      <span class="tag tag--medium tag--outlined">全部</span>
+      <span class="tag tag--medium tag--outlined">已下架</span>
+    </div>
+
+    <div class="label">Tinted</div>
+    <div class="demo">
+      <span class="tag tag--medium tag--tinted">5G</span>
+      <span class="tag tag--medium tag--tinted">自动</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 3. Show icon = true ============ -->
+<section>
+  <h2>3. Show icon = true（前置 24×24 图标）</h2>
+  <p class="group-desc">icon 颜色 = currentColor，自动跟随 type 文字色。</p>
+
+  <div class="case-grid">
+    <div class="label">Large · Filled + 星形</div>
+    <div class="demo">
+      <span class="tag tag--large tag--filled">
+        <svg class="tag__icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+          <use href="#icon/star--fill" />
+        </svg>
+        <span class="tag__label">推荐</span>
+      </span>
+    </div>
+
+    <div class="label">Large · Tinted + 星形</div>
+    <div class="demo">
+      <span class="tag tag--large tag--tinted">
+        <svg class="tag__icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+          <use href="#icon/star--fill" />
+        </svg>
+        <span class="tag__label">收藏</span>
+      </span>
+    </div>
+
+    <div class="label">Medium · Outlined + 星形</div>
+    <div class="demo">
+      <span class="tag tag--medium tag--outlined">
+        <svg class="tag__icon" viewBox="0 0 48 48" fill="currentColor" aria-hidden="true">
+          <use href="#icon/star--fill" />
+        </svg>
+        <span class="tag__label">筛选</span>
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 4. 真实场景：嵌入 list 行 ============ -->
+<section>
+  <h2>4. 真实场景：嵌入 list 行</h2>
+  <p class="group-desc">在标题右侧作为属性标记，与 list-content 的 Show Tag = true 等价。</p>
+
+  <div class="stack">
+    <div class="row-mock">
+      <span class="row-mock__title">WLAN</span>
+      <span class="tag tag--large tag--tinted">5G</span>
+      <span class="row-mock__spacer"></span>
+    </div>
+    <div class="row-mock">
+      <span class="row-mock__title">移动数据</span>
+      <span class="tag tag--large tag--filled">无限</span>
+      <span class="row-mock__spacer"></span>
+    </div>
+    <div class="row-mock">
+      <span class="row-mock__title">蓝牙耳机</span>
+      <span class="tag tag--large tag--outlined">已配对</span>
+      <span class="row-mock__spacer"></span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+  document.documentElement.setAttribute('data-theme', 'light');
+</script>
+</body>
+</html>

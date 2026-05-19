@@ -1,0 +1,148 @@
+/* =============================================================
+ * Component: list-content  (列表行中槽内容)
+ * Figma source: 🤖座舱组件库-AI版 / list-content  (Component Set 388:17491)
+ *
+ * 1:1 映射自 Figma 真实测量（通过 figma_execute 直读）：
+ *   外容器：垂直布局，hug 内容；自身无背景、无圆角、无内边距
+ *   两个 variant（Figma variantProperties: Type）：
+ *     Type=Title    → gap = 18（spacing-18），仅 title-row（hug）
+ *     Type=Subtitle → gap = 12（spacing-12），title-row + description（28/36）
+ *
+ *   title-row：水平布局，gap = 12，align-items=center
+ *     ├─ title-group（水平 hbox / gap=0 / align=start / hug）
+ *     │   ├─ title       32/32 Medium，色 text/primary
+ *     │   └─ Badge       12×12 圆点 #ff293b（red-5）—— 由 boolean Show Badge 控制可见
+ *     └─ Tag             Tag 组件 Large/Tinted（高 36 / 内边距 6 / 圆角 6）
+ *                        —— 由 boolean Show Tag 控制可见。
+ *
+ *   description（仅 Subtitle 显示）：宽度 fill，28/36 Regular，色 text/secondary
+ *
+ * 与 Figma boolean 属性对应：
+ *   Show Badge#388:311 → 是否渲染 .list-content__badge
+ *   Show Tag#388:314   → 是否渲染 .list-content__tag
+ *
+ * 用法：
+ *   <!-- Title 形态：标题 + Badge + Tag -->
+ *   <div class="list-content list-content--title">
+ *     <div class="list-content__title-row">
+ *       <div class="list-content__title-group">
+ *         <span class="list-content__title">标题文本</span>
+ *         <span class="list-content__badge" aria-hidden="true"></span>
+ *       </div>
+ *       <span class="list-content__tag">标签文案</span>
+ *     </div>
+ *   </div>
+ *
+ *   <!-- Subtitle 形态：标题 + Badge + Tag + 解释信息 -->
+ *   <div class="list-content list-content--subtitle">
+ *     <div class="list-content__title-row">
+ *       <div class="list-content__title-group">
+ *         <span class="list-content__title">标题文本</span>
+ *         <span class="list-content__badge" aria-hidden="true"></span>
+ *       </div>
+ *       <span class="list-content__tag">标签文案</span>
+ *     </div>
+ *     <p class="list-content__description">解释信息解释信息解释信息</p>
+ *   </div>
+ *
+ *   要隐藏 Badge / Tag 直接删除对应节点即可（与 Figma boolean=false 等价）。
+ * ============================================================= */
+
+
+/* ---------- 外容器 ---------- */
+
+.list-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;          /* Figma counterAxisAlignItems = MIN */
+  padding: 0;
+  background: transparent;
+  /* 高度由内部 hug；宽度让父级（list 行）控制 fill。 */
+  width: 100%;
+  min-width: 0;                     /* 允许 description 在窄容器里换行/收缩 */
+}
+
+.list-content--title    { gap: 18px; }   /* spacing-18 */
+.list-content--subtitle { gap: 12px; }   /* spacing-12 */
+
+
+/* ---------- title-row ---------- */
+
+.list-content__title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;                        /* spacing-12 */
+  /* hug：宽度跟随内容 */
+}
+
+.list-content__title-group {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;          /* Figma counterAxisAlignItems = MIN，让红点贴右上角 */
+  gap: 0;
+  /* hug */
+}
+
+.list-content__title {
+  font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 32px;
+  line-height: 32px;
+  font-weight: 500;                 /* Medium */
+  color: var(--color-text-primary); /* #1f2229 */
+  white-space: nowrap;
+}
+
+/* Badge：12×12 红圆点（Figma badge type=circle, fill=red-5 #ff293b） */
+.list-content__badge {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background: var(--palette-red-5); /* 与 Figma badge 颜色严格一致 */
+  flex: none;
+  /* 视觉对齐：Figma 中红点位于标题右上角，与 title 顶端对齐
+     title-group 的 align-items=flex-start 已经能让 badge 贴顶。
+     但 32px 行高里红点显得偏低 —— 用一点点上 margin 微调到顶部 4px 处。 */
+  margin-top: 4px;
+}
+
+/* Tag：视觉真源已迁至独立 .tag 组件（components-html/tag/tag.css）
+   list-content 不再写 tag 视觉规则，调用方需同时引入 ../tag/tag.css，
+   并在标题行右侧直接放 <span class="tag tag--large tag--tinted">…</span>。
+
+   兼容旧 class：保留 .list-content__tag 作为别名，等价于 .tag.tag--large.tag--tinted，
+   方便存量 HTML 渐进迁移。新代码请直接用 .tag。 */
+.list-content__tag {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 36px;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: var(--color-bg-item-quaternary);  /* 与 Figma Tag/Tinted 真值一致，dark 模式自动反相 */
+  color: var(--color-text-primary);
+  font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: 400;
+  flex: none;
+  white-space: nowrap;
+}
+
+
+/* ---------- description（仅 Subtitle 出现） ---------- */
+
+.list-content__description {
+  /* Figma layoutSizingHorizontal = FILL → 占据整行宽度 */
+  width: 100%;
+  margin: 0;
+  font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 400;
+  color: var(--color-text-secondary); /* #828997 */
+  word-break: break-word;
+}

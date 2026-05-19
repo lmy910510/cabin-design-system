@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>list-content · Preview</title>
+
+<!-- design-system -->
+<link rel="stylesheet" href="../../design-system/tokens.css" />
+<link rel="stylesheet" href="../../design-system/shadows.css" />
+<link rel="stylesheet" href="../../design-system/text-styles.css" />
+
+<!-- 本组件 + 内嵌的 tag -->
+<link rel="stylesheet" href="./list-content.css" />
+
+<!-- 注入统一图标 sprite（同文档锚点，绕开 file:// 跨文件 use 限制）-->
+<script src="../icon/icon-sprite-inline.js"></script>
+<link rel="stylesheet" href="../tag/tag.css" />
+<link rel="stylesheet" href="../icon/icon.css" />
+
+<style>
+  body {
+    margin: 0;
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+    padding: 48px;
+  }
+  .theme-toggle {
+    position: fixed;
+    top: 24px; right: 24px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 2px solid var(--color-border-disabled);
+    background: var(--color-bg-item-tertiary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+  }
+  h2 {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--color-text-primary);
+  }
+  .group-desc {
+    font-size: 22px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+  section { margin-bottom: 64px; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 16px 32px;
+    align-items: start;
+  }
+  .case-grid > .label {
+    color: var(--color-text-secondary);
+    font-size: 22px;
+    padding-top: 8px;
+  }
+  .case-grid > .demo {
+    background: var(--color-bg-item-tertiary);
+    border-radius: 24px;
+    padding: 30px 36px;
+    min-height: 60px;
+  }
+
+  /* 真实场景：模拟 list-row 上下文 */
+  .row-mock {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    background: var(--color-bg-item-tertiary);
+    padding: 30px 36px;
+    border-radius: 24px;
+  }
+  .row-mock__icon {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    background: var(--color-bg-item-tertiary);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-text-primary);
+    flex: none;
+  }
+  .row-mock__icon svg { width: 36px; height: 36px; }
+  .row-mock > .list-content { flex: 1; min-width: 0; }
+  .row-mock__action {
+    color: var(--color-text-secondary);
+    font-size: 28px; line-height: 28px;
+    display: inline-flex; align-items: center; gap: 12px;
+    flex: none;
+  }
+  .row-mock__action svg {
+    width: 42px; height: 42px;
+  }
+  .stack { display: flex; flex-direction: column; gap: 16px; }
+</style>
+</head>
+<body data-theme="light">
+
+<button class="theme-toggle" id="themeToggle">Toggle Light / Dark</button>
+
+<h1 style="font-size:48px;font-weight:600;margin:0 0 8px;">list-content</h1>
+<p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
+  2 个 variant × 2 个布尔位 · 1:1 映射 Figma component set <code>388:17491</code>
+</p>
+
+
+<!-- ============ 1. Type = Title ============ -->
+<section>
+  <h2>1. Type = Title（gap = 18，仅 title-row）</h2>
+  <p class="group-desc">单行标题项；通过 Show Badge / Show Tag 控制是否渲染红点和标签。</p>
+
+  <div class="case-grid">
+    <div class="label">仅标题</div>
+    <div class="demo">
+      <div class="list-content list-content--title">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">标题文本</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label">标题 + Tag</div>
+    <div class="demo">
+      <div class="list-content list-content--title">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">标题文本</span>
+          </div>
+          <span class="tag tag--large tag--tinted">标签文案</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="label">标题 + Badge</div>
+    <div class="demo">
+      <div class="list-content list-content--title">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">标题文本</span>
+            <span class="list-content__badge" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label">标题 + Badge + Tag（满配）</div>
+    <div class="demo">
+      <div class="list-content list-content--title">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">标题文本</span>
+            <span class="list-content__badge" aria-hidden="true"></span>
+          </div>
+          <span class="tag tag--large tag--tinted">标签文案</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 2. Type = Subtitle ============ -->
+<section>
+  <h2>2. Type = Subtitle（gap = 12，title-row + description）</h2>
+  <p class="group-desc">带解释信息的项；description 占满宽度，可换行。</p>
+
+  <div class="case-grid">
+    <div class="label">标题 + 解释信息</div>
+    <div class="demo">
+      <div class="list-content list-content--subtitle">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">标题文本</span>
+          </div>
+        </div>
+        <p class="list-content__description">这里是解释信息，描述当前条目的额外说明。</p>
+      </div>
+    </div>
+
+    <div class="label">标题 + Tag + 解释信息</div>
+    <div class="demo">
+      <div class="list-content list-content--subtitle">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">标题文本</span>
+          </div>
+          <span class="tag tag--large tag--tinted">标签文案</span>
+        </div>
+        <p class="list-content__description">这里是解释信息，描述当前条目的额外说明。</p>
+      </div>
+    </div>
+
+    <div class="label">标题 + Badge + Tag + 解释信息（满配）</div>
+    <div class="demo">
+      <div class="list-content list-content--subtitle">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">标题文本</span>
+            <span class="list-content__badge" aria-hidden="true"></span>
+          </div>
+          <span class="tag tag--large tag--tinted">标签文案</span>
+        </div>
+        <p class="list-content__description">这里是解释信息解释信息，描述当前条目的额外说明，可以多行换行展示，超出后自然换行。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 3. 真实场景：嵌入 list-row 中槽 ============ -->
+<section>
+  <h2>3. 真实场景：嵌入 list-row 中槽</h2>
+  <p class="group-desc">中槽 flex:1 占据剩余宽度；左 icon 60×60，右 action 简化模拟。</p>
+
+  <div class="stack" style="max-width:920px;">
+    <!-- Title 行 -->
+    <div class="row-mock">
+      <div class="row-mock__icon">
+        <svg viewBox="0 0 48 48" fill="currentColor"><use href="#icon/wifi--fill" /></svg>
+      </div>
+      <div class="list-content list-content--title">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">WLAN</span>
+            <span class="list-content__badge" aria-hidden="true"></span>
+          </div>
+          <span class="tag tag--large tag--tinted">5G</span>
+        </div>
+      </div>
+      <span class="row-mock__action">
+        已连接
+        <svg fill="currentColor"><use href="#icon/enter--line" /></svg>
+      </span>
+    </div>
+
+    <!-- Subtitle 行 -->
+    <div class="row-mock">
+      <div class="row-mock__icon">
+        <svg viewBox="0 0 48 48" fill="currentColor"><use href="#icon/setting--fill" /></svg>
+      </div>
+      <div class="list-content list-content--subtitle">
+        <div class="list-content__title-row">
+          <div class="list-content__title-group">
+            <span class="list-content__title">通用</span>
+          </div>
+        </div>
+        <p class="list-content__description">系统语言、版本、关于本机</p>
+      </div>
+      <span class="row-mock__action">
+        <svg fill="currentColor"><use href="#icon/enter--line" /></svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+<script>
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+  document.documentElement.setAttribute('data-theme', 'light');
+</script>
+</body>
+</html>

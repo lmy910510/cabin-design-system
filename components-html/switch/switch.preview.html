@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Switch · 预览（Figma 1:1）</title>
+  <link rel="stylesheet" href="../../design-system/tokens.css" />
+  <link rel="stylesheet" href="../../design-system/shadows.css" />
+  <link rel="stylesheet" href="../../design-system/text-styles.css" />
+  <link rel="stylesheet" href="./switch.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 60px 72px;
+      background: var(--color-bg-page-primary);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-cn);
+      min-height: 100vh;
+    }
+    h1 {
+      margin: 0 0 12px;
+      font-size: 48px;
+      line-height: 54px;
+      font-weight: 700;
+    }
+    .subtitle {
+      margin: 0 0 60px;
+      color: var(--color-text-secondary);
+      font-size: 28px;
+      line-height: 32px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+    .toolbar button {
+      padding: 0 24px;
+      height: 60px;
+      border: 1px solid var(--color-border-primary);
+      border-radius: 30px;
+      background: var(--color-bg-card-primary);
+      color: var(--color-text-primary);
+      font: 500 24px/24px var(--font-family-cn);
+      cursor: pointer;
+    }
+    .toolbar button[aria-pressed="true"] {
+      background: var(--color-bg-item-primary);
+      color: var(--color-text-primary-inverse);
+      border-color: var(--color-bg-item-primary);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, max-content);
+      gap: 60px 96px;
+      margin-bottom: 60px;
+    }
+    .case {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+    .case .label {
+      font-size: 24px;
+      line-height: 28px;
+      color: var(--color-text-secondary);
+    }
+    .ruler {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .size-tip {
+      color: var(--color-text-tertiary);
+      font: 400 18px/22px var(--font-family-num);
+    }
+    .section-divider {
+      height: 1px;
+      background: var(--color-border-tertiary);
+      margin: 24px 0 60px;
+    }
+    .row-demo {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 24px 30px;
+      background: var(--color-bg-card-primary);
+      border-radius: 24px;
+      box-shadow: var(--shadow-medium);
+      max-width: 720px;
+    }
+    .row-demo .text {
+      flex: 1;
+    }
+    .row-demo .text .t {
+      font: 500 32px/36px var(--font-family-cn);
+    }
+    .row-demo .text .d {
+      margin-top: 6px;
+      font: 400 24px/28px var(--font-family-cn);
+      color: var(--color-text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <h1>Switch · Figma 1:1 预览</h1>
+  <p class="subtitle">
+    Figma 节点 257:5522 · 4 个 variants · 严格按 Figma 真实测量复刻
+  </p>
+
+  <div class="toolbar" role="tablist" aria-label="主题切换">
+    <button id="btn-light" aria-pressed="true" type="button">☀️ Light</button>
+    <button id="btn-dark" aria-pressed="false" type="button">🌙 Dark</button>
+  </div>
+
+  <div class="grid">
+    <div class="case">
+      <span class="label">On=True, Disabled=False</span>
+      <label class="switch" aria-label="开">
+        <input type="checkbox" checked />
+        <span class="switch-track"></span>
+        <span class="switch-thumb"></span>
+      </label>
+      <span class="size-tip">108 × 60 · thumb 48 · radius 30</span>
+    </div>
+
+    <div class="case">
+      <span class="label">On=False, Disabled=False</span>
+      <label class="switch" aria-label="关">
+        <input type="checkbox" />
+        <span class="switch-track"></span>
+        <span class="switch-thumb"></span>
+      </label>
+      <span class="size-tip">thumb 带 shadow/light</span>
+    </div>
+
+    <div class="case">
+      <span class="label">On=True, Disabled=True</span>
+      <label class="switch" aria-label="开-禁用">
+        <input type="checkbox" checked disabled />
+        <span class="switch-track"></span>
+        <span class="switch-thumb"></span>
+      </label>
+      <span class="size-tip">track 降为 tertiary，thumb 灰</span>
+    </div>
+
+    <div class="case">
+      <span class="label">On=False, Disabled=True</span>
+      <label class="switch" aria-label="关-禁用">
+        <input type="checkbox" disabled />
+        <span class="switch-track"></span>
+        <span class="switch-thumb"></span>
+      </label>
+      <span class="size-tip">thumb 灰，无阴影</span>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <h2 style="margin: 0 0 24px; font: 700 36px/42px var(--font-family-cn);">在 list-row 中的真实使用</h2>
+
+  <div class="row-demo">
+    <div class="text">
+      <div class="t">启动后自动恢复上次模式</div>
+      <div class="d">车辆启动后恢复上次驾驶偏好、空调与媒体状态</div>
+    </div>
+    <label class="switch" aria-label="启动后自动恢复上次模式">
+      <input type="checkbox" checked />
+      <span class="switch-track"></span>
+      <span class="switch-thumb"></span>
+    </label>
+  </div>
+
+  <script>
+    const html = document.documentElement;
+    const btnLight = document.getElementById('btn-light');
+    const btnDark = document.getElementById('btn-dark');
+    function setTheme(t) {
+      html.setAttribute('data-theme', t);
+      btnLight.setAttribute('aria-pressed', t === 'light');
+      btnDark.setAttribute('aria-pressed', t === 'dark');
+    }
+    btnLight.addEventListener('click', () => setTheme('light'));
+    btnDark.addEventListener('click', () => setTheme('dark'));
+  </script>
+</body>
+</html>

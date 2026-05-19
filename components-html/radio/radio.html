@@ -1,0 +1,75 @@
+<!--
+  radio · 静态 HTML 片段示例
+  使用方式：在页面 <head> 引入 design-system 三件套 + radio.css，
+  即可直接复制下面任一片段进 body。
+
+  注意：同一组单选必须共用 name，否则不会互斥。
+-->
+
+<!-- ============== 1. 仅外圆（不带文字标签） ============== -->
+
+<!-- 未选中 -->
+<label class="radio">
+  <input type="radio" name="demo-1" />
+  <span class="radio__box" aria-hidden="true">
+    <span class="radio__dot"></span>
+  </span>
+</label>
+
+<!-- 选中 -->
+<label class="radio">
+  <input type="radio" name="demo-1" checked />
+  <span class="radio__box" aria-hidden="true">
+    <span class="radio__dot"></span>
+  </span>
+</label>
+
+<!-- 禁用 · 未选 -->
+<label class="radio">
+  <input type="radio" name="demo-1-disabled" disabled />
+  <span class="radio__box" aria-hidden="true">
+    <span class="radio__dot"></span>
+  </span>
+</label>
+
+<!-- 禁用 · 选中 -->
+<label class="radio">
+  <input type="radio" name="demo-1-disabled" checked disabled />
+  <span class="radio__box" aria-hidden="true">
+    <span class="radio__dot"></span>
+  </span>
+</label>
+
+
+<!-- ============== 2. 外圆 + 文字标签（独立使用，单选组） ============== -->
+
+<label class="radio">
+  <input type="radio" name="theme" />
+  <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+  <span class="radio__label">浅色主题</span>
+</label>
+
+<label class="radio">
+  <input type="radio" name="theme" checked />
+  <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+  <span class="radio__label">深色主题</span>
+</label>
+
+<label class="radio">
+  <input type="radio" name="theme" disabled />
+  <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+  <span class="radio__label">跟随系统（暂不支持）</span>
+</label>
+
+
+<!-- ============== 3. 在 list-leading 槽位中使用 ============== -->
+
+<!-- list-leading--radio：60×60 占位 + 内嵌独立 .radio -->
+<span class="list-leading list-leading--radio">
+  <label class="radio">
+    <input type="radio" name="row-radio" checked />
+    <span class="radio__box" aria-hidden="true">
+      <span class="radio__dot"></span>
+    </span>
+  </label>
+</span>

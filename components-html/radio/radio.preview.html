@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>radio · Preview</title>
+
+<!-- design-system -->
+<link rel="stylesheet" href="../../design-system/tokens.css" />
+<link rel="stylesheet" href="../../design-system/shadows.css" />
+<link rel="stylesheet" href="../../design-system/text-styles.css" />
+
+<!-- 本组件 + 联动展示 -->
+<link rel="stylesheet" href="./radio.css" />
+<link rel="stylesheet" href="../list-leading/list-leading.css" />
+
+<style>
+  body {
+    margin: 0;
+    background: var(--color-bg-page-primary);
+    color: var(--color-text-primary);
+    font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+    padding: 48px;
+  }
+  .theme-toggle {
+    position: fixed; top: 24px; right: 24px;
+    padding: 12px 24px; border-radius: 999px;
+    border: 2px solid var(--color-border-disabled);
+    background: var(--color-bg-item-tertiary);
+    color: var(--color-text-primary);
+    cursor: pointer; font-size: 20px; z-index: 10;
+  }
+  h1 { font-size: 48px; font-weight: 600; margin: 0 0 8px; }
+  h2 {
+    font-size: 32px; font-weight: 500; margin: 0 0 8px;
+    color: var(--color-text-primary);
+  }
+  .group-desc {
+    font-size: 22px; color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+  section { margin-bottom: 64px; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px 32px;
+    align-items: center;
+  }
+  .case-grid > .label {
+    color: var(--color-text-secondary);
+    font-size: 22px;
+  }
+  .case-grid > .demo {
+    background: var(--color-bg-item-tertiary);
+    border-radius: 24px;
+    padding: 24px 30px;
+    display: flex; align-items: center; gap: 36px;
+    min-height: 60px;
+  }
+
+  .row-mock {
+    display: flex; align-items: center; gap: 36px;
+    background: var(--color-bg-item-tertiary);
+    padding: 30px 36px; border-radius: 24px;
+  }
+  .row-mock__title {
+    flex: 1; font-size: 32px; line-height: 32px; font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  .stack { display: flex; flex-direction: column; gap: 16px; }
+</style>
+</head>
+<body data-theme="light">
+
+<button class="theme-toggle" id="themeToggle">Toggle Light / Dark</button>
+
+<h1>radio</h1>
+<p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
+  独立单选组件 · 4 状态 · 与 checkbox 节奏对称（外圆 + 圆点 反色）
+</p>
+
+
+<!-- ============ 1. 仅外圆（4 状态） ============ -->
+<section>
+  <h2>1. 仅外圆（4 状态）</h2>
+  <p class="group-desc">36×36 / 圆角 50% / 描边 2 / 选中实心 + 反色圆点 18×18。</p>
+
+  <div class="case-grid">
+    <div class="label">未选中</div>
+    <div class="demo">
+      <label class="radio">
+        <input type="radio" name="state-1" />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+      </label>
+    </div>
+
+    <div class="label">选中</div>
+    <div class="demo">
+      <label class="radio">
+        <input type="radio" name="state-2" checked />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+      </label>
+    </div>
+
+    <div class="label">禁用 · 未选</div>
+    <div class="demo">
+      <label class="radio">
+        <input type="radio" name="state-3" disabled />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+      </label>
+    </div>
+
+    <div class="label">禁用 · 选中</div>
+    <div class="demo">
+      <label class="radio">
+        <input type="radio" name="state-4" checked disabled />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+      </label>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 2. 外圆 + 文字标签（单选组） ============ -->
+<section>
+  <h2>2. 外圆 + 文字标签（单选组互斥）</h2>
+  <p class="group-desc">
+    同一组共用 <code>name="theme"</code>，点击切换；间距 18px，文字 28/36 Regular。
+  </p>
+
+  <div class="case-grid">
+    <div class="label">主题选择</div>
+    <div class="demo" style="flex-direction:column; align-items:flex-start; gap:24px;">
+      <label class="radio">
+        <input type="radio" name="theme" />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        <span class="radio__label">浅色主题</span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="theme" checked />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        <span class="radio__label">深色主题</span>
+      </label>
+      <label class="radio">
+        <input type="radio" name="theme" disabled />
+        <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        <span class="radio__label">跟随系统（暂不支持）</span>
+      </label>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 3. 嵌入 list-leading 槽 ============ -->
+<section>
+  <h2>3. 嵌入 list-leading 槽（list-leading--radio）</h2>
+  <p class="group-desc">
+    list-leading 提供 60×60 占位容器；radio 提供外圆 / 圆点 / 状态。
+    单选互斥由原生 <code>name</code> 实现。
+  </p>
+
+  <div class="stack" style="max-width:920px;">
+    <div class="row-mock">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="row-theme" />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+      <div class="row-mock__title">浅色主题</div>
+    </div>
+
+    <div class="row-mock">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="row-theme" checked />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+      <div class="row-mock__title">深色主题</div>
+    </div>
+
+    <div class="row-mock">
+      <span class="list-leading list-leading--radio">
+        <label class="radio">
+          <input type="radio" name="row-theme" disabled />
+          <span class="radio__box" aria-hidden="true"><span class="radio__dot"></span></span>
+        </label>
+      </span>
+      <div class="row-mock__title" style="color:var(--color-text-disabled);">跟随系统 · 暂不支持</div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+  document.documentElement.setAttribute('data-theme', 'light');
+</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+/* =============================================================
+ * Shadow Effects - 阴影预设
+ * 1:1 映射自 Figma「🤖座舱组件库-AI版」Effect Styles
+ *
+ * 命名约定：--shadow-{light|medium|heavy}
+ *
+ * 三档语义：
+ *   light  ：浮起一点点，用在 ListRow 选中态、Toggle 滑块等小部件
+ *   medium ：明显浮出，用在 Card、Popover、Toast、抽屉等中型容器
+ *   heavy  ：悬浮强对比，用在 Dialog、Modal、关键浮层
+ * ============================================================= */
+:root {
+  /* Shadow / Light  : y6 r18 black 5% */
+  --shadow-light:
+    0 6px 18px 0 rgba(0, 0, 0, 0.05);
+
+  /* Shadow / Medium : 双层叠加，远阴影负责发散，近阴影负责接地 */
+  --shadow-medium:
+    0 6px 30px 0 rgba(0, 0, 0, 0.06),
+    0 6px  6px 0 rgba(0, 0, 0, 0.02);
+
+  /* Shadow / Heavy  : 双层叠加，更高的浮空高度 */
+  --shadow-heavy:
+    0 18px 78px 0 rgba(0, 0, 0, 0.06),
+    0  6px 18px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* 暗色模式下，阴影本身保留参数不变（黑色阴影在深底上几乎看不到，这是预期行为）；
+ * 如果未来需要在 dark 模式增强浮空感，可在此处用 :root[data-theme="dark"] 覆盖。
+ * 当前与 Figma Light/Dark 双模式下 Effect Styles 一致，不再单独定义。
+ */

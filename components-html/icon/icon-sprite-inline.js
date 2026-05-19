@@ -1,0 +1,146 @@
+/* ==========================================================================
+   icon-sprite-inline.js · 把 icon.svg 内联到当前文档 <body> 顶部
+   ----------------------------------------------------------------------------
+   背景：跨文件 <use href="./icon.svg#xxx"/> 在 file:// 协议（尤其 macOS
+   iCloud 路径含中文/空格）下浏览器常拒绝加载。改为同文档锚点 <use href="#xxx"/>
+   以彻底绕开协议限制。
+   --------------------------------------------------------------------------
+   ⚠️ 真源仍是 components-html/icon/icon.svg。若改了 svg 必须重新生成本文件。
+   生成命令见 icon.md。
+   ========================================================================== */
+(function () {
+  if (document.getElementById('cabin-icon-sprite')) return;
+  // 直接构造 inline <svg>，挂到 documentElement，head 阶段即可生效，
+  // 不依赖 body / DOMContentLoaded，<use href="#…"/> 任何时机都查得到 symbol。
+  var SPRITE_INNER = `<!-- ============== wifi （线/面） ============== -->
+  <symbol id="icon/wifi--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M44.5355 19.9662C39.4216 14.4514 32.1137 11 23.9996 11C15.8861 11 8.57863 14.4509 3.46484 19.965L6.32907 22.7593C10.7155 17.9893 17.0084 15 23.9996 15C30.9913 15 37.2848 17.9898 41.6712 22.7606L44.5355 19.9662Z"/>
+    <path fill="currentColor" d="M36.6576 27.6519C33.5452 24.1826 29.0273 22 23.9996 22C18.9725 22 14.455 24.182 11.3427 27.6506L14.2091 30.4471C16.5921 27.7216 20.0948 26 23.9996 26C27.905 26 31.4082 27.7221 33.7912 30.4484L36.6576 27.6519Z"/>
+    <path fill="currentColor" d="M29.0107 35.1123C27.7394 33.8092 25.964 33 23.9996 33C22.0358 33 20.2609 33.8086 18.9897 35.1111L24.0008 40L29.0107 35.1123Z"/>
+  </symbol>
+  <symbol id="icon/wifi--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M44.5355 19.9662C39.4216 14.4514 32.1137 11 23.9996 11C15.8861 11 8.57863 14.4509 3.46484 19.965L7.76132 24.1567C11.7839 19.7585 17.5696 17 23.9996 17C30.4302 17 36.2164 19.759 40.239 24.1579L44.5355 19.9662Z"/>
+    <path fill="currentColor" d="M36.6576 27.6519C33.5452 24.1826 29.0273 22 23.9996 22C18.9725 22 14.455 24.182 11.3427 27.6506L15.6432 31.8463C17.6607 29.4919 20.6559 28 23.9996 28C27.3439 28 30.3396 29.4924 32.3571 31.8476L36.6576 27.6519Z"/>
+    <path fill="currentColor" d="M29.0107 35.1123C27.7394 33.8092 25.964 33 23.9996 33C22.0358 33 20.2609 33.8086 18.9897 35.1111L24.0008 40L29.0107 35.1123Z"/>
+  </symbol>
+
+  <!-- ============== star （线/面） ============== -->
+  <symbol id="icon/star--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9999 3.46216L31.243 14.0307L43.5325 17.6534L35.7195 27.8079L36.0717 40.6154L23.9999 36.3227L11.9281 40.6154L12.2803 27.8079L4.46729 17.6534L16.7568 14.0307L23.9999 3.46216ZM23.9999 10.5378L19.2522 17.4653L11.1966 19.8399L16.3179 26.496L16.087 34.8911L23.9999 32.0773L31.9128 34.8911L31.6819 26.496L36.8032 19.8399L28.7476 17.4653L23.9999 10.5378Z"/>
+  </symbol>
+  <symbol id="icon/star--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M31.243 15.0307L23.9999 4.46216L16.7568 15.0307L4.46729 18.6534L12.2803 28.8079L11.9281 41.6154L23.9999 37.3227L36.0717 41.6154L35.7195 28.8079L43.5325 18.6534L31.243 15.0307Z"/>
+  </symbol>
+
+  <!-- ============== add （线=面，库里同形） ============== -->
+  <symbol id="icon/add--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M7 22L7 26L22 26L22 41H26V26L41 26V22H26L26 7L22 7L22 22H7Z"/>
+  </symbol>
+  <symbol id="icon/add--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M7 22L7 26L22 26L22 41H26V26L41 26V22H26L26 7L22 7L22 22H7Z"/>
+  </symbol>
+
+  <!-- ============== refresh （线/面，库里同形） ============== -->
+  <symbol id="icon/refresh--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M24 11C16.8203 11 11 16.8203 11 24C11 31.1797 16.8203 37 24 37C27.5823 37 30.823 35.5537 33.1765 33.2083L36 36.0416C32.9274 39.1036 28.6833 41 24 41C14.6112 41 7 33.3888 7 24C7 14.6112 14.6112 7 24 7C30.8043 7 36.6749 10.9975 39.3914 16.7722L35.4451 17.8296C33.248 13.7628 28.9467 11 24 11Z"/>
+    <path fill="currentColor" d="M40.2678 28.951C41.4821 24.9559 41.1698 20.5526 39.3914 16.7722L35.4451 17.8296L29.636 19.3861L40.2678 28.951Z"/>
+  </symbol>
+  <symbol id="icon/refresh--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M24 11C16.8203 11 11 16.8203 11 24C11 31.1797 16.8203 37 24 37C27.5823 37 30.823 35.5537 33.1765 33.2083L36 36.0416C32.9274 39.1036 28.6833 41 24 41C14.6112 41 7 33.3888 7 24C7 14.6112 14.6112 7 24 7C30.8043 7 36.6749 10.9975 39.3914 16.7722L35.4451 17.8296C33.248 13.7628 28.9467 11 24 11Z"/>
+    <path fill="currentColor" d="M40.2678 28.951C41.4821 24.9559 41.1698 20.5526 39.3914 16.7722L35.4451 17.8296L29.636 19.3861L40.2678 28.951Z"/>
+  </symbol>
+
+  <!-- ============== close （线=面，库里同形） ============== -->
+  <symbol id="icon/close--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M24.1127 27.1138L36.7833 39.7844L39.6117 36.956L26.9411 24.2854L39.8979 11.3285L37.0695 8.50012L24.1127 21.457L11.3275 8.67173L8.49902 11.5002L21.2843 24.2854L8.78525 36.7844L11.6137 39.6128L24.1127 27.1138Z"/>
+  </symbol>
+  <symbol id="icon/close--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M24.1127 27.1138L36.7833 39.7844L39.6117 36.956L26.9411 24.2854L39.8979 11.3285L37.0695 8.50012L24.1127 21.457L11.3275 8.67173L8.49902 11.5002L21.2843 24.2854L8.78525 36.7844L11.6137 39.6128L24.1127 27.1138Z"/>
+  </symbol>
+
+  <!-- ============== back（返回，箭头+三横线，线=面） ============== -->
+  <symbol id="icon/back--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M36.6651 39.1074L33 37.9995V9.99945H37V31.3835L39.3349 27.8745L42.6651 30.0905L36.6651 39.1074Z"/>
+    <path fill="currentColor" d="M27 9.99998H8V14H27V9.99998Z"/>
+    <path fill="currentColor" d="M27 22H8V26H27V22Z"/>
+    <path fill="currentColor" d="M8 34H27V38H8V34Z"/>
+  </symbol>
+  <symbol id="icon/back--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M36.6651 39.1074L33 37.9995V9.99945H37V31.3835L39.3349 27.8745L42.6651 30.0905L36.6651 39.1074Z"/>
+    <path fill="currentColor" d="M27 9.99998H8V14H27V9.99998Z"/>
+    <path fill="currentColor" d="M27 22H8V26H27V22Z"/>
+    <path fill="currentColor" d="M8 34H27V38H8V34Z"/>
+  </symbol>
+
+  <!-- ============== enter（进入 / chevron_right，线/面） ============== -->
+  <symbol id="icon/enter--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M31.1127 24.3848L15.5563 8.82843L18.3848 6L35.3553 22.9706V25.799L18.3848 42.7696L15.5563 39.9411L31.1127 24.3848Z"/>
+  </symbol>
+  <symbol id="icon/enter--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M31.1127 23.9706L15.5563 8.41424L18.3848 5.58582L35.3553 22.5564V25.3848L18.3848 42.3554L15.5563 39.5269L31.1127 23.9706Z"/>
+  </symbol>
+
+  <!-- ============== down（向下，线=面） ============== -->
+  <symbol id="icon/down--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9707 30.1421L8.41436 14.5858L5.58594 17.4142L22.5565 34.3847H25.3849L42.3555 17.4142L39.5271 14.5858L23.9707 30.1421Z"/>
+  </symbol>
+  <symbol id="icon/down--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9707 30.1421L8.41436 14.5858L5.58594 17.4142L22.5565 34.3847H25.3849L42.3555 17.4142L39.5271 14.5858L23.9707 30.1421Z"/>
+  </symbol>
+
+  <!-- ============== up（向上，线=面） ============== -->
+  <symbol id="icon/up--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9707 15.8579L8.41436 31.4142L5.58594 28.5858L22.5565 11.6153H25.3849L42.3555 28.5858L39.5271 31.4142L23.9707 15.8579Z"/>
+  </symbol>
+  <symbol id="icon/up--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9707 15.8579L8.41436 31.4142L5.58594 28.5858L22.5565 11.6152H25.3849L42.3555 28.5858L39.5271 31.4142L23.9707 15.8579Z"/>
+  </symbol>
+
+  <!-- ============== setting（设置，六边形+中心点，线/面） ============== -->
+  <symbol id="icon/setting--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M24 20C21.7909 20 20 21.7909 20 24C20 26.2091 21.7909 28 24 28C26.2091 28 28 26.2091 28 24C28 21.7909 26.2091 20 24 20Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M41 14.8679L23.9991 4.66797L7 14.868V33.1607L24.0014 43.3318L41 33.1327V14.8679ZM11 17.1327L23.9992 9.33273L37 17.1328V30.868L23.9984 38.6688L11 30.8925V17.1327Z"/>
+  </symbol>
+  <symbol id="icon/setting--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M23.9991 4.6676L41 14.8676V33.1324L24.0014 43.3314L7 33.1603V14.8676L23.9991 4.6676ZM24 19C21.2386 19 19 21.2386 19 24C19 26.7614 21.2386 29 24 29C26.7614 29 29 26.7614 29 24C29 21.2386 26.7614 19 24 19Z"/>
+  </symbol>
+
+  <!-- ============== list（列表，定位+列表三横，线/面） ============== -->
+  <symbol id="icon/list--line" viewBox="0 0 48 48" fill="currentColor">
+    <path fill="currentColor" d="M14 21C14 19.3431 15.3431 18 17 18C18.6569 18 20 19.3431 20 21C20 22.6569 18.6569 24 17 24C15.3431 24 14 22.6569 14 21Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M17.0012 39C15.8706 38.0068 14.7037 37.0339 13.534 36.0587C11.3237 34.2159 9.10326 32.3646 7.09775 30.3513C4.6275 27.8714 3 24.5228 3 20.8378C3 13.1954 9.26801 7 17 7C24.732 7 31 13.1954 31 20.8378C31 24.5228 29.3725 27.8714 26.9022 30.3513C25.0003 32.335 22.7517 34.1917 20.5019 36.0494C19.3186 37.0264 18.1349 38.0038 17.0012 39ZM23.9109 27.4279L23.9391 27.3996C25.7475 25.5842 26.8175 23.2585 26.8175 20.8378C26.8175 15.5511 22.4682 11.1825 17 11.1825C11.5318 11.1825 7.18246 15.5511 7.18246 20.8378C7.18246 23.2585 8.25253 25.5842 10.0609 27.3996C11.9446 29.2905 13.897 30.9157 15.9971 32.6638C16.3301 32.941 16.6668 33.2212 17.0075 33.5061C17.3801 33.1972 17.7468 32.8951 18.1079 32.5977L18.1104 32.5957C20.2191 30.8586 22.1334 29.2818 23.8832 27.4567L23.9109 27.4279Z"/>
+    <path fill="currentColor" d="M41 11H33V15H41V11Z"/>
+    <path fill="currentColor" d="M34 23H41V27H34V23Z"/>
+    <path fill="currentColor" d="M41 39V35H25V39H41Z"/>
+  </symbol>
+  <symbol id="icon/list--fill" viewBox="0 0 48 48" fill="currentColor">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M31 20.8378C31 24.5228 29.3725 27.8714 26.9022 30.3513C25.0003 32.335 22.7517 34.1917 20.5019 36.0494C19.3186 37.0264 18.1349 38.0038 17.0012 39C15.8706 38.0068 14.7037 37.0339 13.534 36.0587C11.3237 34.2159 9.10328 32.3646 7.09775 30.3513C4.6275 27.8714 3 24.5228 3 20.8378C3 13.1954 9.26801 7 17 7C24.732 7 31 13.1954 31 20.8378ZM17 17C14.7909 17 13 18.7909 13 21C13 23.2091 14.7909 25 17 25C19.2091 25 21 23.2091 21 21C21 18.7909 19.2091 17 17 17Z"/>
+    <path fill="currentColor" d="M33 11H41V15H33V11Z"/>
+    <path fill="currentColor" d="M34 23H41V27H34V23Z"/>
+    <path fill="currentColor" d="M25 35H41V39H25V35Z"/>
+  </symbol>`;
+
+  // 用 DOMParser 以 image/svg+xml 解析，确保 <symbol>/<path> 都在正确的 SVG 命名空间下创建。
+  // （早先用 svg.innerHTML 在某些 WebKit 版本会把内部节点解析成 HTMLUnknownElement，导致 <use> 找不到 symbol。）
+  var WRAPPER =
+    '<svg xmlns="http://www.w3.org/2000/svg" id="cabin-icon-sprite" aria-hidden="true" ' +
+    'style="position:absolute;width:0;height:0;overflow:hidden;">' +
+    SPRITE_INNER +
+    '</svg>';
+  var doc = new DOMParser().parseFromString(WRAPPER, 'image/svg+xml');
+  var svg = doc.documentElement;
+  // 检测解析错误，回退到 innerHTML 方案
+  if (svg.nodeName !== 'svg' || svg.querySelector('parsererror')) {
+    svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.id = 'cabin-icon-sprite';
+    svg.setAttribute('aria-hidden', 'true');
+    svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden;';
+    svg.innerHTML = SPRITE_INNER;
+  } else {
+    svg = document.importNode(svg, true);
+  }
+  (document.documentElement || document.body).appendChild(svg);
+  try {
+    console.info('[icon-sprite] inlined', svg.querySelectorAll('symbol').length, 'symbols');
+  } catch (e) {}
+})();

@@ -1,0 +1,1380 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>如何"训练"你的知识工程 · 方法论</title>
+  <style>
+    :root {
+      /* Notion 风格中性色板 */
+      --text-default: #37352f;
+      --text-secondary: #6b6a64;
+      --text-tertiary: #9b9a94;
+      --text-disabled: #b8b7b1;
+      --bg-page: #ffffff;
+      --bg-soft: #f7f6f3;
+      --bg-block: #f1f1ef;
+      --bg-callout: #f7f6f3;
+      --bg-code: #f4f4f2;
+      --bg-table-head: #f7f6f3;
+      --border-default: #ededec;
+      --border-strong: #e3e2e0;
+      --border-table: #e9e9e7;
+
+      /* 强调（克制使用） */
+      --accent-ink: #1f1f1c;
+
+      /* 排版 */
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial,
+        "Noto Sans SC", sans-serif;
+      --font-mono: "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono",
+        monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { background: var(--bg-page); }
+
+    body {
+      margin: 0;
+      color: var(--text-default);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .page {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 96px 96px 160px;
+    }
+
+    @media (max-width: 760px) {
+      .page { padding: 56px 24px 120px; }
+    }
+
+    /* 宽屏下让 TOC + 正文 整体在视口居中：
+       做法是把 TOC 也算进 .page 的 max-width，并让 .page 内部用左 padding 给 TOC 留位 */
+    @media (min-width: 1180px) {
+      .page {
+        max-width: 1200px;          /* TOC(240) + 间距(40) + 正文(920) */
+        padding-left: 280px;         /* 给左侧 sticky TOC 留出空间 */
+        padding-right: 40px;
+      }
+    }
+    @media (min-width: 1440px) {
+      .page {
+        max-width: 1280px;          /* 240 + 40 + 1000 */
+        padding-left: 280px;
+        padding-right: 80px;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+    /* 让锚点跳转避开顶部留白 */
+    h2[id], h3[id] { scroll-margin-top: 32px; }
+
+    /* ============ Sticky 侧边目录 ============ */
+    .toc-side {
+      position: fixed;
+      top: 96px;
+      /* 贴在 .page (max-width:1200px, 居中) 的左侧 padding 区域内 */
+      left: max(20px, calc((100vw - 1200px) / 2 + 20px));
+      width: 220px;
+      max-height: calc(100vh - 160px);
+      overflow-y: auto;
+      padding: 16px 18px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      border-left: 1px solid var(--border-default);
+      background: transparent;
+      z-index: 10;
+      display: none; /* 默认隐藏，宽屏显示 */
+    }
+    .toc-side .toc-title {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+    .toc-side ol {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      counter-reset: toc;
+    }
+    .toc-side li {
+      counter-increment: toc;
+      position: relative;
+      margin: 0;
+    }
+    .toc-side a {
+      display: block;
+      padding: 6px 10px 6px 28px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      line-height: 1.5;
+      border-radius: 3px;
+      position: relative;
+      transition: color 120ms ease, background 120ms ease;
+    }
+    .toc-side a::before {
+      content: counter(toc, decimal-leading-zero);
+      position: absolute;
+      left: 4px;
+      top: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-tertiary);
+      letter-spacing: 0;
+    }
+    .toc-side a:hover {
+      color: var(--text-default);
+      background: var(--bg-soft);
+    }
+    .toc-side a.active {
+      color: var(--text-default);
+      font-weight: 600;
+      background: var(--bg-block);
+    }
+    .toc-side a.active::before {
+      color: var(--text-default);
+    }
+    /* 滚动条克制风格 */
+    .toc-side::-webkit-scrollbar { width: 6px; }
+    .toc-side::-webkit-scrollbar-thumb {
+      background: var(--border-strong);
+      border-radius: 3px;
+    }
+
+    /* 宽屏开启 sticky TOC，并隐藏正文里的内嵌 TOC */
+    @media (min-width: 1180px) {
+      .toc-side { display: block; }
+      .toc-inline { display: none; }
+    }
+
+    /* 超宽屏：TOC 贴着 max-width 1280 的 .page 左侧 padding */
+    @media (min-width: 1440px) {
+      .toc-side {
+        left: max(20px, calc((100vw - 1280px) / 2 + 20px));
+      }
+    }
+
+    /* 顶部 */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-tertiary);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+    .eyebrow .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--text-tertiary);
+    }
+
+    h1.page-title {
+      font-size: 40px;
+      line-height: 1.2;
+      font-weight: 700;
+      margin: 0 0 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 16px;
+      margin: 0 0 12px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      color: var(--text-tertiary);
+      font-size: 13px;
+      padding: 12px 0 4px;
+      border-top: 1px solid var(--border-default);
+      border-bottom: 1px solid var(--border-default);
+      margin: 24px 0 40px;
+    }
+    .meta b { color: var(--text-secondary); font-weight: 500; }
+
+    /* 标题层级 */
+    h2 {
+      font-size: 26px;
+      line-height: 1.3;
+      font-weight: 700;
+      margin: 56px 0 12px;
+      letter-spacing: -0.01em;
+    }
+    h3 {
+      font-size: 19px;
+      line-height: 1.35;
+      font-weight: 600;
+      margin: 32px 0 8px;
+    }
+    h4 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 20px 0 6px;
+      color: var(--text-default);
+    }
+
+    p { margin: 8px 0 12px; }
+
+    a { color: var(--text-default); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* 强调 */
+    strong { color: var(--text-default); font-weight: 600; }
+    em { font-style: normal; background: var(--bg-block); padding: 0 4px; border-radius: 3px; }
+
+    /* 引用 */
+    blockquote {
+      margin: 16px 0;
+      padding: 2px 0 2px 16px;
+      border-left: 3px solid var(--text-default);
+      color: var(--text-default);
+      font-size: 16px;
+    }
+
+    /* 代码 */
+    code {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      background: var(--bg-code);
+      color: #4a4a45;
+      padding: 1px 6px;
+      border-radius: 3px;
+    }
+    pre {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.55;
+      background: var(--bg-code);
+      color: var(--text-default);
+      padding: 16px 20px;
+      border-radius: 4px;
+      overflow: auto;
+      margin: 14px 0;
+      border: 1px solid var(--border-default);
+    }
+    pre code { background: transparent; padding: 0; }
+
+    /* ============ 评估用例卡片 ============ */
+    .sub-title {
+      margin: 28px 0 4px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-default);
+      letter-spacing: 0.01em;
+    }
+    .sub-desc {
+      margin: 0 0 14px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .case-card {
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      background: var(--bg-page);
+      margin: 12px 0;
+      overflow: hidden;
+    }
+    .case-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      background: var(--bg-soft);
+      border-bottom: 1px solid var(--border-default);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .case-meta .case-id {
+      color: var(--text-default);
+      font-weight: 600;
+    }
+    .case-meta .pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border: 1px solid var(--border-strong);
+      border-radius: 10px;
+      background: var(--bg-page);
+      font-size: 11px;
+      color: var(--text-secondary);
+      letter-spacing: 0.02em;
+    }
+    .case-row {
+      display: grid;
+      grid-template-columns: 96px 1fr;
+      gap: 0;
+      border-bottom: 1px solid var(--border-default);
+    }
+    .case-row:last-child { border-bottom: none; }
+    .case-row .case-key {
+      padding: 12px 16px;
+      background: var(--bg-soft);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      font-weight: 600;
+      border-right: 1px solid var(--border-default);
+    }
+    .case-row .case-val {
+      padding: 12px 18px;
+      font-size: 14px;
+      color: var(--text-default);
+      line-height: 1.65;
+    }
+    .case-row .case-val ul {
+      margin: 4px 0 2px;
+      padding-left: 18px;
+    }
+    .case-row .case-val li { margin: 2px 0; }
+    .case-row.bad .case-key { color: #8a8a85; }
+    .case-row.good .case-key { color: var(--text-default); }
+    .case-row .case-val em {
+      font-style: normal;
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
+    @media (max-width: 640px) {
+      .case-row { grid-template-columns: 1fr; }
+      .case-row .case-key {
+        border-right: none;
+        border-bottom: 1px solid var(--border-default);
+        padding: 8px 16px;
+      }
+    }
+
+    /* ============ 经验列表（带数字徽章） ============ */
+    .lesson-list {
+      list-style: none;
+      counter-reset: lesson;
+      padding: 0;
+      margin: 12px 0 4px;
+    }
+    .lesson-list > li {
+      counter-increment: lesson;
+      position: relative;
+      padding: 14px 16px 14px 52px;
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      background: var(--bg-page);
+      margin: 8px 0;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-default);
+    }
+    .lesson-list > li::before {
+      content: counter(lesson, decimal-leading-zero);
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      width: 26px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-default);
+      background: var(--bg-block);
+      border: 1px solid var(--border-strong);
+      border-radius: 3px;
+      letter-spacing: 0;
+    }
+    .lesson-list .lesson-title {
+      display: block;
+      font-weight: 600;
+      color: var(--text-default);
+      margin-bottom: 2px;
+    }
+    .lesson-list .lesson-desc {
+      color: var(--text-secondary);
+      font-size: 13.5px;
+    }
+
+    /* ============ 下一步预告卡片 ============ */
+    .next-card {
+      margin: 24px 0 4px;
+      padding: 20px 22px;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      background: var(--bg-soft);
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .next-card .next-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-default);
+      background: var(--bg-page);
+      border: 1px solid var(--border-strong);
+      padding: 4px 8px;
+      border-radius: 3px;
+      white-space: nowrap;
+      align-self: start;
+    }
+    .next-card .next-body { font-size: 14px; color: var(--text-default); }
+    .next-card .next-body h4 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-default);
+    }
+    .next-card .next-body p {
+      margin: 6px 0;
+      color: var(--text-secondary);
+    }
+    .next-card .next-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .next-card .next-flow .step-pill {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-default);
+      background: var(--bg-page);
+      border: 1px solid var(--border-default);
+      padding: 4px 10px;
+      border-radius: 3px;
+    }
+    .next-card .next-flow .arrow {
+      color: var(--text-tertiary);
+      align-self: center;
+      font-family: var(--font-mono);
+    }
+    @media (max-width: 640px) {
+      .next-card { grid-template-columns: 1fr; }
+    }
+
+    /* Callout */
+    .callout {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      align-items: start;
+      background: var(--bg-callout);
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      padding: 14px 16px;
+      margin: 18px 0;
+      font-size: 15px;
+    }
+    .callout .ico {
+      width: 22px; height: 22px;
+      display: grid; place-items: center;
+      font-size: 16px;
+      color: var(--text-default);
+    }
+    .callout p { margin: 0; }
+    .callout p + p { margin-top: 6px; }
+
+    /* 列表 */
+    ul, ol { padding-left: 22px; margin: 8px 0 14px; }
+    ul li, ol li { margin: 4px 0; }
+    ul li::marker { color: var(--text-tertiary); }
+
+    /* 分割 */
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border-default);
+      margin: 56px 0;
+    }
+
+    /* 表格 */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 16px 0 20px;
+      border: 1px solid var(--border-table);
+      border-radius: 4px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #fff;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-table);
+      border-right: 1px solid var(--border-table);
+      vertical-align: top;
+    }
+    th:last-child, td:last-child { border-right: 0; }
+    tr:last-child td { border-bottom: 0; }
+    thead th {
+      background: var(--bg-table-head);
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 13px;
+    }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-mono); font-size: 13px; }
+    td.center, th.center { text-align: center; }
+
+    .badge {
+      display: inline-block;
+      padding: 1px 8px;
+      font-size: 12px;
+      border-radius: 3px;
+      background: var(--bg-block);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    /* 步骤卡片 */
+    .step {
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      padding: 22px 24px;
+      margin: 18px 0;
+      background: #fff;
+    }
+    .step-head {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 6px;
+    }
+    .step-num {
+      width: 26px; height: 26px;
+      display: grid; place-items: center;
+      border-radius: 4px;
+      background: var(--text-default);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+    .step-title {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.005em;
+    }
+    .step-tag {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--text-tertiary);
+      background: var(--bg-block);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .step p:first-of-type { margin-top: 4px; }
+
+    /* 维度网格 */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .dim {
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      padding: 12px 14px;
+      background: #fff;
+    }
+    .dim-name {
+      display: flex; align-items: baseline; justify-content: space-between;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 14.5px;
+      margin-bottom: 6px;
+    }
+    .dim-score { color: var(--text-tertiary); font-size: 12px; font-family: var(--font-mono); }
+    .dim ul { padding-left: 16px; margin: 4px 0 0; font-size: 13.5px; color: var(--text-secondary); }
+    .dim ul li { margin: 2px 0; }
+
+    /* 流程图 */
+    .flow {
+      background: var(--bg-soft);
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      padding: 28px 24px;
+      margin: 18px 0;
+    }
+    .flow-row {
+      display: flex; align-items: stretch; justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .flow-node {
+      min-width: 132px;
+      flex: 1 1 132px;
+      max-width: 180px;
+      background: #fff;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      padding: 12px 10px;
+      text-align: center;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-default);
+    }
+    .flow-node small {
+      display: block;
+      color: var(--text-tertiary);
+      font-weight: 400;
+      font-size: 11.5px;
+      margin-top: 4px;
+      letter-spacing: 0.02em;
+    }
+    .flow-arrow {
+      align-self: center;
+      color: var(--text-tertiary);
+      font-size: 18px;
+      font-family: var(--font-mono);
+    }
+    .flow-loop {
+      margin-top: 12px;
+      text-align: center;
+      color: var(--text-tertiary);
+      font-size: 12.5px;
+      letter-spacing: 0.02em;
+    }
+
+    /* 对比双栏 */
+    .vs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    @media (max-width: 640px) { .vs { grid-template-columns: 1fr; } }
+    .vs-col { padding: 18px 20px; background: #fff; }
+    .vs-col + .vs-col { border-left: 1px solid var(--border-default); }
+    @media (max-width: 640px) {
+      .vs-col + .vs-col { border-left: 0; border-top: 1px solid var(--border-default); }
+    }
+    .vs-col h4 {
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    .vs-col ul { padding-left: 18px; margin: 0; font-size: 14px; }
+    .vs-col li { margin: 6px 0; }
+
+    /* TOC */
+    .toc {
+      margin: 0 0 48px;
+      padding: 16px 18px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-default);
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .toc-title {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .toc ol { padding-left: 20px; margin: 0; }
+    .toc li { margin: 3px 0; }
+    .toc a { text-decoration: none; color: var(--text-default); }
+    .toc a:hover { text-decoration: underline; }
+
+    /* 尾部 */
+    .footer-card {
+      margin-top: 56px;
+      padding: 22px 24px;
+      border: 1px solid var(--border-default);
+      border-radius: 6px;
+      background: var(--bg-soft);
+    }
+    .footer-card h3 { margin-top: 0; }
+
+    /* 选区颜色（克制） */
+    ::selection { background: #ebeae6; color: var(--text-default); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="eyebrow"><span class="dot"></span><span>方法论 · Knowledge Engineering</span></div>
+    <h1 class="page-title">如何科学系统地"训练"你的知识工程</h1>
+    <p class="subtitle">从"和 AI 聊天"升级为"有目标、可度量、能复盘"的迭代闭环。</p>
+
+    <div class="meta">
+      <span><b>作者</b>　CodeBuddy</span>
+      <span><b>更新</b>　2026-05-18</span>
+      <span><b>适用</b>　Prompt 工程 / 知识库迭代 / AI 辅助设计</span>
+      <span><b>阅读</b>　约 8 分钟</span>
+    </div>
+
+    <nav class="toc toc-inline" aria-label="目录">
+      <div class="toc-title">目录</div>
+      <ol>
+        <li><a href="#why">为什么需要"训练"</a></li>
+        <li><a href="#what">什么才算"训练"</a></li>
+        <li><a href="#how">五步可落地方法论</a></li>
+        <li><a href="#loop">完整迭代闭环</a></li>
+        <li><a href="#vs">"装模作样" vs. "真正训练"</a></li>
+        <li><a href="#first">现在就做的第一件事</a></li>
+      </ol>
+    </nav>
+
+    <!-- ===================== Why ===================== -->
+    <h2 id="why">为什么需要"训练"</h2>
+    <p>
+      你每天都在和 AI 对话、改文档、调规则，但常常说不清这些动作是<strong>系统性进步</strong>，
+      还是<strong>原地打转</strong>。这种困惑的根源很简单：
+    </p>
+    <blockquote>缺少一个可量化的评估体系。没有评估，就没有"训练"，只有"聊天"。</blockquote>
+
+    <div class="callout">
+      <div class="ico">★</div>
+      <div>
+        <p><strong>核心判断标准</strong></p>
+        <p>有测试集 + 有评分标准 + 有版本对比 = <strong>训练</strong>。<br/>
+        只有对话 + 凭感觉改 = <strong>聊天</strong>。</p>
+      </div>
+    </div>
+
+    <!-- ===================== What ===================== -->
+    <h2 id="what">什么才算"训练"</h2>
+    <p>
+      不管是模型微调还是 Prompt 工程，<strong>"训练"的本质都是同一个循环</strong>：
+    </p>
+
+    <div class="flow" aria-label="训练循环">
+      <div class="flow-row">
+        <div class="flow-node">定义目标<small>OBJECTIVE</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">准备测试集<small>TEST SET</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">跑一遍<small>RUN</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">量化打分<small>SCORE</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">找差距改进<small>IMPROVE</small></div>
+      </div>
+      <div class="flow-loop">↻ 用同一套测试集再跑一遍，对比版本分数</div>
+    </div>
+
+    <p>
+      你现在缺的不是"和 AI 对话"这个动作（这个你已经做得很好），
+      而是循环里的 <em>① 明确目标</em>、<em>② 测试集</em>、<em>③ 量化打分</em> 这三块。
+    </p>
+
+    <!-- ===================== How ===================== -->
+    <h2 id="how">五步可落地方法论</h2>
+    <p class="subtitle">把抽象的"训练循环"落到 5 个可执行的动作上。</p>
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">1</span>
+        <span class="step-title">建立「考试题库」</span>
+        <span class="step-tag">Test Set</span>
+      </div>
+      <p>你现在的知识库是<strong>"教材"</strong>，但你没有<strong>"考试卷"</strong>。</p>
+      <p>具体做法：创建 <code>评估用例集.md</code>，列出真实的设计需求与你期望的"标准答案"。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:80px">用例 ID</th>
+              <th style="width:200px">输入需求</th>
+              <th>期望输出的关键检查项</th>
+              <th style="width:90px" class="center">权重</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge">T-001</span></td>
+              <td>"生成一个车机设置页，包含 WiFi、蓝牙、显示三个菜单项"</td>
+              <td>① TopBar 使用组件实例　② SideMenu 使用组件实例　③ 所有文字绑定 text style　④ 所有颜色绑定 semantic variable　⑤ 间距使用 spacing token　⑥ 图标从对照表命中</td>
+              <td class="center">满分 6</td>
+            </tr>
+            <tr>
+              <td><span class="badge">T-002</span></td>
+              <td>"在已有设置页基础上，新增一个'驾驶辅助'菜单项"</td>
+              <td>① 图标使用 icon/sensor_fusion　② 形态 = 面形　③ 菜单项结构与已有项一致　④ 不破坏已有布局</td>
+              <td class="center">满分 4</td>
+            </tr>
+            <tr>
+              <td><span class="badge">T-003</span></td>
+              <td>"生成一个空调控制面板"</td>
+              <td>① 布局合理　② 温度数字使用大字号 bold　③ 按钮复用 Button 组件　④ 全部节点无硬编码</td>
+              <td class="center">满分 4</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="ico">i</div>
+        <div><p>不需要太多，<strong>10–20 个用例覆盖核心场景就够</strong>。重点是稳定、可复用。</p></div>
+      </div>
+
+      <!-- ===== 评估用例范例 ===== -->
+      <div class="sub-title">一份合格的评估用例 = 6 个字段</div>
+      <p class="sub-desc">字段越克制越好，但<strong>每一项都不能省</strong>。最容易翻车的是 <code>input</code>（题面写得太"干净"，等于送分）和 <code>scoring</code>（没有规则，每次打分都靠感觉，版本之间没法比）。</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:120px">字段</th>
+              <th style="width:200px">作用</th>
+              <th>没有它会怎样</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><code>id</code></td><td>唯一编号，便于回归对比</td><td>改完版本无法对齐同一题</td></tr>
+            <tr><td><code>category</code></td><td>分类（token / 图标 / 间距 / 字号 / 状态色 …）</td><td>无法定位是哪类知识薄弱</td></tr>
+            <tr><td><code>difficulty</code></td><td>难度：基础 / 进阶 / 陷阱</td><td>平均分被简单题拉高，看不出真实水平</td></tr>
+            <tr><td><code>input</code></td><td>给 AI 的题面（必须是<strong>真实业务问法</strong>）</td><td>题目失真，等于送分</td></tr>
+            <tr><td><code>expected</code></td><td>标准答案 + 允许的等价表述</td><td>评分主观、不可复现</td></tr>
+            <tr><td><code>scoring</code></td><td>评分规则（满分 10，按要点扣分）</td><td>不同人打分不一样，没法做版本对比</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="ico">!</div>
+        <div>
+          <p><strong>核心原则：题面要"脏"，答案要"干净"。</strong></p>
+          <ul style="margin:6px 0 0; padding-left:18px;">
+            <li>反例题面：<em>"请给出 <code>text-primary</code> 的色值"</em> ← 已经把答案塞进题面了</li>
+            <li>正例题面：<em>"这个标题字看起来灰灰的，要怎么改成最显眼的那种？"</em> ← 考的是 AI 能不能映射到 <code>text-primary</code></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sub-title">三道示范题（直接抄走改字段就能用）</div>
+
+      <!-- Case 1：基础题 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">EVAL-001</span>
+          <span class="pill">category: token / 文字色</span>
+          <span class="pill">difficulty: 基础</span>
+          <span class="pill">满分 10</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"这个副标题灰灰的，看着有点弱，能不能改成跟主标题一样显眼？"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>命中 token：<code>text-primary</code>（等价：<code>color/text/primary</code>、"主文字色"）</li>
+              <li>不接受：直接给十六进制色值（如 <code>#1F1F1C</code>）</li>
+              <li>需要说明改法：把 <code>text-secondary</code> 替换为 <code>text-primary</code></li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">
+            <ul>
+              <li>命中正确 token 名 +6</li>
+              <li>给出替换路径（旧 → 新）+2</li>
+              <li>说明这是"语义色而非具体色值" +2</li>
+              <li>给硬编码色值 −5</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 2：进阶题 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">EVAL-002</span>
+          <span class="pill">category: 图标语义</span>
+          <span class="pill">difficulty: 进阶</span>
+          <span class="pill">满分 10</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"导航栏里要加一个'我的车'入口，用什么图标？给出图标名和形态。"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>图标名：<code>icon/car</code>（等价：<code>vehicle</code>、"车辆"）</li>
+              <li>形态：<strong>面形（filled）</strong>，因为是导航栏一级入口</li>
+              <li>需引用规则："导航栏 / Tab 选中态用面形，未选中用线形"</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">
+            <ul>
+              <li>命中正确图标名 +4</li>
+              <li>形态选对（面形）+3</li>
+              <li>说明形态选择的规则依据 +3</li>
+              <li>只给名字不给形态 满分上限 4</li>
+              <li>形态选反（给线形）此项直接 0</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Case 3：陷阱题 -->
+      <div class="case-card">
+        <div class="case-meta">
+          <span class="case-id">EVAL-003</span>
+          <span class="pill">category: 状态色 / 陷阱</span>
+          <span class="pill">difficulty: 陷阱</span>
+          <span class="pill">满分 10</span>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Input</div>
+          <div class="case-val">"电量低于 20% 时，电量数字要变红警告，用哪个颜色？"</div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Expected</div>
+          <div class="case-val">
+            <ul>
+              <li>正确 token：<code>text-danger</code>（或 <code>color/semantic/danger</code>）</li>
+              <li><strong>不能给</strong> <code>color/red/500</code>（这是基础色板，不是语义色）</li>
+              <li><strong>不能给</strong> <code>#FF3B30</code>（硬编码）</li>
+              <li>加分项：提示同时把背景或图标统一切到 danger 系列，保持语义一致</li>
+            </ul>
+          </div>
+        </div>
+        <div class="case-row">
+          <div class="case-key">Scoring</div>
+          <div class="case-val">
+            <ul>
+              <li>给出 <code>text-danger</code> 语义 token +6</li>
+              <li>明确指出"不要用基础色板/硬编码" +2</li>
+              <li>提到联动图标/背景一致性 +2</li>
+              <li>给硬编码或基础色 此题判 0（陷阱题不给情面）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-title">存储格式：JSON（推荐，可被脚本批量跑）</div>
+      <p class="sub-desc">用 JSON 而不是 Markdown，是为了将来可以接一个评分脚本批量跑测。Markdown 表格做"人读版本"，JSON 做"机读版本"，两份同步。</p>
+<pre><code>[
+  {
+    "id": "EVAL-001",
+    "category": "token/文字色",
+    "difficulty": "基础",
+    "input": "这个副标题灰灰的，看着有点弱，能不能改成跟主标题一样显眼？",
+    "expected": {
+      "must_hit": ["text-primary"],
+      "equivalents": ["color/text/primary", "主文字色"],
+      "must_not": ["#1F1F1C", "硬编码色值"],
+      "explain": "应把 text-secondary 替换为 text-primary"
+    },
+    "scoring": {
+      "max": 10,
+      "rules": [
+        { "+6": "命中正确 token 名" },
+        { "+2": "给出替换路径（旧→新）" },
+        { "+2": "说明这是语义色而非具体色值" },
+        { "-5": "给硬编码色值" }
+      ]
+    }
+  }
+]</code></pre>
+
+      <div class="callout">
+        <div class="ico">i</div>
+        <div>
+          <p><strong>用例数量建议：</strong>首版 <strong>15–20 题</strong>，按"基础 60% / 进阶 30% / 陷阱 10%"分布。</p>
+          <p style="margin-top:6px;">每次知识库迭代后，<strong>同一套题重新跑一遍</strong>，对比 v1 / v2 / v3 的均分与分类得分——这才是"训练"留下的痕迹。</p>
+        </div>
+      </div>
+
+      <!-- ===== 三条实战经验 ===== -->
+      <div class="sub-title">写评估用例最容易翻车的三个点</div>
+      <p class="sub-desc">下面这三条，是范例里没法直接写进字段、但每次做训练都会反复踩到的坑。</p>
+      <ol class="lesson-list">
+        <li>
+          <span class="lesson-title">陷阱题不能太多（≤ 10%）</span>
+          <span class="lesson-desc">陷阱题占比一旦超过 20%，均分会被持续压低，每次小迭代都看起来"没进步"，团队会失去训练动力。陷阱题的作用是<strong>定点暴露已知短板</strong>，不是用来打击士气。</span>
+        </li>
+        <li>
+          <span class="lesson-title">Expected 一定要写 must_not（不能给什么）</span>
+          <span class="lesson-desc">AI 经常"答对一半"——给了正确语义 token，又附了硬编码色值"兜底"。如果只给正向得分项，永远改不掉它的<strong>保险习惯</strong>。must_not 让评分能精确扣分，知识库优化才有抓手。</span>
+        </li>
+        <li>
+          <span class="lesson-title">同一题只增不改（已发布的题永远冻结）</span>
+          <span class="lesson-desc">一旦某道题进了用例集，<strong>只能新增不能改</strong>。改题等于换了考卷，v1 vs v2 的对比就失效了。如果题目本身有问题，把它标记为 <code>deprecated: true</code>，再新增一道替代——这样历史分数仍然可比对。</span>
+        </li>
+      </ol>
+
+      <!-- ===== 下一步：自动化评分 ===== -->
+      <div class="next-card">
+        <span class="next-tag">Next Step</span>
+        <div class="next-body">
+          <h4>从手工打分 → 自动化评分脚本</h4>
+          <p>当用例集稳定后（通常第 2–3 次迭代之后），把"打分"这一步从人工换成脚本。这是知识工程从<strong>手工活</strong>变成<strong>工程化</strong>的分水岭。</p>
+          <div class="next-flow">
+            <span class="step-pill">读取 eval-set.json</span>
+            <span class="arrow">→</span>
+            <span class="step-pill">调用 LLM (current KB)</span>
+            <span class="arrow">→</span>
+            <span class="step-pill">按 rubric 自动打分</span>
+            <span class="arrow">→</span>
+            <span class="step-pill">输出 v1 vs v2 对比 csv</span>
+          </div>
+          <p style="margin-top:10px;">输出建议包含三列：<code>case_id</code> / <code>v_n_score</code> / <code>fail_reason</code>。<strong>fail_reason 是金子</strong>——它直接告诉你下一轮该补哪条知识。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">2</span>
+        <span class="step-title">定义「评分规则」（Rubric）</span>
+        <span class="step-tag">Scoring</span>
+      </div>
+      <p>把 SOP 的自查清单转化成<strong>可打分的维度</strong>，每个维度 0 / 1 / 2 三档。</p>
+
+      <div class="grid-2">
+        <div class="dim">
+          <div class="dim-name">A. 组件复用 <span class="dim-score">0 / 1 / 2</span></div>
+          <ul>
+            <li>0：完全手绘，没用组件</li>
+            <li>1：部分复用，部分手绘</li>
+            <li>2：能用组件的全部复用了</li>
+          </ul>
+        </div>
+        <div class="dim">
+          <div class="dim-name">B. Variable 绑定 <span class="dim-score">0 / 1 / 2</span></div>
+          <ul>
+            <li>0：大量硬编码</li>
+            <li>1：部分绑定，仍有遗漏</li>
+            <li>2：自绘节点 100% 绑定</li>
+          </ul>
+        </div>
+        <div class="dim">
+          <div class="dim-name">C. Text Style 绑定 <span class="dim-score">0 / 1 / 2</span></div>
+          <ul>
+            <li>0：字号字重全是手写数字</li>
+            <li>1：部分绑定</li>
+            <li>2：100% 绑定</li>
+          </ul>
+        </div>
+        <div class="dim">
+          <div class="dim-name">D. 图标正确性 <span class="dim-score">0 / 1 / 2</span></div>
+          <ul>
+            <li>0：用错图标或没用图标</li>
+            <li>1：语义大致对，但不是最优</li>
+            <li>2：精确命中对照表</li>
+          </ul>
+        </div>
+        <div class="dim">
+          <div class="dim-name">E. 间距规范 <span class="dim-score">0 / 1 / 2</span></div>
+          <ul>
+            <li>0：间距随意</li>
+            <li>1：数值合理但未绑 spacing token</li>
+            <li>2：绑定了 spacing variable</li>
+          </ul>
+        </div>
+        <div class="dim">
+          <div class="dim-name">F. 一次成功率 <span class="dim-score">0 / 1 / 2</span></div>
+          <ul>
+            <li>0：需要 3 轮以上人工纠正</li>
+            <li>1：需要 1–2 轮纠正</li>
+            <li>2：一次生成即达标</li>
+          </ul>
+        </div>
+      </div>
+
+      <p>共 6 个维度，<strong>满分 12 分</strong>。每跑完一个用例，就给它打一个分。</p>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">3</span>
+        <span class="step-title">建立「基线」</span>
+        <span class="step-tag">Baseline</span>
+      </div>
+      <p>这一步最关键，也是你现在最缺的一步：</p>
+      <blockquote>用<strong>当前的</strong>知识库和规则，把 10–20 个用例全部跑一遍，每个都打分，记录下来。</blockquote>
+
+      <h4>基线评估 v1.0（2026-05-18）</h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>用例</th>
+              <th class="num">A 组件</th>
+              <th class="num">B Variable</th>
+              <th class="num">C TextStyle</th>
+              <th class="num">D 图标</th>
+              <th class="num">E 间距</th>
+              <th class="num">F 一次成功</th>
+              <th class="num">总分</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>T-001</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">0</td><td class="num">1</td><td class="num"><strong>8 / 12</strong></td></tr>
+            <tr><td>T-002</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">2</td><td class="num"><strong>11 / 12</strong></td></tr>
+            <tr><td>T-003</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num"><strong>3 / 12</strong></td></tr>
+            <tr><td><strong>均分</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num"><strong>7.3 / 12</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout">
+        <div class="ico">→</div>
+        <div><p>有了这个数字，你才能说："我的工程目前水平是 <strong>7.3 / 12</strong>"。</p></div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">4</span>
+        <span class="step-title">针对性改进 —— 这才是"训练"</span>
+        <span class="step-tag">Improve</span>
+      </div>
+      <p><strong>哪个维度最低，就集中改那个维度</strong>。改的不是模型，而是知识库与规则。</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:32%">发现的短板</th>
+              <th>改进动作</th>
+              <th style="width:18%">改的是什么</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>间距维度全场 0 分</td>
+              <td>SOP 增加"间距必须绑 spacing token"的强制规则；经验文档补充每个 spacing token 的使用场景</td>
+              <td>知识库</td>
+            </tr>
+            <tr>
+              <td>T-003 空调面板完全跑偏</td>
+              <td>新增"空调面板"的组件结构说明文档</td>
+              <td>知识库</td>
+            </tr>
+            <tr>
+              <td>图标有时命中、有时不命中</td>
+              <td>扩充图标对照表，覆盖更多业务场景</td>
+              <td>知识库</td>
+            </tr>
+            <tr>
+              <td>一次成功率低，AI 总忘记某条规则</td>
+              <td>把该规则从普通文档提到 system prompt / always-applied rules</td>
+              <td>规则权重</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">5</span>
+        <span class="step-title">用同一套题再跑一遍</span>
+        <span class="step-tag">Re-evaluate</span>
+      </div>
+      <p>改完后，<strong>用完全相同的测试集</strong>再跑一遍，对比基线。</p>
+
+      <h4>评估 v2.0（改进间距规则后，2026-05-25）</h4>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>用例</th>
+              <th class="num">A 组件</th>
+              <th class="num">B Variable</th>
+              <th class="num">C TextStyle</th>
+              <th class="num">D 图标</th>
+              <th class="num">E 间距</th>
+              <th class="num">F 一次成功</th>
+              <th class="num">总分</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>T-001</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num"><strong>12 / 12</strong></td></tr>
+            <tr><td>T-002</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num">2</td><td class="num"><strong>12 / 12</strong></td></tr>
+            <tr><td>T-003</td><td class="num">1</td><td class="num">2</td><td class="num">2</td><td class="num">1</td><td class="num">1</td><td class="num">1</td><td class="num"><strong>8 / 12</strong></td></tr>
+            <tr><td><strong>均分</strong></td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td class="num"><strong>10.7 / 12</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <div class="ico">↑</div>
+        <div><p><strong>v1.0 → v2.0：7.3 → 10.7，提升 3.4 分。</strong>这就是可量化的"训练成果"。</p></div>
+      </div>
+    </div>
+
+    <!-- ===================== Loop ===================== -->
+    <h2 id="loop">完整迭代闭环</h2>
+    <div class="flow">
+      <div class="flow-row">
+        <div class="flow-node">考试题库<small>固定</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">跑测评估<small>RUN</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node">量化打分<small>SCORE</small></div>
+      </div>
+      <div class="flow-row" style="margin-top:12px">
+        <div class="flow-node">再跑一轮 · 对比分数<small>RE-EVAL</small></div>
+        <div class="flow-arrow">←</div>
+        <div class="flow-node">改知识库 · 改规则<small>FIX WEAKEST</small></div>
+        <div class="flow-arrow">←</div>
+        <div class="flow-node">找最低分维度<small>DIAGNOSE</small></div>
+      </div>
+      <div class="flow-loop">↻ 分数达标 → 发布新版本 ｜ 未达标 → 继续循环</div>
+    </div>
+
+    <!-- ===================== VS ===================== -->
+    <h2 id="vs">"装模作样" vs. "真正训练"</h2>
+    <div class="vs">
+      <div class="vs-col">
+        <h4>装模作样</h4>
+        <ul>
+          <li>出了问题才改文档</li>
+          <li>改完不知道有没有变好</li>
+          <li>不知道哪里是短板</li>
+          <li>每次改动是"感觉应该这样"</li>
+          <li>无法向别人解释进展</li>
+        </ul>
+      </div>
+      <div class="vs-col">
+        <h4>真正在训练</h4>
+        <ul>
+          <li>有固定的测试集，定期跑</li>
+          <li>改完用同一套题重新评分，分数有对比</li>
+          <li>按维度打分，清楚知道弱在哪</li>
+          <li>每次改动是"因为 X 维度得分最低"</li>
+          <li>能说"v1 均分 7.3，v3 均分 10.7"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===================== First ===================== -->
+    <h2 id="first">现在就做的第一件事</h2>
+    <p>不要从大重构开始。在项目里建两个文件即可启动：</p>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">①</span>
+        <span class="step-title">评估用例集.md</span>
+        <span class="step-tag">Test Set</span>
+      </div>
+      <p>写下 10 个你最常遇到的设计需求，附上每个用例的检查项与满分。</p>
+    </div>
+
+    <div class="step">
+      <div class="step-head">
+        <span class="step-num">②</span>
+        <span class="step-title">评估记录.md</span>
+        <span class="step-tag">Scorebook</span>
+      </div>
+      <p>用当前知识库跑一遍，记录基线分数。之后<strong>每次迭代都追加一行版本记录</strong>。</p>
+    </div>
+
+    <div class="footer-card">
+      <h3>结语</h3>
+      <p>
+        有了这两个文件，你后续每一次"和 AI 对话来优化知识库"，
+        就不再是被动应对，而是<strong>有目标、有度量、有版本号的真正的训练迭代</strong>。
+      </p>
+      <p style="color:var(--text-secondary); margin-bottom:0;">
+        模型本身是冻住的黑盒，你优化的是黑盒外面的一切——
+        这是一份纯粹的工程能力建设工作，价值并不比微调低。
+      </p>
+    </div>
+  </main>
+
+  <aside class="toc-side" aria-label="侧边目录">
+    <div class="toc-title">On this page</div>
+    <ol>
+      <li><a href="#why">为什么需要"训练"</a></li>
+      <li><a href="#what">什么才算"训练"</a></li>
+      <li><a href="#how">五步可落地方法论</a></li>
+      <li><a href="#loop">完整迭代闭环</a></li>
+      <li><a href="#vs">"装模作样" vs. "真正训练"</a></li>
+      <li><a href="#first">现在就做的第一件事</a></li>
+    </ol>
+  </aside>
+
+  <script>
+    (function () {
+      const links = Array.from(document.querySelectorAll('.toc-side a'));
+      if (!links.length) return;
+      const map = new Map();
+      links.forEach(a => {
+        const id = a.getAttribute('href').slice(1);
+        const target = document.getElementById(id);
+        if (target) map.set(target, a);
+      });
+
+      const sections = Array.from(map.keys());
+
+      function setActive(el) {
+        links.forEach(a => a.classList.remove('active'));
+        const a = map.get(el);
+        if (a) a.classList.add('active');
+      }
+
+      // 用 IntersectionObserver 跟踪当前可视章节（顶部偏移 120px）
+      const io = new IntersectionObserver((entries) => {
+        // 找到当前距顶部最近且已进入的标题
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top);
+        if (visible.length) {
+          setActive(visible[0].target);
+        } else {
+          // 都不可见时，根据滚动位置 fallback：选最后一个已经滚过的标题
+          const scrolled = window.scrollY + 140;
+          let current = sections[0];
+          for (const s of sections) {
+            if (s.offsetTop <= scrolled) current = s;
+          }
+          setActive(current);
+        }
+      }, {
+        rootMargin: '-120px 0px -70% 0px',
+        threshold: 0
+      });
+
+      sections.forEach(s => io.observe(s));
+
+      // 初始态
+      setActive(sections[0]);
+    })();
+  </script>
+</body>
+</html>

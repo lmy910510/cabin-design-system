@@ -1,0 +1,283 @@
+/* =============================================================
+ * Component: Button (按钮)
+ * Figma source: 🤖座舱组件库-AI版 / Button (Component Set 6:38, 130 variants)
+ *
+ * 1:1 严格映射自 Figma 真实测量（通过 figma_execute 直读）：
+ *
+ * 维度系统（4 sizes）：
+ *                       Compact-60   Small-48   Medium-72   Large-84
+ *   高度 / px            60          48         72          84
+ *   水平 padding 短边     24          18         30          30
+ *   水平 padding 长边     30          24         36          36
+ *   None 模式两侧 padding  30          24         36          36
+ *   icon-gap (itemSpacing) 6           6          6           6
+ *   icon size            30          24         36          42
+ *   字号 / line-height    24/24       24/24      28/28       32/32
+ *   圆角                 42          42         42          42
+ *   Icon-Only 圆角        999         999        999         999
+ *   Icon-Only 宽=高       60          48         72          84
+ *
+ * Variant × State：
+ *   Primary  Default  → bg=item_primary(#1f2229)        text/icon=text_primary_inverse(white90%)
+ *   Primary  Disabled → bg=item_disabled(#dee2e8)       text/icon=text_disabled(white80%)
+ *   Secondary Default → bg=item_tertiary(#eaedf2)       text/icon=text_primary(#1f2229)
+ *   Secondary Disabled→ bg=item_disabled                 text/icon=text_disabled
+ *   Ghost     Default → 透明 + border 2px border_disabled(#dee2e8)  text/icon=text_primary
+ *   Ghost     Disabled→ 透明 + border 2px border_disabled            text/icon=text_disabled
+ *   Danger    Default → bg=red-transparent-0(red5 12%)  text/icon=text_warning(#ff293b)
+ *   Danger    Disabled→ bg=item_disabled                 text/icon=text_disabled
+ *   Text      Default → 无 bg 无 border                  text/icon=text_primary
+ *   Text      Disabled→ 无 bg 无 border                  text/icon=text_disabled
+ *
+ * 特殊：Primary + Icon-Only + Default
+ *   bg = bg-item-elevated(白) + shadow-medium，icon 颜色 = text_primary（深色）
+ *   这是 Figma 里独有的"浮起的圆形 icon 按钮"形态。
+ *
+ * 用法：
+ *   <button class="btn btn--primary btn--md">按钮</button>
+ *   <button class="btn btn--secondary btn--md btn--leading">
+ *     <span class="btn-icon">★</span><span class="btn-label">按钮</span>
+ *   </button>
+ *   <button class="btn btn--primary btn--md btn--icon-only" aria-label="收藏">
+ *     <span class="btn-icon">★</span>
+ *   </button>
+ *
+ * 修饰类组合规则：
+ *   尺寸：btn--xs(Compact-60) | btn--sm(Small-48) | btn--md(Medium-72) | btn--lg(Large-84)
+ *   样式：btn--primary | btn--secondary | btn--ghost | btn--danger | btn--text
+ *   图标：btn--leading | btn--trailing | btn--icon-only （不加表示纯文字 None）
+ * ============================================================= */
+
+.btn {
+  /* 基础重置 */
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
+  /* layout：HORIZONTAL flex，center-center，6px gap */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  /* 形状：除 icon-only 外都是 42 胶囊 */
+  border-radius: 42px;
+
+  /* 字体：默认 Medium-72 字号，由 size 修饰类覆盖 */
+  font-family: var(--font-family-cn, "Noto Sans SC", system-ui, sans-serif);
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 28px;
+  letter-spacing: 0;
+  white-space: nowrap;
+
+  /* 过渡（Figma 静态稿无动效，这里补 160ms 增强可读） */
+  transition: background-color 160ms ease, color 160ms ease,
+    border-color 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+}
+
+/* icon 容器：fill 跟随 currentColor，便于让按钮颜色驱动 icon */
+.btn .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  color: inherit;
+}
+.btn .btn-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: currentColor;
+}
+
+.btn .btn-label {
+  display: inline-block;
+}
+
+/* -------------------------------------------------------------
+ * Size 修饰：Compact-60 / Small-48 / Medium-72(默认) / Large-84
+ * ------------------------------------------------------------- */
+.btn--xs {
+  height: 60px;
+  font-size: 24px;
+  line-height: 24px;
+  padding: 0 30px;          /* None 模式：两侧 30 */
+}
+.btn--xs .btn-icon { width: 30px; height: 30px; }
+
+.btn--sm {
+  height: 48px;
+  font-size: 24px;
+  line-height: 24px;
+  padding: 0 24px;          /* None 模式：两侧 24 */
+}
+.btn--sm .btn-icon { width: 24px; height: 24px; }
+
+.btn--md {
+  height: 72px;
+  font-size: 28px;
+  line-height: 28px;
+  padding: 0 36px;          /* None 模式：两侧 36 */
+}
+.btn--md .btn-icon { width: 36px; height: 36px; }
+
+.btn--lg {
+  height: 84px;
+  font-size: 32px;
+  line-height: 32px;
+  padding: 0 36px;          /* None 模式：两侧 36 */
+}
+.btn--lg .btn-icon { width: 42px; height: 42px; }
+
+/* -------------------------------------------------------------
+ * Icon-Position 修饰：Leading / Trailing
+ *   Leading：icon 在文字前，icon 边 padding 较小，文字边 padding 较大
+ *   Trailing：镜像
+ * ------------------------------------------------------------- */
+.btn--xs.btn--leading  { padding-left: 24px; padding-right: 30px; }
+.btn--xs.btn--trailing { padding-left: 30px; padding-right: 24px; }
+.btn--sm.btn--leading  { padding-left: 18px; padding-right: 24px; }
+.btn--sm.btn--trailing { padding-left: 24px; padding-right: 18px; }
+.btn--md.btn--leading  { padding-left: 30px; padding-right: 36px; }
+.btn--md.btn--trailing { padding-left: 36px; padding-right: 30px; }
+.btn--lg.btn--leading  { padding-left: 30px; padding-right: 36px; }
+.btn--lg.btn--trailing { padding-left: 36px; padding-right: 30px; }
+
+/* -------------------------------------------------------------
+ * Icon-Only：宽=高，圆角 999
+ * ------------------------------------------------------------- */
+.btn--icon-only {
+  padding: 0;
+  border-radius: 999px;
+  gap: 0;
+}
+.btn--icon-only.btn--xs { width: 60px; }
+.btn--icon-only.btn--sm { width: 48px; }
+.btn--icon-only.btn--md { width: 72px; }
+.btn--icon-only.btn--lg { width: 84px; }
+
+/* -------------------------------------------------------------
+ * Variant 修饰：Primary / Secondary / Ghost / Danger / Text
+ * ------------------------------------------------------------- */
+
+/* Primary：深色实心 */
+.btn--primary {
+  background: var(--color-bg-item-primary);
+  color: var(--color-text-primary-inverse);
+}
+.btn--primary:hover:not(:disabled):not([aria-disabled="true"]) {
+  filter: brightness(1.08);
+}
+.btn--primary:active:not(:disabled):not([aria-disabled="true"]) {
+  filter: brightness(0.92);
+}
+
+/* Primary + Icon-Only Default：白底 + shadow-medium（Figma 独有） */
+.btn--primary.btn--icon-only {
+  background: var(--color-bg-item-elevated);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-medium);
+}
+.btn--primary.btn--icon-only:hover:not(:disabled):not([aria-disabled="true"]) {
+  filter: brightness(0.98);
+}
+
+/* Secondary：浅灰填充 */
+.btn--secondary {
+  background: var(--color-bg-item-tertiary);
+  color: var(--color-text-primary);
+}
+.btn--secondary:hover:not(:disabled):not([aria-disabled="true"]) {
+  filter: brightness(0.96);
+}
+
+/* Ghost：透明 + 2px 边框 */
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-primary);
+  border: 2px solid var(--color-border-disabled);
+}
+.btn--ghost:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--color-bg-item-tertiary);
+}
+
+/* Danger：red 12% 背景 + 红字 */
+.btn--danger {
+  background: var(--palette-red-transparent-0);
+  color: var(--color-text-warning);
+}
+.btn--danger:hover:not(:disabled):not([aria-disabled="true"]) {
+  background: var(--palette-red-transparent-1);
+}
+
+/* Text：无背景无边框 */
+.btn--text {
+  background: transparent;
+  color: var(--color-text-primary);
+  padding-left: 12px;       /* Text 通常不需要太大 padding，沿用 Figma None 模式但减半 */
+  padding-right: 12px;
+}
+.btn--text.btn--leading,
+.btn--text.btn--trailing { padding-left: 12px; padding-right: 12px; }
+.btn--text:hover:not(:disabled):not([aria-disabled="true"]) {
+  color: var(--color-text-link);
+}
+
+/* -------------------------------------------------------------
+ * Disabled 状态：所有 variant 共同表现
+ *   bg=item_disabled / text=text_disabled / 无阴影 / cursor 禁用
+ * 优先级要高于 variant 的默认状态
+ * ------------------------------------------------------------- */
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  filter: none;
+  box-shadow: none;
+}
+
+.btn--primary:disabled,
+.btn--primary[aria-disabled="true"],
+.btn--secondary:disabled,
+.btn--secondary[aria-disabled="true"],
+.btn--danger:disabled,
+.btn--danger[aria-disabled="true"] {
+  background: var(--color-bg-item-disabled);
+  color: var(--color-text-disabled);
+}
+
+/* Primary Icon-Only Disabled：失去阴影，背景降为 item_disabled */
+.btn--primary.btn--icon-only:disabled,
+.btn--primary.btn--icon-only[aria-disabled="true"] {
+  background: var(--color-bg-item-disabled);
+  color: var(--color-text-disabled);
+  box-shadow: none;
+}
+
+.btn--ghost:disabled,
+.btn--ghost[aria-disabled="true"] {
+  background: transparent;
+  color: var(--color-text-disabled);
+  border-color: var(--color-border-disabled);
+}
+
+.btn--text:disabled,
+.btn--text[aria-disabled="true"] {
+  background: transparent;
+  color: var(--color-text-disabled);
+}
+
+/* -------------------------------------------------------------
+ * 键盘可访问性：focus-visible outline
+ * ------------------------------------------------------------- */
+.btn:focus-visible {
+  outline: 3px solid var(--color-border-active);
+  outline-offset: 3px;
+}

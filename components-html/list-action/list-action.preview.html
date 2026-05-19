@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>list-action · Preview</title>
+
+<!-- design-system -->
+<link rel="stylesheet" href="../../design-system/tokens.css" />
+<link rel="stylesheet" href="../../design-system/shadows.css" />
+<link rel="stylesheet" href="../../design-system/text-styles.css" />
+
+<!-- 依赖组件 -->
+<link rel="stylesheet" href="../button/button.css" />
+<link rel="stylesheet" href="../switch/switch.css" />
+
+<!-- 本组件 -->
+<link rel="stylesheet" href="./list-action.css" />
+
+<!-- 注入统一图标 sprite（同文档锚点，绕开 file:// 跨文件 use 限制）-->
+<script src="../icon/icon-sprite-inline.js"></script>
+
+<style>
+  body {
+    margin: 0;
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+    padding: 48px;
+  }
+  .theme-toggle {
+    position: fixed;
+    top: 24px; right: 24px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 2px solid var(--color-border-disabled);
+    background: var(--color-bg-item-tertiary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+  }
+  h2 {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--color-text-primary);
+  }
+  .group-desc {
+    font-size: 22px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+  section { margin-bottom: 64px; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px 32px;
+    align-items: center;
+  }
+  .case-grid > .label {
+    color: var(--color-text-secondary);
+    font-size: 22px;
+  }
+  .case-grid > .demo {
+    background: var(--color-bg-item-tertiary);
+    border-radius: 24px;
+    padding: 20px 30px;
+    display: flex; align-items: center;
+  }
+
+  /* 真实场景：模拟 list-row 上下文（左 icon + 标题 + list-action 在右） */
+  .row-mock {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    background: var(--color-bg-item-tertiary);
+    padding: 24px 36px;
+    border-radius: 24px;
+  }
+  .row-mock__icon {
+    width: 60px; height: 60px;
+    border-radius: 16px;
+    background: var(--color-bg-item-tertiary);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-text-primary);
+    flex: none;
+  }
+  .row-mock__icon svg { width: 36px; height: 36px; }
+  .row-mock__title {
+    flex: 1;
+    font-size: 32px; line-height: 32px; font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  .stack { display: flex; flex-direction: column; gap: 16px; }
+</style>
+</head>
+<body data-theme="light">
+
+<button class="theme-toggle" id="themeToggle">Toggle Light / Dark</button>
+
+<h1 style="font-size:48px;font-weight:600;margin:0 0 8px;">list-action</h1>
+<p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
+  3 个 variant · 1:1 映射 Figma component set <code>388:17408</code>
+</p>
+
+
+<!-- ============ 1. 三个 variant ============ -->
+<section>
+  <h2>1. 三种 variant</h2>
+  <p class="group-desc">容器 hbox / gap=12 / hug，自身透明无圆角，高度跟随子组件。</p>
+
+  <div class="case-grid">
+    <div class="label">Type = Arrow（副标题 + 右箭头）</div>
+    <div class="demo">
+      <span class="list-action list-action--arrow">
+        <span class="list-action__subtitle">副标题</span>
+        <span class="list-action__arrow" aria-hidden="true">
+          <svg fill="currentColor"><use href="#icon/enter--line"/></svg>
+        </span>
+      </span>
+    </div>
+
+    <div class="label">Type = Arrow（仅副标题）</div>
+    <div class="demo">
+      <span class="list-action list-action--arrow">
+        <span class="list-action__subtitle">已连接</span>
+      </span>
+    </div>
+
+    <div class="label">Type = Button（默认 Secondary Compact-60）</div>
+    <div class="demo">
+      <span class="list-action list-action--button">
+        <button class="btn btn--secondary btn--xs">按钮</button>
+      </span>
+    </div>
+
+    <div class="label">Type = Switch（默认 Off / 启用）</div>
+    <div class="demo">
+      <span class="list-action list-action--switch">
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="switch-track"></span>
+          <span class="switch-thumb"></span>
+        </label>
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 2. 业务变体 ============ -->
+<section>
+  <h2>2. 业务可替换内嵌 variant</h2>
+  <p class="group-desc">容器结构不变，把内嵌的 .btn / .switch 换成任意合法 variant。</p>
+
+  <div class="case-grid">
+    <div class="label">Button → Primary Small Leading</div>
+    <div class="demo">
+      <span class="list-action list-action--button">
+        <button class="btn btn--primary btn--sm btn--leading">
+          <span class="btn-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="currentColor"><use href="#icon/star--fill"/></svg>
+          </span>
+          <span class="btn-label">收藏</span>
+        </button>
+      </span>
+    </div>
+
+    <div class="label">Button → Danger Compact</div>
+    <div class="demo">
+      <span class="list-action list-action--button">
+        <button class="btn btn--danger btn--xs">退出登录</button>
+      </span>
+    </div>
+
+    <div class="label">Switch → On=True</div>
+    <div class="demo">
+      <span class="list-action list-action--switch">
+        <label class="switch">
+          <input type="checkbox" checked />
+          <span class="switch-track"></span>
+          <span class="switch-thumb"></span>
+        </label>
+      </span>
+    </div>
+
+    <div class="label">Switch → On=True / Disabled</div>
+    <div class="demo">
+      <span class="list-action list-action--switch">
+        <label class="switch">
+          <input type="checkbox" checked disabled />
+          <span class="switch-track"></span>
+          <span class="switch-thumb"></span>
+        </label>
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 3. 真实场景：放进 list-row 上下文 ============ -->
+<section>
+  <h2>3. 真实场景：嵌入 list-row 右槽</h2>
+  <p class="group-desc">模拟 list 主组件的 row 结构。list-action 应该 flex-end 贴右，左侧标题/图标自然伸展。</p>
+
+  <div class="stack" style="max-width:920px;">
+    <!-- Arrow 行 -->
+    <div class="row-mock">
+      <div class="row-mock__icon">
+        <svg viewBox="0 0 48 48" fill="currentColor"><use href="#icon/setting--fill"/></svg>
+      </div>
+      <div class="row-mock__title">通用</div>
+      <span class="list-action list-action--arrow">
+        <span class="list-action__subtitle">已开启</span>
+        <span class="list-action__arrow" aria-hidden="true">
+          <svg fill="currentColor"><use href="#icon/enter--line"/></svg>
+        </span>
+      </span>
+    </div>
+
+    <!-- Switch 行 -->
+    <div class="row-mock">
+      <div class="row-mock__icon">
+        <svg viewBox="0 0 48 48" fill="currentColor"><use href="#icon/wifi--fill"/></svg>
+      </div>
+      <div class="row-mock__title">WLAN</div>
+      <span class="list-action list-action--switch">
+        <label class="switch">
+          <input type="checkbox" checked />
+          <span class="switch-track"></span>
+          <span class="switch-thumb"></span>
+        </label>
+      </span>
+    </div>
+
+    <!-- Button 行 -->
+    <div class="row-mock">
+      <div class="row-mock__icon">
+        <svg viewBox="0 0 48 48" fill="currentColor"><use href="#icon/star--fill"/></svg>
+      </div>
+      <div class="row-mock__title">系统更新</div>
+      <span class="list-action list-action--button">
+        <button class="btn btn--primary btn--xs">立即更新</button>
+      </span>
+    </div>
+  </div>
+</section>
+
+<script>
+  // 主题切换
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+  document.documentElement.setAttribute('data-theme', 'light');
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+/* =============================================================
+ * Component: list  (列表行 - 整行组合)
+ * Figma source: 🤖座舱组件库-AI版 / list  (Component 388:17634)
+ *
+ * 这是「整行」组件，本身**只负责行级布局 + 分隔线**，
+ * 中/左/右三个槽各自由独立组件提供视觉与交互：
+ *
+ *   .list  =  flex 行 + 上下 padding(42) + 底部 1px 分隔线
+ *      ├─ .list-leading   ← 由 list-leading.css 提供（icon / checkbox / none）
+ *      ├─ .list-content   ← 由 list-content.css 提供（title / subtitle）
+ *      └─ .list-action    ← 由 list-action.css 提供（arrow / button / switch）
+ *
+ * 关键：本文件**不重写**子槽的任何样式。只引用类名做行级布局。
+ *
+ * Figma 真实测量：
+ *   - 行：水平 hbox / gap=36 / padding 42 0 / align-items=center
+ *   - 中槽 fill 占据剩余宽度（list-content 自身 width:100% + min-width:0）
+ *   - 行底部 1px secondary 分隔线（最后一行可用 .list--last 去掉）
+ *
+ * 用法：
+ *   <div class="list">
+ *     <span class="list-leading list-leading--icon">...</span>
+ *     <div class="list-content list-content--title">...</div>
+ *     <span class="list-action list-action--arrow">...</span>
+ *   </div>
+ *
+ *   建议外层用 <ul class="list-group"><li class="list">...</li>...</ul> 语义化。
+ * ============================================================= */
+
+
+/* ---------- 行容器 ---------- */
+
+.list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 36px;                              /* Figma itemSpacing */
+  padding: 42px 0;                        /* Figma paddingTop/Bottom */
+  background: transparent;
+  /* 底部分隔线：Figma 行尾的 1px secondary 线 */
+  border-bottom: 1px solid var(--color-border-secondary);
+  /* 容器宽度由父级 list-group 决定 */
+  width: 100%;
+  box-sizing: border-box;
+  /* 兼容 <li> 用法 */
+  list-style: none;
+}
+
+/* 中槽 fill：把 .list-content 撑到剩余宽度 */
+.list > .list-content {
+  flex: 1 1 auto;
+  min-width: 0;                           /* 允许内部 description 收缩换行 */
+}
+
+/* 左/右槽 hug，保持 flex:none（list-leading / list-action 内部已 flex:none） */
+
+
+/* ---------- 列表组（包裹多行） ---------- */
+
+.list-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 末行去掉分隔线 */
+.list-group > .list:last-child,
+.list--last {
+  border-bottom: none;
+}
+
+
+/* ---------- 整行可点态（可选） ---------- */
+
+/* 业务语义需要时给整行加 .list--clickable，
+   出现 hover/press 反馈，但不影响子槽语义。 */
+.list--clickable {
+  cursor: pointer;
+  transition: background-color 120ms;
+}
+
+@media (hover: hover) {
+  .list--clickable:hover {
+    background: var(--color-bg-item-tertiary);
+  }
+}
+
+.list--clickable:active {
+  background: var(--color-bg-item-secondary);
+}
+
+
+/* ---------- 禁用整行（可选） ---------- */
+
+.list--disabled,
+.list--disabled .list-content__title,
+.list--disabled .list-content__description {
+  color: var(--color-text-disabled);
+}
+
+.list--disabled .list-leading {
+  color: var(--color-text-disabled);
+}
+
+.list--disabled {
+  pointer-events: none;
+}

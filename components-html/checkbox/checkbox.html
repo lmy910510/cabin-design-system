@@ -1,0 +1,104 @@
+<!--
+  checkbox · 静态 HTML 片段示例
+  使用方式：在页面 <head> 引入 design-system 三件套 + checkbox.css，
+  即可直接复制下面任一片段进 body。
+-->
+
+<!-- ============== 1. 仅方框（不带文字标签） ============== -->
+
+<!-- 未选中 -->
+<label class="checkbox">
+  <input type="checkbox" />
+  <span class="checkbox__box" aria-hidden="true">
+    <svg viewBox="0 0 36 36" fill="none">
+      <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+</label>
+
+<!-- 选中 -->
+<label class="checkbox">
+  <input type="checkbox" checked />
+  <span class="checkbox__box" aria-hidden="true">
+    <svg viewBox="0 0 36 36" fill="none">
+      <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+</label>
+
+<!-- 禁用 · 未选 -->
+<label class="checkbox">
+  <input type="checkbox" disabled />
+  <span class="checkbox__box" aria-hidden="true">
+    <svg viewBox="0 0 36 36" fill="none">
+      <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+</label>
+
+<!-- 禁用 · 选中 -->
+<label class="checkbox">
+  <input type="checkbox" checked disabled />
+  <span class="checkbox__box" aria-hidden="true">
+    <svg viewBox="0 0 36 36" fill="none">
+      <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+</label>
+
+
+<!-- ============== 2. 方框 + 文字标签（独立使用） ============== -->
+
+<label class="checkbox">
+  <input type="checkbox" />
+  <span class="checkbox__box" aria-hidden="true">
+    <svg viewBox="0 0 36 36" fill="none">
+      <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+  <span class="checkbox__label">同意《用户协议》</span>
+</label>
+
+<label class="checkbox">
+  <input type="checkbox" checked />
+  <span class="checkbox__box" aria-hidden="true">
+    <svg viewBox="0 0 36 36" fill="none">
+      <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+  <span class="checkbox__label">已阅读并同意</span>
+</label>
+
+<label class="checkbox">
+  <input type="checkbox" disabled />
+  <span class="checkbox__box" aria-hidden="true">
+    <svg viewBox="0 0 36 36" fill="none">
+      <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </span>
+  <span class="checkbox__label">该选项暂不可选</span>
+</label>
+
+
+<!-- ============== 3. 在 list-leading 槽位中使用（消除分叉） ============== -->
+
+<!-- list-leading--checkbox 现已改为内嵌 .checkbox：
+     由 list-leading 提供 60×60 占位容器，由 .checkbox 提供方框/勾/状态 -->
+<span class="list-leading list-leading--checkbox">
+  <label class="checkbox">
+    <input type="checkbox" checked />
+    <span class="checkbox__box" aria-hidden="true">
+      <svg viewBox="0 0 36 36" fill="none">
+        <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </label>
+</span>

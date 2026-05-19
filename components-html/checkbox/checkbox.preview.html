@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>checkbox · Preview</title>
+
+<!-- design-system -->
+<link rel="stylesheet" href="../../design-system/tokens.css" />
+<link rel="stylesheet" href="../../design-system/shadows.css" />
+<link rel="stylesheet" href="../../design-system/text-styles.css" />
+
+<!-- 本组件 + 联动展示 -->
+<link rel="stylesheet" href="./checkbox.css" />
+<link rel="stylesheet" href="../list-leading/list-leading.css" />
+
+<style>
+  body {
+    margin: 0;
+    background: var(--color-bg-page-primary);
+    color: var(--color-text-primary);
+    font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+    padding: 48px;
+  }
+  .theme-toggle {
+    position: fixed; top: 24px; right: 24px;
+    padding: 12px 24px; border-radius: 999px;
+    border: 2px solid var(--color-border-disabled);
+    background: var(--color-bg-item-tertiary);
+    color: var(--color-text-primary);
+    cursor: pointer; font-size: 20px; z-index: 10;
+  }
+  h1 { font-size: 48px; font-weight: 600; margin: 0 0 8px; }
+  h2 {
+    font-size: 32px; font-weight: 500; margin: 0 0 8px;
+    color: var(--color-text-primary);
+  }
+  .group-desc {
+    font-size: 22px; color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+  section { margin-bottom: 64px; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 16px 32px;
+    align-items: center;
+  }
+  .case-grid > .label {
+    color: var(--color-text-secondary);
+    font-size: 22px;
+  }
+  .case-grid > .demo {
+    background: var(--color-bg-item-tertiary);
+    border-radius: 24px;
+    padding: 24px 30px;
+    display: flex; align-items: center; gap: 36px;
+    min-height: 60px;
+  }
+
+  .row-mock {
+    display: flex; align-items: center; gap: 36px;
+    background: var(--color-bg-item-tertiary);
+    padding: 30px 36px; border-radius: 24px;
+  }
+  .row-mock__title {
+    flex: 1; font-size: 32px; line-height: 32px; font-weight: 500;
+    color: var(--color-text-primary);
+  }
+  .stack { display: flex; flex-direction: column; gap: 16px; }
+</style>
+</head>
+<body data-theme="light">
+
+<button class="theme-toggle" id="themeToggle">Toggle Light / Dark</button>
+
+<h1>checkbox</h1>
+<p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
+  独立复选框组件 · 4 状态 · 1:1 对齐 list-leading 内联规格
+</p>
+
+
+<!-- ============ 1. 仅方框（4 状态） ============ -->
+<section>
+  <h2>1. 仅方框（4 状态）</h2>
+  <p class="group-desc">36×36 / 圆角 8 / 描边 2 / 选中实心 + 反色对勾。</p>
+
+  <div class="case-grid">
+    <div class="label">未选中</div>
+    <div class="demo">
+      <label class="checkbox">
+        <input type="checkbox" />
+        <span class="checkbox__box" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </label>
+    </div>
+
+    <div class="label">选中</div>
+    <div class="demo">
+      <label class="checkbox">
+        <input type="checkbox" checked />
+        <span class="checkbox__box" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </label>
+    </div>
+
+    <div class="label">禁用 · 未选</div>
+    <div class="demo">
+      <label class="checkbox">
+        <input type="checkbox" disabled />
+        <span class="checkbox__box" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </label>
+    </div>
+
+    <div class="label">禁用 · 选中</div>
+    <div class="demo">
+      <label class="checkbox">
+        <input type="checkbox" checked disabled />
+        <span class="checkbox__box" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </label>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 2. 方框 + 文字标签 ============ -->
+<section>
+  <h2>2. 方框 + 文字标签（独立使用）</h2>
+  <p class="group-desc">
+    label 是父级，点击文字也能切换；间距 18px，文字 28/36 Regular。
+  </p>
+
+  <div class="case-grid">
+    <div class="label">未选中</div>
+    <div class="demo">
+      <label class="checkbox">
+        <input type="checkbox" />
+        <span class="checkbox__box" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="checkbox__label">同意《用户协议》</span>
+      </label>
+    </div>
+
+    <div class="label">选中</div>
+    <div class="demo">
+      <label class="checkbox">
+        <input type="checkbox" checked />
+        <span class="checkbox__box" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="checkbox__label">已阅读并同意</span>
+      </label>
+    </div>
+
+    <div class="label">禁用</div>
+    <div class="demo">
+      <label class="checkbox">
+        <input type="checkbox" disabled />
+        <span class="checkbox__box" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none">
+            <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="checkbox__label">该选项暂不可选</span>
+      </label>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 3. 嵌入 list-leading 槽 ============ -->
+<section>
+  <h2>3. 嵌入 list-leading 槽（消除分叉）</h2>
+  <p class="group-desc">
+    list-leading 提供 60×60 占位容器；checkbox 提供方框 / 勾 / 状态。
+  </p>
+
+  <div class="stack" style="max-width:920px;">
+    <div class="row-mock">
+      <span class="list-leading list-leading--checkbox">
+        <label class="checkbox">
+          <input type="checkbox" checked />
+          <span class="checkbox__box" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+      </span>
+      <div class="row-mock__title">同意《用户协议》</div>
+    </div>
+
+    <div class="row-mock">
+      <span class="list-leading list-leading--checkbox">
+        <label class="checkbox">
+          <input type="checkbox" />
+          <span class="checkbox__box" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+      </span>
+      <div class="row-mock__title">订阅产品更新</div>
+    </div>
+
+    <div class="row-mock">
+      <span class="list-leading list-leading--checkbox">
+        <label class="checkbox">
+          <input type="checkbox" checked disabled />
+          <span class="checkbox__box" aria-hidden="true">
+            <svg viewBox="0 0 36 36" fill="none">
+              <path d="M9 18l6 6 12-12" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </label>
+      </span>
+      <div class="row-mock__title" style="color:var(--color-text-disabled);">必选项 · 不可取消</div>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+  document.documentElement.setAttribute('data-theme', 'light');
+</script>
+</body>
+</html>

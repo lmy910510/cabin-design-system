@@ -1,0 +1,36 @@
+<!--
+  Component: Switch · 静态 HTML 片段
+  Figma: Component Set 257:5522 (4 variants)
+  使用前先在页面 <head> 引入：
+    <link rel="stylesheet" href="../../design-system/tokens.css" />
+    <link rel="stylesheet" href="../../design-system/shadows.css" />
+    <link rel="stylesheet" href="./switch.css" />
+-->
+
+<!-- variant 1: On=True, Disabled=False (Figma id 257:5523) -->
+<label class="switch" aria-label="开关">
+  <input type="checkbox" checked />
+  <span class="switch-track"></span>
+  <span class="switch-thumb"></span>
+</label>
+
+<!-- variant 2: On=False, Disabled=False (Figma id 257:5526) -->
+<label class="switch" aria-label="开关">
+  <input type="checkbox" />
+  <span class="switch-track"></span>
+  <span class="switch-thumb"></span>
+</label>
+
+<!-- variant 3: On=True, Disabled=True (Figma id 315:11852) -->
+<label class="switch" aria-label="开关">
+  <input type="checkbox" checked disabled />
+  <span class="switch-track"></span>
+  <span class="switch-thumb"></span>
+</label>
+
+<!-- variant 4: On=False, Disabled=True (Figma id 315:11855) -->
+<label class="switch" aria-label="开关">
+  <input type="checkbox" disabled />
+  <span class="switch-track"></span>
+  <span class="switch-thumb"></span>
+</label>

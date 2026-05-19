@@ -1,0 +1,117 @@
+/* =============================================================
+ * Component: tag  (标签 / 分类标记 / 状态展示)
+ * Figma source: 🤖座舱组件库-AI版 / Tag  (Component Set 277:116)
+ *
+ * 1:1 映射自 Figma 真实测量（通过 figma_execute 直读 6 个 variant）：
+ *   Variant 矩阵：Size {Large, Medium} × Type {Filled, Outlined, Tinted}
+ *   布尔属性：Show icon（默认 true，前置 24×24 icon）
+ *
+ *   公共规格（所有 variant 一致）：
+ *     - layout: hbox / gap 3 / padding 0 6 / align center
+ *     - 圆角 6
+ *     - label: Noto Sans SC 20/20 Regular
+ *     - icon:  24 × 24（线形 SVG，currentColor 跟随 label 文字色）
+ *
+ *   Size 差异：
+ *     Large  → 高 36
+ *     Medium → 高 30
+ *
+ *   Type 差异（color token 直接对齐 Figma 真值，dark 模式自动切换）：
+ *     Filled   → 背景 var(--color-bg-item-primary)     文字 var(--color-text-primary-inverse)
+ *     Outlined → 背景 透明 + 1px 描边 var(--color-border-secondary)   文字 var(--color-text-secondary)
+ *     Tinted   → 背景 var(--color-bg-item-quaternary)  文字 var(--color-text-primary)
+ *
+ * 用法：
+ *   <!-- Large + Tinted（最常见，列表标签） -->
+ *   <span class="tag">标签文案</span>
+ *
+ *   <!-- 显式声明 -->
+ *   <span class="tag tag--large tag--tinted">标签文案</span>
+ *
+ *   <!-- 带前置 icon（Show icon = true） -->
+ *   <span class="tag tag--large tag--filled">
+ *     <svg class="tag__icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+ *       <path d="M12 3l2.7 5.5 6 .9-4.4 4.3 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.4l6-.9z"
+ *             stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+ *     </svg>
+ *     <span class="tag__label">标签文案</span>
+ *   </span>
+ *
+ *   仅文字时可省略 .tag__label，直接把文字塞进 .tag 即可。
+ * ============================================================= */
+
+
+/* ---------- 基础（= Large + Tinted 默认） ---------- */
+
+.tag {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 0 6px;
+  border-radius: 6px;
+  border: 0 solid transparent;       /* 占位，避免 Outlined 加 border 时撑高 */
+  font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 20px;
+  font-weight: 400;
+  white-space: nowrap;
+  user-select: none;
+  flex: none;
+  box-sizing: border-box;
+
+  /* default = Large */
+  height: 36px;
+
+  /* default = Tinted */
+  background: var(--color-bg-item-quaternary);
+  color: var(--color-text-primary);
+}
+
+
+/* ---------- Size ---------- */
+
+.tag--large  { height: 36px; }
+.tag--medium { height: 30px; }
+
+
+/* ---------- Type ---------- */
+
+/* Filled：实底强调 */
+.tag--filled {
+  background: var(--color-bg-item-primary);
+  color: var(--color-text-primary-inverse);
+  border-color: transparent;
+}
+
+/* Outlined：仅描边，无背景 */
+.tag--outlined {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border-width: 1px;
+  border-style: solid;
+  border-color: var(--color-border-secondary);
+}
+
+/* Tinted：浅色底（默认） */
+.tag--tinted {
+  background: var(--color-bg-item-quaternary);
+  color: var(--color-text-primary);
+  border-color: transparent;
+}
+
+
+/* ---------- 前置 icon ---------- */
+
+.tag__icon {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  color: currentColor;               /* 跟随 .tag 文字色 */
+}
+
+.tag__label {
+  /* 给文字一个独立 hook（icon + 文字组合时用），不强制结构 */
+  display: inline-block;
+}

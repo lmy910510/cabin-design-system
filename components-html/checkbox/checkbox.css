@@ -1,0 +1,127 @@
+/* =============================================================
+ * Component: Checkbox  (复选框)
+ *
+ * 独立可复用控件。视觉规格 1:1 来自 list-leading--checkbox 内联实现，
+ * 现独立成组件，list-leading 后续改为内嵌 <span class="checkbox">…</span>
+ * 形式，消除分叉。
+ *
+ * 默认尺寸：36×36 方框 / 圆角 8 / 描边 2 / 选中实心 + 对勾反色 / 30×30 勾。
+ *
+ * 状态（由内部 input 决定，零 JS）：
+ *   未选中 (默认)        → 描边 + 透明底
+ *   选中 (:checked)      → 实心 (text-primary) + 对勾反色
+ *   禁用 (:disabled)     → 描边 disabled + 底 item-disabled + 勾 text-disabled
+ *   禁用+选中            → 同禁用，勾仍显示 text-disabled
+ *
+ * 结构：
+ *   <label class="checkbox">
+ *     <input type="checkbox" />
+ *     <span class="checkbox__box" aria-hidden="true">
+ *       <svg viewBox="0 0 36 36" fill="none">
+ *         <path d="M9 18l6 6 12-12"
+ *               stroke="currentColor" stroke-width="3.5"
+ *               stroke-linecap="round" stroke-linejoin="round"/>
+ *       </svg>
+ *     </span>
+ *   </label>
+ *
+ *   独立使用时可在 label 后面加文字：
+ *   <label class="checkbox">
+ *     <input type="checkbox" checked />
+ *     <span class="checkbox__box" aria-hidden="true">…svg…</span>
+ *     <span class="checkbox__label">同意《用户协议》</span>
+ *   </label>
+ * ============================================================= */
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;                     /* spacing-18，与 list-content 标题尺度同节奏 */
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  color: var(--color-text-primary);
+}
+
+/* 隐藏原生 input，仅作语义/状态来源 */
+.checkbox > input[type="checkbox"] {
+  /* 关键：用 absolute 把它从 flex 流里拿掉，但仍覆盖到 box，保证可点 */
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  opacity: 0;
+  cursor: inherit;
+  /* 默认贴左侧 box 的位置 */
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 视觉方框 */
+.checkbox__box {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 2px solid var(--color-border-primary);
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;            /* 未选中 → 勾隐藏 */
+  flex: none;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+
+.checkbox__box svg {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+
+/* 文字标签（独立使用时可选） */
+.checkbox__label {
+  font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  font-size: 28px;
+  line-height: 36px;
+  font-weight: 400;
+  color: var(--color-text-primary);
+}
+
+/* ---------- 选中态 ---------- */
+.checkbox > input[type="checkbox"]:checked ~ .checkbox__box {
+  background: var(--color-text-primary);          /* Light: #1f2229；Dark: white-9 */
+  border-color: var(--color-text-primary);
+  color: var(--color-text-primary-inverse);       /* 对勾反色 */
+}
+
+/* ---------- 禁用态（未选） ---------- */
+.checkbox > input[type="checkbox"]:disabled ~ .checkbox__box {
+  border-color: var(--color-border-disabled);
+  background: var(--color-bg-item-disabled);
+  color: transparent;
+}
+
+/* 禁用态文字也变灰 */
+.checkbox:has(> input[type="checkbox"]:disabled) {
+  cursor: not-allowed;
+}
+.checkbox:has(> input[type="checkbox"]:disabled) .checkbox__label {
+  color: var(--color-text-disabled);
+}
+
+/* ---------- 禁用 + 选中：勾仍显示，但用 disabled 文字色 ---------- */
+.checkbox > input[type="checkbox"]:disabled:checked ~ .checkbox__box {
+  border-color: var(--color-border-disabled);
+  background: var(--color-bg-item-disabled);
+  color: var(--color-text-disabled);              /* 勾 = disabled 文字色 */
+}
+
+/* ---------- 键盘可访问性 ---------- */
+.checkbox > input[type="checkbox"]:focus-visible ~ .checkbox__box {
+  outline: 3px solid var(--color-border-active);
+  outline-offset: 3px;
+}

@@ -1,0 +1,157 @@
+/* =============================================================
+ * Component: brand-tag (品牌业务标记 / 双段组合 tag)
+ * Figma source: 🤖座舱组件库-AI版 / BrandTag (Component Set 594:9487)
+ *
+ * 1:1 映射自 Figma 真实测量（通过 figma_execute 直读 5 个 variant）：
+ *   Variant：类型 = {车速取-车道, 车速取-沿街, 可预约, 得来速, 得来速-带icon}
+ *
+ * 结构：双段组合
+ *   ┌──────────────┬───────────────────────────┐
+ *   │  左段 head    │   右段 body (可带 icon)     │
+ *   └──────────────┴───────────────────────────┘
+ *   外层圆角 5；左右段无内部圆角；
+ *   外层背景：对应 type 的 6%~12% 半透明色（tinted 底）。
+ *   外层不带 1px 紫描边（Figma 里那个紫框是变体编辑示意，非真实 UI）。
+ *
+ * 颜色策略：
+ *   不新增 brand 色 token，直接复用现有 design-system 语义色：
+ *     红（车速取） → --color-bg-warning / --color-text-warning / --color-bg-warning-transparent
+ *     蓝（可预约） → --color-text-link  /  --color-bg-link (=blue transparent)
+ *     黄（得来速） → --color-bg-price   / --color-text-price  / --color-bg-price-transparent
+ *   色值与 Figma 不完全一致是预期内的（沿用 tokens，跟随 dark mode 自动切换）。
+ *
+ * 字体：
+ *   左段（车速取/可预约）：MFYuanHei + 系统圆体回退，22 / 22 加粗
+ *   左段（得来速）：矢量 logo（内联 SVG，path 直接来自 Figma vector 594:9506）
+ *   右段：Noto Sans SC 20 / 20 加粗
+ *
+ * 用法：
+ *   <span class="brand-tag brand-tag--warning">
+ *     <span class="brand-tag__head">车速取</span>
+ *     <span class="brand-tag__body">车道</span>
+ *   </span>
+ *
+ *   <span class="brand-tag brand-tag--link">
+ *     <span class="brand-tag__head">可预约</span>
+ *     <span class="brand-tag__body">定时出餐 美味新鲜</span>
+ *   </span>
+ *
+ *   <!-- 得来速：左段是 SVG logo -->
+ *   <span class="brand-tag brand-tag--price">
+ *     <span class="brand-tag__head brand-tag__head--logo">
+ *       <svg class="brand-tag__logo" viewBox="0 0 75 22" aria-label="得来速" role="img"> ... </svg>
+ *     </span>
+ *     <span class="brand-tag__body">车道取餐 无须下车</span>
+ *   </span>
+ *
+ *   <!-- 得来速 + 右侧 info icon -->
+ *   <span class="brand-tag brand-tag--price">
+ *     <span class="brand-tag__head brand-tag__head--logo"> ... </span>
+ *     <span class="brand-tag__body">
+ *       车道取餐 无须下车
+ *       <svg class="brand-tag__icon" viewBox="0 0 48 48" aria-hidden="true">
+ *         <use href="#icon/info--fill" />
+ *       </svg>
+ *     </span>
+ *   </span>
+ * ============================================================= */
+
+
+/* ---------- 容器 ---------- */
+
+.brand-tag {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: stretch;        /* 左右两段等高 */
+  height: 28px;                /* Figma 实测整体高度 */
+  border-radius: 5px;
+  overflow: hidden;            /* 让左段实底色不溢出外层圆角 */
+  user-select: none;
+  flex: none;
+  box-sizing: border-box;
+  font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+  line-height: 1;
+}
+
+
+/* ---------- 左段 head ---------- */
+
+.brand-tag__head {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  font-family: "MFYuanHei", "PingFang SC", "Noto Sans SC", system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary-inverse);  /* 白字（Figma 实测） */
+  flex: none;
+}
+
+/* 得来速：左段是矢量 logo，padding 收紧、不用文字色 */
+.brand-tag__head--logo {
+  padding: 0 6px;
+}
+
+.brand-tag__logo {
+  display: block;
+  width: 75px;
+  height: 22px;
+}
+
+
+/* ---------- 右段 body ---------- */
+
+.brand-tag__body {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
+  font-size: 20px;
+  font-weight: 700;
+  flex: none;
+  /* 文字色由 type 修饰类控制 */
+}
+
+.brand-tag__icon {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  color: currentColor;         /* 跟随 body 文字色 */
+}
+
+
+/* ---------- Type 修饰类（颜色组合） ---------- */
+
+/* 红：车速取 */
+.brand-tag--warning {
+  background: var(--color-bg-warning-transparent);
+}
+.brand-tag--warning .brand-tag__head {
+  background: var(--color-bg-warning);
+}
+.brand-tag--warning .brand-tag__body {
+  color: var(--color-text-warning);
+}
+
+/* 蓝：可预约 */
+.brand-tag--link {
+  background: var(--color-bg-link);  /* blue transparent */
+}
+.brand-tag--link .brand-tag__head {
+  background: var(--color-text-link); /* blue-5 实底 */
+}
+.brand-tag--link .brand-tag__body {
+  color: var(--color-text-link);
+}
+
+/* 黄/橙：得来速 */
+.brand-tag--price {
+  background: var(--color-bg-price-transparent);
+}
+.brand-tag--price .brand-tag__head {
+  background: var(--color-bg-price);
+}
+.brand-tag--price .brand-tag__body {
+  color: var(--color-text-price);
+}

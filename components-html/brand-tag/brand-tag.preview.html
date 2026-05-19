@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>brand-tag · Preview</title>
+
+<!-- design-system -->
+<link rel="stylesheet" href="../../design-system/tokens.css" />
+<link rel="stylesheet" href="../../design-system/shadows.css" />
+<link rel="stylesheet" href="../../design-system/text-styles.css" />
+
+<!-- 本组件 -->
+<link rel="stylesheet" href="./brand-tag.css" />
+
+<!-- 注入统一图标 sprite -->
+<script src="../icon/icon-sprite-inline.js"></script>
+<link rel="stylesheet" href="../icon/icon.css" />
+
+<style>
+  body {
+    margin: 0;
+    background: var(--color-bg-base);
+    color: var(--color-text-primary);
+    font-family: "Noto Sans SC", "PingFang SC", system-ui, sans-serif;
+    padding: 48px;
+  }
+  .theme-toggle {
+    position: fixed;
+    top: 24px; right: 24px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    border: 2px solid var(--color-border-disabled);
+    background: var(--color-bg-item-tertiary);
+    color: var(--color-text-primary);
+    cursor: pointer;
+    font-size: 20px;
+    z-index: 10;
+  }
+  h2 {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    color: var(--color-text-primary);
+  }
+  .group-desc {
+    font-size: 22px;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+  }
+  section { margin-bottom: 64px; }
+
+  .case-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 16px 32px;
+    align-items: start;
+  }
+  .case-grid > .label {
+    color: var(--color-text-secondary);
+    font-size: 22px;
+    padding-top: 12px;
+  }
+  .case-grid > .demo {
+    background: var(--color-bg-item-tertiary);
+    border-radius: 24px;
+    padding: 24px 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+  }
+
+  /* 真实场景：POI 卡片 mock */
+  .poi-mock {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: var(--color-bg-item-tertiary);
+    padding: 24px 28px;
+    border-radius: 20px;
+  }
+  .poi-mock__name {
+    font-size: 28px;
+    line-height: 28px;
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+  .poi-mock__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .stack { display: flex; flex-direction: column; gap: 16px; max-width: 920px; }
+</style>
+</head>
+<body data-theme="light">
+
+<button class="theme-toggle" id="themeToggle">Toggle Light / Dark</button>
+
+<h1 style="font-size:48px;font-weight:600;margin:0 0 8px;">brand-tag</h1>
+<p style="font-size:22px;color:var(--color-text-secondary);margin:0 0 56px;">
+  5 个业务 variant · 1:1 映射 Figma component set <code>594:9487</code> · 颜色复用现有 <code>--color-bg-warning / --color-text-link / --color-bg-price</code> 语义 token
+</p>
+
+
+<!-- ============ 1. 全部 5 个 variant ============ -->
+<section>
+  <h2>1. 5 个 variant 一览</h2>
+  <p class="group-desc">和 Figma 一对一对应；颜色用现有语义 token，dark 模式自动切换。</p>
+
+  <div class="case-grid">
+    <div class="label">车速取-车道（红）</div>
+    <div class="demo">
+      <span class="brand-tag brand-tag--warning">
+        <span class="brand-tag__head">车速取</span>
+        <span class="brand-tag__body">车道</span>
+      </span>
+    </div>
+
+    <div class="label">车速取-沿街（红）</div>
+    <div class="demo">
+      <span class="brand-tag brand-tag--warning">
+        <span class="brand-tag__head">车速取</span>
+        <span class="brand-tag__body">沿街</span>
+      </span>
+    </div>
+
+    <div class="label">可预约（蓝）</div>
+    <div class="demo">
+      <span class="brand-tag brand-tag--link">
+        <span class="brand-tag__head">可预约</span>
+        <span class="brand-tag__body">定时出餐 美味新鲜</span>
+      </span>
+    </div>
+
+    <div class="label">得来速（黄）</div>
+    <div class="demo">
+      <span class="brand-tag brand-tag--price">
+        <span class="brand-tag__head brand-tag__head--logo">
+          <svg class="brand-tag__logo" viewBox="0 0 74.86 22" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="得来速">
+            <path fill="#d32d20" fill-rule="evenodd" d="M24.1994 11.579 L23.7142 13.9262 L21.3364 13.9262 L21.3364 14.8236 L23.2784 14.8236 L22.8168 16.6134 L25.6248 16.8574 L20.5009 16.8574 L19.7365 20.5914 L19.6898 20.7694 C19.4662 21.4648 18.8065 21.9614 18.0319 21.9948 L17.932 21.999 L14.7492 21.999 L14.7492 19.4127 L16.3019 19.4127 L16.4568 18.4201 L14.7492 18.423 L14.3874 20.3958 L14.3796 20.4432 C14.2375 21.308 13.4724 21.9543 12.5563 21.9838 L7.86818 21.999 L8.47222 20.0978 L10.2569 20.0978 C10.5433 20.0978 10.7821 19.8884 10.8064 19.6158 L10.981 17.6575 L16.6769 17.6575 L16.9879 16.8374 L8.47222 16.8374 L9.26543 14.8236 L17.5419 14.8236 L17.7504 13.9262 L10.7634 13.9262 L11.2965 11.579 L24.1994 11.579 Z M44.305 0.000142761 L41.521 0.461697 L41.521 1.61424 L51.4729 1.61424 C50.2016 1.91352 49.3838 2.20641 49.0195 2.49287 C48.6554 2.77932 48.5207 3.30096 48.615 4.05775 L40.5044 4.05775 L39.752 6.42716 L41.521 6.42716 L41.53 6.26614 C41.6142 5.52572 42.2708 4.94938 43.0683 4.94938 L47.3213 4.94938 L44.9539 5.31408 C44.3818 5.4022 43.9614 5.87378 43.9614 6.42716 L48.615 6.42716 L46.7054 7.11488 C46.3064 7.2586 46.0423 7.62333 46.0423 8.03065 L46.0423 9.30229 L42.8843 9.30229 C41.7576 9.30229 40.844 8.42989 40.844 7.35367 L39.4425 7.35367 L38.5189 10.1471 L50.0089 10.1471 L50.9532 7.35367 L50.0089 7.35367 L50.9532 5.10724 L55.6451 5.10724 L50.6041 18.64 L51.2018 19.6613 L70.4748 19.6613 L66.5918 20.1418 L65.7987 22 L51.4729 22 L50.0089 20.9897 L48.615 22 L45.3101 22 L45.3101 20.3968 C44.4102 20.3834 43.7128 20.4834 43.2181 20.6966 C42.7235 20.9098 42.562 21.3222 42.7338 21.9342 L38.5189 21.9342 L36.4997 17.8792 L35.1102 21.5996 L37.4607 22 L29.6655 22 L31.0866 21.5996 L32.8698 15.6708 L29.3749 20.9897 L28.7157 21.9342 L20.1596 21.9342 L22.6323 21.5996 L22.6323 19.2894 L26.4936 19.2894 L29.9358 13.4514 L33.7937 13.4514 L33.7937 12.6744 L24.5566 12.6744 L25.333 10.1471 L34.8793 10.1471 L35.6545 7.35367 L35.4392 7.36324 C34.5857 7.43904 33.8381 7.96123 33.509 8.72924 L33.2635 9.30229 C30.865 9.62704 29.3489 9.3297 28.7157 8.41035 C28.1897 7.64664 28.3191 6.75751 29.1066 5.74478 C29.4187 5.3437 29.9112 5.10726 30.4345 5.10724 L34.8793 5.10724 C34.1167 5.18052 33.4468 5.30044 32.8698 5.46698 C32.2927 5.63352 31.9526 5.95358 31.8494 6.42716 L35.9613 6.42716 L36.4997 4.36395 L27.7791 4.36395 L28.7157 1.61424 L37.4607 1.61424 L37.4607 0.000142761 L44.305 0.000142761 Z M18.3724 0 L14.1703 0.732984 L11.0514 5.89165 L13.338 5.89165 L15.0277 0.732984 L30.0556 0.732984 L26.2873 1.66215 L23.6379 10.2526 L11.6757 10.2526 L12.8915 7.0256 L12.0047 7.0256 L8.92779 12.0169 L5.8882 21.934 L0 21.934 L2.59151 21.0174 L5.16248 12.0169 L3.03066 12.0169 L3.76317 9.02384 L6.21414 9.02384 L7.65648 6.79704 L4.61401 6.79704 L5.16248 3.73489 L7.65648 3.73489 L9.90946 0 L18.3724 0 Z M50.0092 10.2525 L47.8123 10.7067 L47.4862 12.6273 L38.0123 12.4534 L37.736 13.35 L45.7964 13.35 L40.2639 14.2518 C40.2318 14.257 40.2001 14.265 40.1693 14.2756 C39.8829 14.3744 39.7345 14.6763 39.8379 14.9499 L41.6751 19.8089 L45.3177 19.8089 L47.3215 18.6073 L50.0092 10.2525 Z M69.7103 0.000142761 L66.7702 0.461697 L66.5319 1.65049 L74.8645 1.86533 L72.433 2.07224 L71.7805 4.65269 L65.9719 4.65269 L65.5095 5.68154 L71.7805 5.68154 L69.4883 12.4863 L63.2666 12.4863 L63.0471 13.471 L71.0609 13.471 L66.2799 14.0207 L66.2799 16.5147 L71.7805 16.5147 C69.0924 16.8613 67.5992 17.1242 67.3023 17.3036 C67.0053 17.483 66.8816 17.8554 66.9324 18.4211 L63.0471 18.4211 L63.2666 14.373 L62.5962 14.373 L61.4619 18.4211 L57.647 18.4211 L59.8811 13.7511 L59.8811 12.4863 L54.0178 12.4863 L56.404 5.68154 L61.8577 5.68154 L62.2529 4.65269 L56.7003 4.65269 L57.647 1.65049 L63.0471 1.65049 L63.2666 0.000142761 L69.7103 0.000142761 Z M58.5171 13.3085 L56.002 18.4205 L51.6758 18.4205 L52.4319 16.4919 L54.0185 16.4919 L55.5203 13.3085 L58.5171 13.3085 Z M67.3296 8.0214 L64.4416 8.0214 L63.8169 9.69645 L66.7702 9.69645 L67.3296 8.0214 Z M61.3555 8.0214 L58.4673 8.0214 L57.8425 9.69645 L60.7964 9.69645 L61.3555 8.0214 Z M21.3353 6.68913 L16.6798 6.68913 L15.9031 8.13516 L20.5441 8.13516 L21.3353 6.68913 Z M21.8705 3.00193 L18.1599 3.00193 L17.5409 4.44793 L21.2401 4.44793 L21.8705 3.00193 Z M57.6477 0.000142761 C57.2327 0.000142761 56.8545 0.207895 56.5125 0.623398 C56.1705 1.0389 55.8338 2.21255 55.5022 4.14435 L51.6758 4.14435 L52.9412 0.000142761 L57.6477 0.000142761 Z" />
+          </svg>
+        </span>
+        <span class="brand-tag__body">车道取餐 无须下车</span>
+      </span>
+    </div>
+
+    <div class="label">得来速-带 icon（黄）</div>
+    <div class="demo">
+      <span class="brand-tag brand-tag--price">
+        <span class="brand-tag__head brand-tag__head--logo">
+          <svg class="brand-tag__logo" viewBox="0 0 74.86 22" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="得来速">
+            <use href="#brand-drive-thru-logo" />
+          </svg>
+        </span>
+        <span class="brand-tag__body">
+          车道取餐 无须下车
+          <svg class="brand-tag__icon" viewBox="0 0 48 48" aria-hidden="true">
+            <use href="#icon/info--fill" />
+          </svg>
+        </span>
+      </span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 2. 真实场景：POI 卡片 ============ -->
+<section>
+  <h2>2. 真实场景：POI 卡片</h2>
+  <p class="group-desc">用于地图 POI / 餐饮卡片标记业务能力。</p>
+
+  <div class="stack">
+    <div class="poi-mock">
+      <span class="poi-mock__name">麦当劳（科兴广场店）</span>
+      <div class="poi-mock__tags">
+        <span class="brand-tag brand-tag--price">
+          <span class="brand-tag__head brand-tag__head--logo">
+            <svg class="brand-tag__logo" viewBox="0 0 74.86 22"><use href="#brand-drive-thru-logo" /></svg>
+          </span>
+          <span class="brand-tag__body">车道取餐 无须下车</span>
+        </span>
+        <span class="brand-tag brand-tag--link">
+          <span class="brand-tag__head">可预约</span>
+          <span class="brand-tag__body">定时出餐 美味新鲜</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="poi-mock">
+      <span class="poi-mock__name">肯德基（万象城店）</span>
+      <div class="poi-mock__tags">
+        <span class="brand-tag brand-tag--warning">
+          <span class="brand-tag__head">车速取</span>
+          <span class="brand-tag__body">车道</span>
+        </span>
+        <span class="brand-tag brand-tag--warning">
+          <span class="brand-tag__head">车速取</span>
+          <span class="brand-tag__body">沿街</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="poi-mock">
+      <span class="poi-mock__name">星巴克（前海店）</span>
+      <div class="poi-mock__tags">
+        <span class="brand-tag brand-tag--price">
+          <span class="brand-tag__head brand-tag__head--logo">
+            <svg class="brand-tag__logo" viewBox="0 0 74.86 22"><use href="#brand-drive-thru-logo" /></svg>
+          </span>
+          <span class="brand-tag__body">
+            车道取餐 无须下车
+            <svg class="brand-tag__icon" viewBox="0 0 48 48" aria-hidden="true">
+              <use href="#icon/info--fill" />
+            </svg>
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 复用得来速 logo 的 symbol 定义（同文档锚点 use） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="brand-drive-thru-logo" viewBox="0 0 74.86 22">
+      <path fill="#d32d20" fill-rule="evenodd" d="M24.1994 11.579 L23.7142 13.9262 L21.3364 13.9262 L21.3364 14.8236 L23.2784 14.8236 L22.8168 16.6134 L25.6248 16.8574 L20.5009 16.8574 L19.7365 20.5914 L19.6898 20.7694 C19.4662 21.4648 18.8065 21.9614 18.0319 21.9948 L17.932 21.999 L14.7492 21.999 L14.7492 19.4127 L16.3019 19.4127 L16.4568 18.4201 L14.7492 18.423 L14.3874 20.3958 L14.3796 20.4432 C14.2375 21.308 13.4724 21.9543 12.5563 21.9838 L7.86818 21.999 L8.47222 20.0978 L10.2569 20.0978 C10.5433 20.0978 10.7821 19.8884 10.8064 19.6158 L10.981 17.6575 L16.6769 17.6575 L16.9879 16.8374 L8.47222 16.8374 L9.26543 14.8236 L17.5419 14.8236 L17.7504 13.9262 L10.7634 13.9262 L11.2965 11.579 L24.1994 11.579 Z M44.305 0.000142761 L41.521 0.461697 L41.521 1.61424 L51.4729 1.61424 C50.2016 1.91352 49.3838 2.20641 49.0195 2.49287 C48.6554 2.77932 48.5207 3.30096 48.615 4.05775 L40.5044 4.05775 L39.752 6.42716 L41.521 6.42716 L41.53 6.26614 C41.6142 5.52572 42.2708 4.94938 43.0683 4.94938 L47.3213 4.94938 L44.9539 5.31408 C44.3818 5.4022 43.9614 5.87378 43.9614 6.42716 L48.615 6.42716 L46.7054 7.11488 C46.3064 7.2586 46.0423 7.62333 46.0423 8.03065 L46.0423 9.30229 L42.8843 9.30229 C41.7576 9.30229 40.844 8.42989 40.844 7.35367 L39.4425 7.35367 L38.5189 10.1471 L50.0089 10.1471 L50.9532 7.35367 L50.0089 7.35367 L50.9532 5.10724 L55.6451 5.10724 L50.6041 18.64 L51.2018 19.6613 L70.4748 19.6613 L66.5918 20.1418 L65.7987 22 L51.4729 22 L50.0089 20.9897 L48.615 22 L45.3101 22 L45.3101 20.3968 C44.4102 20.3834 43.7128 20.4834 43.2181 20.6966 C42.7235 20.9098 42.562 21.3222 42.7338 21.9342 L38.5189 21.9342 L36.4997 17.8792 L35.1102 21.5996 L37.4607 22 L29.6655 22 L31.0866 21.5996 L32.8698 15.6708 L29.3749 20.9897 L28.7157 21.9342 L20.1596 21.9342 L22.6323 21.5996 L22.6323 19.2894 L26.4936 19.2894 L29.9358 13.4514 L33.7937 13.4514 L33.7937 12.6744 L24.5566 12.6744 L25.333 10.1471 L34.8793 10.1471 L35.6545 7.35367 L35.4392 7.36324 C34.5857 7.43904 33.8381 7.96123 33.509 8.72924 L33.2635 9.30229 C30.865 9.62704 29.3489 9.3297 28.7157 8.41035 C28.1897 7.64664 28.3191 6.75751 29.1066 5.74478 C29.4187 5.3437 29.9112 5.10726 30.4345 5.10724 L34.8793 5.10724 C34.1167 5.18052 33.4468 5.30044 32.8698 5.46698 C32.2927 5.63352 31.9526 5.95358 31.8494 6.42716 L35.9613 6.42716 L36.4997 4.36395 L27.7791 4.36395 L28.7157 1.61424 L37.4607 1.61424 L37.4607 0.000142761 L44.305 0.000142761 Z M18.3724 0 L14.1703 0.732984 L11.0514 5.89165 L13.338 5.89165 L15.0277 0.732984 L30.0556 0.732984 L26.2873 1.66215 L23.6379 10.2526 L11.6757 10.2526 L12.8915 7.0256 L12.0047 7.0256 L8.92779 12.0169 L5.8882 21.934 L0 21.934 L2.59151 21.0174 L5.16248 12.0169 L3.03066 12.0169 L3.76317 9.02384 L6.21414 9.02384 L7.65648 6.79704 L4.61401 6.79704 L5.16248 3.73489 L7.65648 3.73489 L9.90946 0 L18.3724 0 Z M50.0092 10.2525 L47.8123 10.7067 L47.4862 12.6273 L38.0123 12.4534 L37.736 13.35 L45.7964 13.35 L40.2639 14.2518 C40.2318 14.257 40.2001 14.265 40.1693 14.2756 C39.8829 14.3744 39.7345 14.6763 39.8379 14.9499 L41.6751 19.8089 L45.3177 19.8089 L47.3215 18.6073 L50.0092 10.2525 Z M69.7103 0.000142761 L66.7702 0.461697 L66.5319 1.65049 L74.8645 1.86533 L72.433 2.07224 L71.7805 4.65269 L65.9719 4.65269 L65.5095 5.68154 L71.7805 5.68154 L69.4883 12.4863 L63.2666 12.4863 L63.0471 13.471 L71.0609 13.471 L66.2799 14.0207 L66.2799 16.5147 L71.7805 16.5147 C69.0924 16.8613 67.5992 17.1242 67.3023 17.3036 C67.0053 17.483 66.8816 17.8554 66.9324 18.4211 L63.0471 18.4211 L63.2666 14.373 L62.5962 14.373 L61.4619 18.4211 L57.647 18.4211 L59.8811 13.7511 L59.8811 12.4863 L54.0178 12.4863 L56.404 5.68154 L61.8577 5.68154 L62.2529 4.65269 L56.7003 4.65269 L57.647 1.65049 L63.0471 1.65049 L63.2666 0.000142761 L69.7103 0.000142761 Z M58.5171 13.3085 L56.002 18.4205 L51.6758 18.4205 L52.4319 16.4919 L54.0185 16.4919 L55.5203 13.3085 L58.5171 13.3085 Z M67.3296 8.0214 L64.4416 8.0214 L63.8169 9.69645 L66.7702 9.69645 L67.3296 8.0214 Z M61.3555 8.0214 L58.4673 8.0214 L57.8425 9.69645 L60.7964 9.69645 L61.3555 8.0214 Z M21.3353 6.68913 L16.6798 6.68913 L15.9031 8.13516 L20.5441 8.13516 L21.3353 6.68913 Z M21.8705 3.00193 L18.1599 3.00193 L17.5409 4.44793 L21.2401 4.44793 L21.8705 3.00193 Z M57.6477 0.000142761 C57.2327 0.000142761 56.8545 0.207895 56.5125 0.623398 C56.1705 1.0389 55.8338 2.21255 55.5022 4.14435 L51.6758 4.14435 L52.9412 0.000142761 L57.6477 0.000142761 Z" />
+    </symbol>
+  </defs>
+</svg>
+
+
+<script>
+  const btn = document.getElementById('themeToggle');
+  btn.addEventListener('click', () => {
+    const cur = document.body.getAttribute('data-theme');
+    const next = cur === 'light' ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', next);
+    document.documentElement.setAttribute('data-theme', next);
+  });
+  document.documentElement.setAttribute('data-theme', 'light');
+</script>
+</body>
+</html>

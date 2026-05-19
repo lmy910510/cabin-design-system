@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>座舱设计规范 · 组件预览</title>
+  <link rel="stylesheet" href="design-system/tokens.css" />
+  <style>
+    :root {
+      color-scheme: dark;
+      --nav-w: 280px;
+      --bg-page: #0e0f12;
+      --bg-nav: #16181d;
+      --bg-frame: #1b1d23;
+      --line: rgba(255, 255, 255, 0.08);
+      --text: rgba(255, 255, 255, 0.92);
+      --text-dim: rgba(255, 255, 255, 0.55);
+      --brand: #4ea3ff;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--bg-page);
+      color: var(--text);
+      font-family: -apple-system, "PingFang SC", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+    }
+    .app {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* ===== nav ===== */
+    .nav {
+      width: var(--nav-w);
+      flex-shrink: 0;
+      background: var(--bg-nav);
+      border-right: 1px solid var(--line);
+      overflow-y: auto;
+      padding: 20px 0 40px;
+    }
+    .nav__title {
+      padding: 6px 20px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .nav__group {
+      padding: 14px 20px 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+    }
+    .nav__item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 20px;
+      cursor: pointer;
+      color: var(--text);
+      border-left: 2px solid transparent;
+      transition: background .15s, border-color .15s, color .15s;
+      user-select: none;
+    }
+    .nav__item:hover { background: rgba(255, 255, 255, 0.04); }
+    .nav__item.is-active {
+      background: rgba(78, 163, 255, 0.10);
+      border-left-color: var(--brand);
+      color: #fff;
+    }
+    .nav__item-name { font-size: 14px; font-weight: 500; }
+    .nav__item-tag {
+      font-size: 11px;
+      color: var(--text-dim);
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+    }
+
+    /* ===== main ===== */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--line);
+      background: var(--bg-nav);
+    }
+    .topbar__left {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      min-width: 0;
+    }
+    .topbar__name {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .topbar__path {
+      font-size: 12px;
+      color: var(--text-dim);
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .topbar__actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      padding: 6px 12px;
+      font-size: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .btn:hover { background: rgba(255,255,255,0.06); }
+    .btn--primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #0b1220;
+      font-weight: 600;
+    }
+
+    /* ===== frame ===== */
+    .frame-wrap {
+      flex: 1;
+      background: var(--bg-frame);
+      overflow: hidden;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #fff; /* preview 自身有背景；这里给个保险，避免空白时透出黑底 */
+    }
+
+    /* empty */
+    .empty {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="nav" id="nav">
+      <div class="nav__title">座舱设计规范 · 组件</div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div class="topbar__left">
+          <div class="topbar__name" id="curName">选择左侧组件查看预览</div>
+          <div class="topbar__path" id="curPath"></div>
+        </div>
+        <div class="topbar__actions">
+          <a class="btn" id="openMd" target="_blank" rel="noopener" style="display:none">查看说明 .md</a>
+          <a class="btn btn--primary" id="openNew" target="_blank" rel="noopener" style="display:none">新窗口打开</a>
+        </div>
+      </div>
+      <div class="frame-wrap">
+        <iframe id="frame" title="component preview"></iframe>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // 组件清单：按"槽 → 行 → 表单控件"分组
+    const GROUPS = [
+      {
+        title: 'List 三槽 + 整行',
+        items: [
+          { name: 'list',          tag: '整行组合' },
+          { name: 'list-leading',  tag: '左槽' },
+          { name: 'list-content',  tag: '中槽' },
+          { name: 'list-action',   tag: '右槽' },
+        ],
+      },
+      {
+        title: '基础控件',
+        items: [
+          { name: 'icon',          tag: '图标系统' },
+          { name: 'button',        tag: '按钮' },
+          { name: 'switch',        tag: '开关' },
+          { name: 'checkbox',      tag: '复选框' },
+          { name: 'radio',         tag: '单选' },
+          { name: 'tag',           tag: '标签' },
+          { name: 'brand-tag',     tag: '品牌标签' },
+        ],
+      },
+    ];
+
+    const nav = document.getElementById('nav');
+    const frame = document.getElementById('frame');
+    const curName = document.getElementById('curName');
+    const curPath = document.getElementById('curPath');
+    const openNew = document.getElementById('openNew');
+    const openMd = document.getElementById('openMd');
+
+    const allItems = [];
+    GROUPS.forEach((g) => {
+      const h = document.createElement('div');
+      h.className = 'nav__group';
+      h.textContent = g.title;
+      nav.appendChild(h);
+
+      g.items.forEach((it) => {
+        const previewPath = `components-html/${it.name}/${it.name}.preview.html`;
+        const mdPath = `components-html/${it.name}/${it.name}.md`;
+        const el = document.createElement('div');
+        el.className = 'nav__item';
+        el.dataset.name = it.name;
+        el.dataset.preview = previewPath;
+        el.dataset.md = mdPath;
+        el.innerHTML = `
+          <span class="nav__item-name">${it.name}</span>
+          <span class="nav__item-tag">${it.tag}</span>
+        `;
+        el.addEventListener('click', () => select(it.name));
+        nav.appendChild(el);
+        allItems.push({ ...it, el, previewPath, mdPath });
+      });
+    });
+
+    function select(name) {
+      const item = allItems.find((x) => x.name === name);
+      if (!item) return;
+      allItems.forEach((x) => x.el.classList.toggle('is-active', x.name === name));
+      frame.src = item.previewPath;
+      curName.textContent = item.name;
+      curPath.textContent = item.previewPath;
+      openNew.href = item.previewPath;
+      openNew.style.display = '';
+      openMd.href = item.mdPath;
+      openMd.style.display = '';
+      // 写入 hash，方便分享 / 刷新保留状态
+      if (location.hash !== `#${name}`) {
+        history.replaceState(null, '', `#${name}`);
+      }
+      document.title = `${name} · 座舱设计规范`;
+    }
+
+    // 初始：优先读 hash，否则默认进 list
+    const initial = (location.hash || '').replace(/^#/, '') || 'list';
+    select(allItems.some((x) => x.name === initial) ? initial : 'list');
+
+    window.addEventListener('hashchange', () => {
+      const n = (location.hash || '').replace(/^#/, '');
+      if (n) select(n);
+    });
+  </script>
+</body>
+</html>
